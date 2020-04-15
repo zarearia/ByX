@@ -1,0 +1,175 @@
+# this is an auto generated file. This will be overwritten
+mutation CreateXModelType(
+  $email: AWSEmail!
+  $title: String!
+  $isUpgraded: Int
+  $tags: String
+) {
+  createXModelType(
+    email: $email
+    title: $title
+    isUpgraded: $isUpgraded
+    tags: $tags
+  ) {
+    id
+    email
+    title
+    isUpgraded
+    tags
+    dateCreated
+    dateUpgraded
+    dislikesCount
+    likesCount
+    isReported
+    isSpam
+    reportsCount
+    likers
+    dislikers
+    reporters
+    isLikedByTheUser
+    isDislikedByTheUser
+    isReportedByTheUser
+  }
+}
+mutation UpdateXModelType(
+  $id: ID!
+  $title: String!
+  $isUpgraded: Int!
+  $tags: String!
+) {
+  updateXModelType(
+    id: $id
+    title: $title
+    isUpgraded: $isUpgraded
+    tags: $tags
+  ) {
+    id
+    email
+    title
+    isUpgraded
+    tags
+    dateCreated
+    dateUpgraded
+    dislikesCount
+    likesCount
+    isReported
+    isSpam
+    reportsCount
+    likers
+    dislikers
+    reporters
+    isLikedByTheUser
+    isDislikedByTheUser
+    isReportedByTheUser
+  }
+}
+mutation DeleteXModelType($id: ID!) {
+  deleteXModelType(id: $id) {
+    id
+    email
+    title
+    isUpgraded
+    tags
+    dateCreated
+    dateUpgraded
+    dislikesCount
+    likesCount
+    isReported
+    isSpam
+    reportsCount
+    likers
+    dislikers
+    reporters
+    isLikedByTheUser
+    isDislikedByTheUser
+    isReportedByTheUser
+  }
+}
+mutation LikeXModelType($id: ID!, $email: AWSEmail!) {
+  likeXModelType(id: $id, email: $email) {
+    id
+    email
+    title
+    isUpgraded
+    tags
+    dateCreated
+    dateUpgraded
+    dislikesCount
+    likesCount
+    isReported
+    isSpam
+    reportsCount
+    likers
+    dislikers
+    reporters
+    isLikedByTheUser
+    isDislikedByTheUser
+    isReportedByTheUser
+  }
+}
+mutation DislikeXModelType($id: ID!, $email: AWSEmail!) {
+  dislikeXModelType(id: $id, email: $email) {
+    id
+    email
+    title
+    isUpgraded
+    tags
+    dateCreated
+    dateUpgraded
+    dislikesCount
+    likesCount
+    isReported
+    isSpam
+    reportsCount
+    likers
+    dislikers
+    reporters
+    isLikedByTheUser
+    isDislikedByTheUser
+    isReportedByTheUser
+  }
+}
+mutation ReportXModelType($id: ID!, $email: AWSEmail!) {
+  reportXModelType(id: $id, email: $email) {
+    id
+    email
+    title
+    isUpgraded
+    tags
+    dateCreated
+    dateUpgraded
+    dislikesCount
+    likesCount
+    isReported
+    isSpam
+    reportsCount
+    likers
+    dislikers
+    reporters
+    isLikedByTheUser
+    isDislikedByTheUser
+    isReportedByTheUser
+  }
+}
+mutation AdminChangeXModelType($id: ID!, $accept: Boolean) {
+  adminChangeXModelType(id: $id, accept: $accept) {
+    id
+    email
+    title
+    isUpgraded
+    tags
+    dateCreated
+    dateUpgraded
+    dislikesCount
+    likesCount
+    isReported
+    isSpam
+    reportsCount
+    likers
+    dislikers
+    reporters
+    isLikedByTheUser
+    isDislikedByTheUser
+    isReportedByTheUser
+  }
+}

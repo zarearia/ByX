@@ -1,0 +1,167 @@
+# this is an auto generated file. This will be overwritten
+query GetXModelType($id: ID!) {
+  getXModelType(id: $id) {
+    id
+    email
+    title
+    isUpgraded
+    tags
+    dateCreated
+    dateUpgraded
+    dislikesCount
+    likesCount
+    isReported
+    isSpam
+    reportsCount
+    likers
+    dislikers
+    reporters
+    isLikedByTheUser
+    isDislikedByTheUser
+    isReportedByTheUser
+  }
+}
+query ListXModelTypes(
+  $id: ID
+  $dateCreated: String
+  $isSpam: Int
+  $email: AWSEmail
+) {
+  listXModelTypes(
+    id: $id
+    dateCreated: $dateCreated
+    isSpam: $isSpam
+    email: $email
+  ) {
+    Items {
+      id
+      email
+      title
+      isUpgraded
+      tags
+      dateCreated
+      dateUpgraded
+      dislikesCount
+      likesCount
+      isReported
+      isSpam
+      reportsCount
+      likers
+      dislikers
+      reporters
+      isLikedByTheUser
+      isDislikedByTheUser
+      isReportedByTheUser
+    }
+    LastEvaluatedKey {
+      id
+      dateCreated
+      isSpam
+    }
+  }
+}
+query ListXModelTypesLikesSorted(
+  $id: ID
+  $likesCount: Int
+  $isSpam: Int
+  $email: AWSEmail
+) {
+  listXModelTypesLikesSorted(
+    id: $id
+    likesCount: $likesCount
+    isSpam: $isSpam
+    email: $email
+  ) {
+    Items {
+      id
+      email
+      title
+      isUpgraded
+      tags
+      dateCreated
+      dateUpgraded
+      dislikesCount
+      likesCount
+      isReported
+      isSpam
+      reportsCount
+      likers
+      dislikers
+      reporters
+      isLikedByTheUser
+      isDislikedByTheUser
+      isReportedByTheUser
+    }
+    LastEvaluatedKey {
+      id
+      likesCount
+      isSpam
+    }
+  }
+}
+query ListXModelTypesDislikesSorted(
+  $id: ID
+  $dislikesCount: Int
+  $isSpam: Int
+  $email: AWSEmail
+) {
+  listXModelTypesDislikesSorted(
+    id: $id
+    dislikesCount: $dislikesCount
+    isSpam: $isSpam
+    email: $email
+  ) {
+    Items {
+      id
+      email
+      title
+      isUpgraded
+      tags
+      dateCreated
+      dateUpgraded
+      dislikesCount
+      likesCount
+      isReported
+      isSpam
+      reportsCount
+      likers
+      dislikers
+      reporters
+      isLikedByTheUser
+      isDislikedByTheUser
+      isReportedByTheUser
+    }
+    LastEvaluatedKey {
+      id
+      dislikesCount
+      isSpam
+    }
+  }
+}
+query ListXModelTypesSearchTags($id: ID, $tags: String, $email: AWSEmail) {
+  listXModelTypesSearchTags(id: $id, tags: $tags, email: $email) {
+    Items {
+      id
+      email
+      title
+      isUpgraded
+      tags
+      dateCreated
+      dateUpgraded
+      dislikesCount
+      likesCount
+      isReported
+      isSpam
+      reportsCount
+      likers
+      dislikers
+      reporters
+      isLikedByTheUser
+      isDislikedByTheUser
+      isReportedByTheUser
+    }
+    LastEvaluatedKey {
+      id
+    }
+  }
+}

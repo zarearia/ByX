@@ -1,0 +1,15 @@
+{
+    "xappenv": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-xapp-xappenv-160932-authRole",
+            "UnauthRoleArn": "arn:aws:iam::442286511762:role/amplify-xapp-xappenv-160932-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::442286511762:role/amplify-xapp-xappenv-160932-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "amplify-xapp-xappenv-160932-deployment",
+            "UnauthRoleName": "amplify-xapp-xappenv-160932-unauthRole",
+            "StackName": "amplify-xapp-xappenv-160932",
+            "StackId": "arn:aws:cloudformation:us-east-1:442286511762:stack/amplify-xapp-xappenv-160932/4b9832b0-7cb2-11ea-ad19-12b44143da02",
+            "AmplifyAppId": "d28alomltnvisa"
+        }
+    }
+}
