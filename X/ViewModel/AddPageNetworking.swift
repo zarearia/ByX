@@ -9,18 +9,6 @@
 import SwiftUI
 import AWSAppSync
 
-
-//struct TagsTextFieldType {
-//    var id = UUID()
-//    var title: String!
-//    
-//    init(title: String) {
-//        self.title = title
-//    }
-//    
-//}
-
-
 class AddPageNetworking: ObservableObject {
     
     var appSyncClient: AWSAppSyncClient?

@@ -514,23 +514,25 @@ public final class UpdateXModelTypeMutation: GraphQLMutation {
 
 public final class DeleteXModelTypeMutation: GraphQLMutation {
   public static let operationString =
-    "mutation DeleteXModelType($id: ID!) {\n  deleteXModelType(id: $id) {\n    __typename\n    id\n    email\n    title\n    isUpgraded\n    tags\n    dateCreated\n    dateUpgraded\n    dislikesCount\n    likesCount\n    isReported\n    isSpam\n    reportsCount\n    likers\n    dislikers\n    reporters\n    isLikedByTheUser\n    isDislikedByTheUser\n    isReportedByTheUser\n  }\n}"
+    "mutation DeleteXModelType($id: ID!, $email: AWSEmail!) {\n  deleteXModelType(id: $id, email: $email) {\n    __typename\n    id\n    email\n    title\n    isUpgraded\n    tags\n    dateCreated\n    dateUpgraded\n    dislikesCount\n    likesCount\n    isReported\n    isSpam\n    reportsCount\n    likers\n    dislikers\n    reporters\n    isLikedByTheUser\n    isDislikedByTheUser\n    isReportedByTheUser\n  }\n}"
 
   public var id: GraphQLID
+  public var email: String
 
-  public init(id: GraphQLID) {
+  public init(id: GraphQLID, email: String) {
     self.id = id
+    self.email = email
   }
 
   public var variables: GraphQLMap? {
-    return ["id": id]
+    return ["id": id, "email": email]
   }
 
   public struct Data: GraphQLSelectionSet {
     public static let possibleTypes = ["Mutation"]
 
     public static let selections: [GraphQLSelection] = [
-      GraphQLField("deleteXModelType", arguments: ["id": GraphQLVariable("id")], type: .object(DeleteXModelType.selections)),
+      GraphQLField("deleteXModelType", arguments: ["id": GraphQLVariable("id"), "email": GraphQLVariable("email")], type: .object(DeleteXModelType.selections)),
     ]
 
     public var snapshot: Snapshot
@@ -3421,6 +3423,363 @@ public final class ListXModelTypesSearchTagsQuery: GraphQLQuery {
           }
           set {
             snapshot.updateValue(newValue, forKey: "id")
+          }
+        }
+      }
+    }
+  }
+}
+
+public final class ListXModelTypesUserItemsQuery: GraphQLQuery {
+  public static let operationString =
+    "query ListXModelTypesUserItems($id: ID, $email: AWSEmail, $dateCreated: String) {\n  listXModelTypesUserItems(id: $id, email: $email, dateCreated: $dateCreated) {\n    __typename\n    Items {\n      __typename\n      id\n      email\n      title\n      isUpgraded\n      tags\n      dateCreated\n      dateUpgraded\n      dislikesCount\n      likesCount\n      isReported\n      isSpam\n      reportsCount\n      likers\n      dislikers\n      reporters\n      isLikedByTheUser\n      isDislikedByTheUser\n      isReportedByTheUser\n    }\n    LastEvaluatedKey {\n      __typename\n      id\n      email\n      dateCreated\n    }\n  }\n}"
+
+  public var id: GraphQLID?
+  public var email: String?
+  public var dateCreated: String?
+
+  public init(id: GraphQLID? = nil, email: String? = nil, dateCreated: String? = nil) {
+    self.id = id
+    self.email = email
+    self.dateCreated = dateCreated
+  }
+
+  public var variables: GraphQLMap? {
+    return ["id": id, "email": email, "dateCreated": dateCreated]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Query"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("listXModelTypesUserItems", arguments: ["id": GraphQLVariable("id"), "email": GraphQLVariable("email"), "dateCreated": GraphQLVariable("dateCreated")], type: .object(ListXModelTypesUserItem.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(listXModelTypesUserItems: ListXModelTypesUserItem? = nil) {
+      self.init(snapshot: ["__typename": "Query", "listXModelTypesUserItems": listXModelTypesUserItems.flatMap { $0.snapshot }])
+    }
+
+    public var listXModelTypesUserItems: ListXModelTypesUserItem? {
+      get {
+        return (snapshot["listXModelTypesUserItems"] as? Snapshot).flatMap { ListXModelTypesUserItem(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "listXModelTypesUserItems")
+      }
+    }
+
+    public struct ListXModelTypesUserItem: GraphQLSelectionSet {
+      public static let possibleTypes = ["XModelTypeConnectionUserItems"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("Items", type: .list(.object(Item.selections))),
+        GraphQLField("LastEvaluatedKey", type: .object(LastEvaluatedKey.selections)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(items: [Item?]? = nil, lastEvaluatedKey: LastEvaluatedKey? = nil) {
+        self.init(snapshot: ["__typename": "XModelTypeConnectionUserItems", "Items": items.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, "LastEvaluatedKey": lastEvaluatedKey.flatMap { $0.snapshot }])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var items: [Item?]? {
+        get {
+          return (snapshot["Items"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Item(snapshot: $0) } } }
+        }
+        set {
+          snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "Items")
+        }
+      }
+
+      public var lastEvaluatedKey: LastEvaluatedKey? {
+        get {
+          return (snapshot["LastEvaluatedKey"] as? Snapshot).flatMap { LastEvaluatedKey(snapshot: $0) }
+        }
+        set {
+          snapshot.updateValue(newValue?.snapshot, forKey: "LastEvaluatedKey")
+        }
+      }
+
+      public struct Item: GraphQLSelectionSet {
+        public static let possibleTypes = ["XModelType"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+          GraphQLField("email", type: .nonNull(.scalar(String.self))),
+          GraphQLField("title", type: .nonNull(.scalar(String.self))),
+          GraphQLField("isUpgraded", type: .scalar(Int.self)),
+          GraphQLField("tags", type: .scalar(String.self)),
+          GraphQLField("dateCreated", type: .scalar(String.self)),
+          GraphQLField("dateUpgraded", type: .scalar(String.self)),
+          GraphQLField("dislikesCount", type: .scalar(Int.self)),
+          GraphQLField("likesCount", type: .scalar(Int.self)),
+          GraphQLField("isReported", type: .scalar(Int.self)),
+          GraphQLField("isSpam", type: .scalar(Int.self)),
+          GraphQLField("reportsCount", type: .scalar(Int.self)),
+          GraphQLField("likers", type: .list(.scalar(String.self))),
+          GraphQLField("dislikers", type: .list(.scalar(String.self))),
+          GraphQLField("reporters", type: .list(.scalar(String.self))),
+          GraphQLField("isLikedByTheUser", type: .scalar(Bool.self)),
+          GraphQLField("isDislikedByTheUser", type: .scalar(Bool.self)),
+          GraphQLField("isReportedByTheUser", type: .scalar(Bool.self)),
+        ]
+
+        public var snapshot: Snapshot
+
+        public init(snapshot: Snapshot) {
+          self.snapshot = snapshot
+        }
+
+        public init(id: GraphQLID, email: String, title: String, isUpgraded: Int? = nil, tags: String? = nil, dateCreated: String? = nil, dateUpgraded: String? = nil, dislikesCount: Int? = nil, likesCount: Int? = nil, isReported: Int? = nil, isSpam: Int? = nil, reportsCount: Int? = nil, likers: [String?]? = nil, dislikers: [String?]? = nil, reporters: [String?]? = nil, isLikedByTheUser: Bool? = nil, isDislikedByTheUser: Bool? = nil, isReportedByTheUser: Bool? = nil) {
+          self.init(snapshot: ["__typename": "XModelType", "id": id, "email": email, "title": title, "isUpgraded": isUpgraded, "tags": tags, "dateCreated": dateCreated, "dateUpgraded": dateUpgraded, "dislikesCount": dislikesCount, "likesCount": likesCount, "isReported": isReported, "isSpam": isSpam, "reportsCount": reportsCount, "likers": likers, "dislikers": dislikers, "reporters": reporters, "isLikedByTheUser": isLikedByTheUser, "isDislikedByTheUser": isDislikedByTheUser, "isReportedByTheUser": isReportedByTheUser])
+        }
+
+        public var __typename: String {
+          get {
+            return snapshot["__typename"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        public var id: GraphQLID {
+          get {
+            return snapshot["id"]! as! GraphQLID
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "id")
+          }
+        }
+
+        public var email: String {
+          get {
+            return snapshot["email"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "email")
+          }
+        }
+
+        public var title: String {
+          get {
+            return snapshot["title"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "title")
+          }
+        }
+
+        public var isUpgraded: Int? {
+          get {
+            return snapshot["isUpgraded"] as? Int
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "isUpgraded")
+          }
+        }
+
+        public var tags: String? {
+          get {
+            return snapshot["tags"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "tags")
+          }
+        }
+
+        public var dateCreated: String? {
+          get {
+            return snapshot["dateCreated"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "dateCreated")
+          }
+        }
+
+        public var dateUpgraded: String? {
+          get {
+            return snapshot["dateUpgraded"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "dateUpgraded")
+          }
+        }
+
+        public var dislikesCount: Int? {
+          get {
+            return snapshot["dislikesCount"] as? Int
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "dislikesCount")
+          }
+        }
+
+        public var likesCount: Int? {
+          get {
+            return snapshot["likesCount"] as? Int
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "likesCount")
+          }
+        }
+
+        public var isReported: Int? {
+          get {
+            return snapshot["isReported"] as? Int
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "isReported")
+          }
+        }
+
+        public var isSpam: Int? {
+          get {
+            return snapshot["isSpam"] as? Int
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "isSpam")
+          }
+        }
+
+        public var reportsCount: Int? {
+          get {
+            return snapshot["reportsCount"] as? Int
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "reportsCount")
+          }
+        }
+
+        public var likers: [String?]? {
+          get {
+            return snapshot["likers"] as? [String?]
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "likers")
+          }
+        }
+
+        public var dislikers: [String?]? {
+          get {
+            return snapshot["dislikers"] as? [String?]
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "dislikers")
+          }
+        }
+
+        public var reporters: [String?]? {
+          get {
+            return snapshot["reporters"] as? [String?]
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "reporters")
+          }
+        }
+
+        public var isLikedByTheUser: Bool? {
+          get {
+            return snapshot["isLikedByTheUser"] as? Bool
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "isLikedByTheUser")
+          }
+        }
+
+        public var isDislikedByTheUser: Bool? {
+          get {
+            return snapshot["isDislikedByTheUser"] as? Bool
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "isDislikedByTheUser")
+          }
+        }
+
+        public var isReportedByTheUser: Bool? {
+          get {
+            return snapshot["isReportedByTheUser"] as? Bool
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "isReportedByTheUser")
+          }
+        }
+      }
+
+      public struct LastEvaluatedKey: GraphQLSelectionSet {
+        public static let possibleTypes = ["LastEvaluatedKeyUserItems"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("id", type: .scalar(String.self)),
+          GraphQLField("email", type: .scalar(String.self)),
+          GraphQLField("dateCreated", type: .scalar(String.self)),
+        ]
+
+        public var snapshot: Snapshot
+
+        public init(snapshot: Snapshot) {
+          self.snapshot = snapshot
+        }
+
+        public init(id: String? = nil, email: String? = nil, dateCreated: String? = nil) {
+          self.init(snapshot: ["__typename": "LastEvaluatedKeyUserItems", "id": id, "email": email, "dateCreated": dateCreated])
+        }
+
+        public var __typename: String {
+          get {
+            return snapshot["__typename"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        public var id: String? {
+          get {
+            return snapshot["id"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "id")
+          }
+        }
+
+        public var email: String? {
+          get {
+            return snapshot["email"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "email")
+          }
+        }
+
+        public var dateCreated: String? {
+          get {
+            return snapshot["dateCreated"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "dateCreated")
           }
         }
       }

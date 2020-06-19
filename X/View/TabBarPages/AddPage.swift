@@ -7,13 +7,14 @@
 //
 
 import SwiftUI
-//import Combine
-//import UIKit
-//
+import Combine
+
+//MARK: Test
+/********************************************************************************/
 //final class UserData: ObservableObject  {
 //    let didChange = PassthroughSubject<UserData, Never>()
 //
-//    var text = "" {
+//    var text: String {
 //        didSet {
 //            didChange.send(self)
 //        }
@@ -23,26 +24,32 @@ import SwiftUI
 //        self.text = text
 //    }
 //}
-//
-//struct MultilineTextView: UIViewRepresentable {
-//    @Binding var text: String
-//
-//    func makeUIView(context: Context) -> UITextView {
-//        let view = UITextView()
+
+struct MultilineTextView: UIViewRepresentable {
+    @Binding var text: String
+
+    func makeUIView(context: Context) -> UITextView {
+        let view = UITextView()
 //        view.isScrollEnabled = true
 //        view.isEditable = true
 //        view.isUserInteractionEnabled = true
-//        return view
-//    }
-//
-//    func updateUIView(_ uiView: UITextView, context: Context) {
-//        uiView.text = text
-//    }
-//}
+        view.backgroundColor = UIColor(hex: "#3BB0BA")
+        view.textColor = .white
+        view.font = UIFont.systemFont(ofSize: 20, weight: .medium)
+        
+        return view
+    }
+
+    func updateUIView(_ uiView: UITextView, context: Context) {
+        uiView.text = text
+    }
+}
+/********************************************************************************/
 
 struct AddPage: View {
     
     @ObservedObject var observedObj = AddPageNetworking()
+    @State var isEditing = false
 //    @State var textFieldsTestText = ""
 //    @State var isUpgaraded = false
 
@@ -72,13 +79,14 @@ struct AddPage: View {
                             .padding(.leading, 20)
                             .padding([.top, .bottom], 7)
 
-//                        MultilineTextView(text: self.$textFieldsTestText)
-                        TextField("Tap to start writing", text: self.$observedObj.textFieldsText)
-                            .lineLimit(30)
-                            .foregroundColor(Color(hex: "#FAF5E4"))
-                            .font(.system(size: 20, weight: .bold, design: .rounded))
-                            .multilineTextAlignment(.leading)
-                            .fixedSize(horizontal: false, vertical: true)
+//                        MultilineTextView(text: self.$observedObj.textFieldsText)
+                        TextView(text: self.$observedObj.textFieldsText, isEditing: self.$isEditing)
+//                        TextField("Tap to start writing", text: self.$observedObj.textFieldsText)
+//                            .lineLimit(30)
+//                            .foregroundColor(Color(hex: "#FAF5E4"))
+//                            .font(.system(size: 20, weight: .bold, design: .rounded))
+//                            .multilineTextAlignment(.leading)
+//                            .fixedSize(horizontal: false, vertical: true)
                             .padding([.leading, .trailing])
 
                         Spacer()
@@ -129,6 +137,7 @@ struct AddPage: View {
                 }) {
                     AuthenticationButton(text: "Post", screenWidth: geo.size.width)
                 }
+                    .allowsHitTesting(self.observedObj.textFieldsText.count <= 128)
                     .padding()
 
             }
@@ -149,5 +158,34 @@ struct TagTextFieldModifier: ViewModifier{
         content
             .foregroundColor(Color(hex: "#FAF5E4"))
             .font(.system(size: 20, weight: .bold, design: .rounded))
+    }
+}
+
+
+extension UIColor {
+    public convenience init?(hex: String) {
+        let r, g, b, a: CGFloat
+
+        if hex.hasPrefix("#") {
+            let start = hex.index(hex.startIndex, offsetBy: 1)
+            let hexColor = String(hex[start...])
+
+            if hexColor.count == 8 {
+                let scanner = Scanner(string: hexColor)
+                var hexNumber: UInt64 = 0
+
+                if scanner.scanHexInt64(&hexNumber) {
+                    r = CGFloat((hexNumber & 0xff000000) >> 24) / 255
+                    g = CGFloat((hexNumber & 0x00ff0000) >> 16) / 255
+                    b = CGFloat((hexNumber & 0x0000ff00) >> 8) / 255
+                    a = CGFloat(hexNumber & 0x000000ff) / 255
+
+                    self.init(red: r, green: g, blue: b, alpha: a)
+                    return
+                }
+            }
+        }
+
+        return nil
     }
 }

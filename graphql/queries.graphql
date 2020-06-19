@@ -165,3 +165,36 @@ query ListXModelTypesSearchTags($id: ID, $tags: String, $email: AWSEmail) {
     }
   }
 }
+query ListXModelTypesUserItems(
+  $id: ID
+  $email: AWSEmail
+  $dateCreated: String
+) {
+  listXModelTypesUserItems(id: $id, email: $email, dateCreated: $dateCreated) {
+    Items {
+      id
+      email
+      title
+      isUpgraded
+      tags
+      dateCreated
+      dateUpgraded
+      dislikesCount
+      likesCount
+      isReported
+      isSpam
+      reportsCount
+      likers
+      dislikers
+      reporters
+      isLikedByTheUser
+      isDislikedByTheUser
+      isReportedByTheUser
+    }
+    LastEvaluatedKey {
+      id
+      email
+      dateCreated
+    }
+  }
+}

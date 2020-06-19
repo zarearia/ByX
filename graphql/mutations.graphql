@@ -63,8 +63,8 @@ mutation UpdateXModelType(
     isReportedByTheUser
   }
 }
-mutation DeleteXModelType($id: ID!) {
-  deleteXModelType(id: $id) {
+mutation DeleteXModelType($id: ID!, $email: AWSEmail!) {
+  deleteXModelType(id: $id, email: $email) {
     id
     email
     title

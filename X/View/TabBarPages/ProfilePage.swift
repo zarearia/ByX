@@ -10,12 +10,7 @@ import SwiftUI
 
 struct ProfilePage: View {
     
-    var designTestTexts = [DesignTest(text: "Some text"),
-    DesignTest(text: "Any SwiftUI view can be partially or wholly transparent using the opacity() modifier. This accepts a value between 0 (completely invisible) and 1 "),
-    DesignTest(text: "Any SwiftUI view can be partially or wholly transparent using the opacity() modifier. This accepts a value between 0 (completely invisible) and 1 (fully opaque), just like the alpha property of UIView in UIKit."),
-    DesignTest(text: "Some text"),
-    DesignTest(text: "Any SwiftUI view can be partially or wholly transparent using the opacity() modifier. This accepts a value between 0 (completely invisible) and 1 "),
-    DesignTest(text: "Any SwiftUI view can be partially or wholly transparent using the opacity() modifier. This accepts a value between 0 (completely invisible) and 1 (fully opaque), just like the alpha property of UIView in UIKit.")]
+    @ObservedObject var observedObj = HomeViewNetworking()
     
     var body: some View {
         ZStack {
@@ -54,14 +49,16 @@ struct ProfilePage: View {
                 }
                 
                 ScrollView {
-                    ForEach(designTestTexts) { item in
-//                        TextBox(text: item.title, textColor: Color(hex: "#FAF5E4"), boxColor: Color(hex: "#F2A970"), boxOpacity: 1, thumbsupColor: Color(hex: "#E8824F"), thumbsupNumColor: Color(hex: "#E8824F"), thumbsdownNumColor: Color(hex: "#E8824F"), thumbsdownColor: Color(hex: "#E8824F"), seperateLineColor: Color(hex: "#3BB0BA"), isUpgradeable: true, item: item)
-                        Text("Hello World")
+                    ForEach(observedObj.listItems, id: \.self.id) { item in
+                        TextBox(text: item.title, textColor: Color(hex: "#FAF5E4"), boxColor: Color(hex: "#3BB0BA"), boxOpacity: 0.9, thumbsupColor: Color(hex: "#B39283"), thumbsupNumColor: Color(hex: "#B39283"), thumbsdownNumColor: Color(hex: "#C23B22"), thumbsdownColor: Color(hex: "#C23B22"), seperateLineColor: Color(hex: "#3BB0BA"), isUpgradeable: true, item: item)
                     }
 
                     Spacer()
                 }
             }
+        }
+        .onAppear {
+            self.observedObj.userPosterItemsQuery()
         }
     }
 }

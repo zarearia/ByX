@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct AuthenticationButton: View {
-
+    
     var text: String
 //    var action: (() -> Void)
     var screenWidth: CGFloat

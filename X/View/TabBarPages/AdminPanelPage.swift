@@ -9,13 +9,9 @@
 import SwiftUI
 
 struct AdminPanelPage: View {
-    
-    var designTestTexts = [DesignTest(text: "Some text"),
-                           DesignTest(text: "Any SwiftUI view can be partially or wholly transparent using the opacity() modifier. This accepts a value between 0 (completely invisible) and 1 "),
-                           DesignTest(text: "Any SwiftUI view can be partially or wholly transparent using the opacity() modifier. This accepts a value between 0 (completely invisible) and 1 (fully opaque), just like the alpha property of UIView in UIKit."),
-                           DesignTest(text: "Some text"),
-                           DesignTest(text: "Any SwiftUI view can be partially or wholly transparent using the opacity() modifier. This accepts a value between 0 (completely invisible) and 1 "),
-                           DesignTest(text: "Any SwiftUI view can be partially or wholly transparent using the opacity() modifier. This accepts a value between 0 (completely invisible) and 1 (fully opaque), just like the alpha property of UIView in UIKit.")]
+
+    @ObservedObject var observedObj = HomeViewNetworking()
+    @State var contentType = 0
 
     var body: some View {
         
@@ -25,44 +21,31 @@ struct AdminPanelPage: View {
                 .edgesIgnoringSafeArea(.all)
             
             ScrollView {
-                ForEach(designTestTexts) { item in
-                    
-                    VStack(alignment: .leading) {
 
-                        HStack {
-                            Text("Spam")
-                                .foregroundColor(.red)
-                                .font(.system(size: 25, weight: .bold, design: .rounded))
-                                .padding(.leading)
+                Picker(selection: $contentType, label: Text("Select the content type")) {
+                    Text("Spam").tag(0)
+                    Text("Reported").tag(1)
+                }.pickerStyle(SegmentedPickerStyle())
+                    .padding()
+                    .onReceive([self.contentType].publisher.first()) { (value) in
+                        if value == 0 {
+                            self.observedObj.spamsQuery()
+                        } else {
+                            self.observedObj.reportedQuery()
                         }
-                        
-                        VStack(alignment: .leading) {
-                            HStack {
-                                Text(item.text)
-                                    .padding()
-                                    .foregroundColor(Color(hex: "#FAF5E4"))
-                                Spacer()
-                            }
-                        }
-                            .fixedSize(horizontal: false, vertical: true)
-                            .background(Color(hex: "#F2A970"))
-                            .cornerRadius(23)
-                            .padding([.top, .leading, .trailing], 20)
-                        
-//                        HStack {
-//                            Button
-//                        }
-                        
-                        Rectangle()
-                            .foregroundColor(Color(hex: "#3BB0BA"))
-                            .frame(minWidth: 0, maxWidth: .infinity)
-                            .frame(height: 2)
-                            .padding(5)
-                        
                     }
-                    
+
+                ForEach(observedObj.listItems, id: \.self.id) { item in
+                    AdminPanelTextBar(id: item.id, title: item.title)
                 }
             }
         }
+            .onAppear {
+                if self.contentType == 0 {
+                    self.observedObj.spamsQuery()
+                } else {
+                    self.observedObj.reportedQuery()
+                }
+            }
     }
 }
