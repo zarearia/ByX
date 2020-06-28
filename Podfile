@@ -7,5 +7,6 @@ target 'X' do
 
   # Pods for X
 pod 'AWSAppSync', '~> 3.1.0'
+pod 'SwipeView'
 
 end
