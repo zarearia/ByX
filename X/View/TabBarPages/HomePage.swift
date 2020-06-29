@@ -29,82 +29,91 @@ struct HomePage: View {
     @ObservedObject var observedObj = HomeViewNetworking()
     @State var searchText = ""
     @State var searchBarHeight: CGFloat = 0
-    
+
+    @State var swipeablePage : SwipeablePageRepresentable?
+
 //    init() {
 //        self.observedObj.runQuery()
 //    }
     
     var body: some View {
+        NavigationView {
+            ZStack {
 
-        ZStack {
+                Color(hex: "#FAF5E4")
+                    .edgesIgnoringSafeArea(.all)
 
-            Color(hex: "#FAF5E4")
-                .edgesIgnoringSafeArea(.all)
-            
-            ScrollView {
-                ForEach(observedObj.listItems, id: \.self.id) { item in
-                    TextBox(text: item.title, textColor: Color(hex: "#FAF5E4"), boxColor: Color(hex: "#F2A970"), boxOpacity: 1, thumbsupColor: Color(hex: "#B39283"), thumbsupNumColor: Color(hex: "#CFB997"), thumbsdownNumColor: Color(hex: "#C23B22"), thumbsdownColor: Color(hex: "#C23B22"), seperateLineColor: Color(hex: "#3BB0BA"), isUpgradeable: false, item: item)
-                }
-                .offset(y: searchBarHeight)
-
-                Spacer()
-            }
-            
-            VStack {
-                
-                HStack {
-                    SignInUpTextField(text: $observedObj.searchText, placeHolder: "Search #'s", onCommit: observedObj.searchTag)
-                        .overlay(
-                            GeometryReader() { geo in
-                                Color(.clear)
-                                    .onAppear {
-                                        self.searchBarHeight = geo.size.height
-                                }
-                            }
-                        )
-                    
-                    Button(action: {
-                        
-                        if self.observedObj.sortedBy == .latest {
-                            self.observedObj.sortedBy = .mostLiked
-                        } else if self.observedObj.sortedBy == .mostLiked {
-                            self.observedObj.sortedBy = .mostDisliked
-                        } else {
-                            self.observedObj.sortedBy = .latest
+                ScrollView {
+                    ForEach(observedObj.listItems, id: \.self.id) { item in
+                        NavigationLink(destination: self.swipeablePage)
+                                                            /*.navigationBarHidden(true)*/
+                                                            /*.navigationBarTitle(""))*/ {
+                            TextBox(text: item.title, textColor: Color(hex: "#FAF5E4"), boxColor: Color(hex: "#F2A970"), boxOpacity: 1, thumbsupColor: Color(hex: "#B39283"), thumbsupNumColor: Color(hex: "#CFB997"), thumbsdownNumColor: Color(hex: "#C23B22"), thumbsdownColor: Color(hex: "#C23B22"), seperateLineColor: Color(hex: "#3BB0BA"), isUpgradeable: false, item: item)
                         }
-                        
-                        self.observedObj.runQuery()
-                        
-                    }) {
-                        if observedObj.sortedBy == .latest {
-                            Text("latest")
-                                .modifier(SortText())
-                        }
-                        else if observedObj.sortedBy == .mostLiked {
-                            Text("Most Liked")
-                                .modifier(SortText())
-                        }
-                        else {
-                            Text("Most Disliked")
-                                .modifier(SortText())
-                        }
-                        
                     }
-                    
+                        .offset(y: searchBarHeight)
+
+                    Spacer()
                 }
-                    .background(Color(hex: "#FAF5E4"))
-                    .opacity(0.95)
-                    .overlay(
-                        Color(hex: "#FAF5E4")
-                            .opacity(0.95)
-                            .offset(x: 0, y: -self.searchBarHeight)
-                    )
-                
-                Spacer()
+
+                VStack {
+
+                    HStack {
+                        SignInUpTextField(text: $observedObj.searchText, placeHolder: "Search #'s", onCommit: observedObj.searchTag)
+                            .overlay(
+                                GeometryReader() { geo in
+                                    Color(.clear)
+                                        .onAppear {
+                                            self.searchBarHeight = geo.size.height
+                                        }
+                                }
+                            )
+
+                        Button(action: {
+
+                            if self.observedObj.sortedBy == .latest {
+                                self.observedObj.sortedBy = .mostLiked
+                            } else if self.observedObj.sortedBy == .mostLiked {
+                                self.observedObj.sortedBy = .mostDisliked
+                            } else {
+                                self.observedObj.sortedBy = .latest
+                            }
+
+                            self.observedObj.runQuery()
+
+                        }) {
+                            if observedObj.sortedBy == .latest {
+                                Text("latest")
+                                    .modifier(SortText())
+                            } else if observedObj.sortedBy == .mostLiked {
+                                Text("Most Liked")
+                                    .modifier(SortText())
+                            } else {
+                                Text("Most Disliked")
+                                    .modifier(SortText())
+                            }
+
+                        }
+
+                    }
+                        .background(Color(hex: "#FAF5E4"))
+                        .opacity(0.95)
+                        .overlay(
+                            Color(hex: "#FAF5E4")
+                                .opacity(0.95)
+                                .offset(x: 0, y: -self.searchBarHeight)
+                        )
+
+                    Spacer()
+                }
             }
+            .navigationBarTitle("")
+            .navigationBarHidden(true)
         }
+            .navigationViewStyle(StackNavigationViewStyle())
             .onAppear {
                 self.observedObj.runQuery()
+                self.swipeablePage = SwipeablePageRepresentable(listItems: self.$observedObj.listItems)
             }
     }
 }

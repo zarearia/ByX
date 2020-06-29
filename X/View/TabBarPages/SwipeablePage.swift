@@ -6,23 +6,25 @@
 import SwiftUI
 import UIKit
 import SwipeView
+import AWSAppSync
 
-struct SwipeablePageView: View {
-
-    var body: some View {
-        SwipeablePageRepresentable()
-    }
-}
 
 struct SwipeablePageRepresentable: UIViewRepresentable {
 
+    @Binding var listItems: [ListXModelTypesQuery.Data.ListXModelType.Item]
+
+//    init(listItems: [ListXModelTypesQuery.Data.ListXModelType.Item]) {
+//        self.listItems = listItems
+//    }
+
     func makeUIView(context: Context) -> SwipeablePage {
         /*TODO: Change numberOfItems*/
-        let swipeablePage = SwipeablePage(frame: UIScreen.main.bounds, numberOfItems: 100)
+        let swipeablePage = SwipeablePage(frame: UIScreen.main.bounds, numberOfItems: listItems.count, listItems: listItems)
         return swipeablePage
     }
 
     func updateUIView(_ uiView: SwipeablePage, context: Context) {
+        uiView.listItems = listItems
     }
 }
 
@@ -30,16 +32,25 @@ struct SwipeablePageRepresentable: UIViewRepresentable {
 class SwipeablePage: UIView, SwipeViewDataSource, SwipeViewDelegate {
 
     let swipeView = SwipeView()
+    var appSyncClient: AWSAppSyncClient?
+
+    var listItems = [ListXModelTypesQuery.Data.ListXModelType.Item(id: "0", email: "12341234", title: "klanwfblawladk")]
+
     /*TODO: Change this*/
-    var numberOfItems: Int = 100
+    var numberOfItems: Int = 1
 
     required init?(coder: NSCoder) {
         fatalError("StoryBoard unavailable")
     }
 
-    init(frame: CGRect, numberOfItems: Int) {
+    init(frame: CGRect, numberOfItems: Int, listItems: [ListXModelTypesQuery.Data.ListXModelType.Item]) {
         super.init(frame: frame)
+
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        self.appSyncClient = appDelegate.appSyncClient
+
         self.numberOfItems = numberOfItems
+        self.listItems = listItems
         self.addSubview(swipeView)
         swipeView.dataSource = self
         swipeView.delegate = self
@@ -73,10 +84,7 @@ class SwipeablePage: UIView, SwipeViewDataSource, SwipeViewDelegate {
 
 
         let textLabel = UILabel()
-        textLabel.text = """
-                         There's no way to set the vertical-align on a UILabel, but you can get the same effect
-                          by changing the label's frame. I've made my labels orange so you can see clearly what's happening.
-                         """
+        textLabel.text = listItems[index].title
         textLabel.backgroundColor = .cyan
         textLabel.sizeToFit()
         textLabel.numberOfLines = 0
@@ -122,7 +130,20 @@ class SwipeablePage: UIView, SwipeViewDataSource, SwipeViewDelegate {
 //        likeButton.translatesAutoresizingMaskIntoConstraints = true
         likeButton.setImage(UIImage(systemName: "hand.thumbsup"), for: .normal)
         bottomStack.addSubview(likeButton)
-        likeButton.frame = CGRect(x: 100, y: 100, width: 50, height: 50)
+        likeButton.frame = CGRect(x: 0, y: 100, width: 50, height: 50)
+
+        let dislikeButton = UIButton()
+//        dislikeButton.translatesAutoresizingMaskIntoConstraints = true
+        dislikeButton.setImage(UIImage(systemName: "hand.thumbsdown"), for: .normal)
+        bottomStack.addSubview(dislikeButton)
+        dislikeButton.frame = CGRect(x: 50, y: 100, width: 50, height: 50)
+
+        let reportButton = UIButton()
+//        reportButton.translatesAutoresizingMaskIntoConstraints = true
+        reportButton.setTitle("Reported", for: .normal)
+        reportButton.setTitleColor(.blue, for: .normal)
+        bottomStack.addSubview(reportButton)
+        reportButton.frame = CGRect(x: 100, y: 100, width: 100, height: 50)
 
         return view
     }

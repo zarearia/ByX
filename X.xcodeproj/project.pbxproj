@@ -216,7 +216,7 @@
 		A3951E3318E23E300EA600C3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				ORGANIZATIONNAME = ___FULLUSERNAME___;
+				ORGANIZATIONNAME = "___FULLUSERNAME___";
 				TargetAttributes = {
 					A395178522F66DF254DBEA42 = {
 						DevelopmentTeam = GG7GN7L79A;
