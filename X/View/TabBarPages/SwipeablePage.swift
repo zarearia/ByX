@@ -13,18 +13,28 @@ struct SwipeablePageRepresentable: UIViewRepresentable {
 
     @Binding var listItems: [ListXModelTypesQuery.Data.ListXModelType.Item]
 
+    var idOfCurrentItem: String
 //    init(listItems: [ListXModelTypesQuery.Data.ListXModelType.Item]) {
 //        self.listItems = listItems
 //    }
 
     func makeUIView(context: Context) -> SwipeablePage {
-        /*TODO: Change numberOfItems*/
         let swipeablePage = SwipeablePage(frame: UIScreen.main.bounds, numberOfItems: listItems.count, listItems: listItems)
+
+        //TODO: Check this later, is it a right place to put this line of code???
+        swipeablePage.goToItem(at: listItems.firstIndex{ $0.id == idOfCurrentItem} ?? 0 )
+
+        print("make excuted")
         return swipeablePage
     }
 
     func updateUIView(_ uiView: SwipeablePage, context: Context) {
         uiView.listItems = listItems
+        print("update excuted")
+    }
+
+    static func dismantleUIView(_ uiView: UIViewType, coordinator: ()) {
+        print("deinited")
     }
 }
 
@@ -59,6 +69,10 @@ class SwipeablePage: UIView, SwipeViewDataSource, SwipeViewDelegate {
 
     func numberOfItems(in swipeView: SwipeView!) -> Int {
         self.numberOfItems
+    }
+
+    func goToItem(at index: Int) {
+        swipeView.scrollToItem(at: index, duration: TimeInterval.zero)
     }
 
     func swipeView(_ swipeView: SwipeView!, viewForItemAt index: Int, reusing view: UIView!) -> UIView! {
