@@ -9,22 +9,46 @@ import SwipeView
 import AWSAppSync
 
 
+protocol SwipeViewParentUpdateDelegate {
+    func updateListItems(_ sender: SwipeablePage)
+}
+
+
 struct SwipeablePageRepresentable: UIViewRepresentable {
 
     @Binding var listItems: [ListXModelTypesQuery.Data.ListXModelType.Item]
 
     var idOfCurrentItem: String
-//    init(listItems: [ListXModelTypesQuery.Data.ListXModelType.Item]) {
-//        self.listItems = listItems
-//    }
+
+
+    class Coordinator: NSObject, SwipeViewParentUpdateDelegate {
+        /*@Binding*/ var listItems: [ListXModelTypesQuery.Data.ListXModelType.Item]
+        init(listItems: /*Binding<*/[ListXModelTypesQuery.Data.ListXModelType.Item]/*>*/) {
+            self.listItems = listItems
+        }
+
+        func updateListItems(_ sender: SwipeablePage) {
+            print("coordinator update troggered")
+            listItems = sender.listItems
+            print(listItems[0].isLikedByTheUser)
+        }
+
+//        @objc func listItemsChanged(_ sender: SwipeablePage) {
+//            self.listItems = sender.listItems
+//        }
+    }
+
+    func makeCoordinator() -> Coordinator {
+        return Coordinator(listItems: listItems)
+    }
 
     func makeUIView(context: Context) -> SwipeablePage {
         let swipeablePage = SwipeablePage(frame: UIScreen.main.bounds, numberOfItems: listItems.count, listItems: listItems)
+        swipeablePage.delegate = context.coordinator
 
         //TODO: Check this later, is it a right place to put this line of code???
         swipeablePage.goToItem(at: listItems.firstIndex{ $0.id == idOfCurrentItem} ?? 0 )
-
-        print("make excuted")
+//        print("make excuted")
         return swipeablePage
     }
 
@@ -43,6 +67,8 @@ class SwipeablePage: UIView, SwipeViewDataSource, SwipeViewDelegate {
 
     let swipeView = SwipeView()
     var appSyncClient: AWSAppSyncClient?
+
+    var delegate: SwipeViewParentUpdateDelegate?
 
     var listItems = [ListXModelTypesQuery.Data.ListXModelType.Item(id: "0", email: "12341234", title: "klanwfblawladk")]
 
@@ -130,7 +156,7 @@ class SwipeablePage: UIView, SwipeViewDataSource, SwipeViewDelegate {
         let bottomStackToViewTrailing = NSLayoutConstraint(item: bottomStack, attribute: .trailingMargin, relatedBy: .equal,
             toItem: postView, attribute: .trailingMargin, multiplier: 1, constant: -15)
         let bottomStackToViewBottom = NSLayoutConstraint(item: bottomStack, attribute: .bottom, relatedBy: .equal,
-            toItem: postView, attribute: .bottomMargin, multiplier: 1, constant: -10)
+            toItem: postView, attribute: .bottomMargin, multiplier: 1, constant: -100)
 
 
         NSLayoutConstraint.activate([postViewToViewLeading, postViewToViewTop, postViewToViewTrailing,
@@ -140,27 +166,96 @@ class SwipeablePage: UIView, SwipeViewDataSource, SwipeViewDelegate {
 
 
         /*exp: buttons*/
-        let likeButton = UIButton()
+        let likeButton = UIButtonWithAction(frame: CGRect(x: 0, y: 100, width: 50, height: 50)) {
+            print("like exc")
+
+//            disableAllHits()
+
+            self.appSyncClient?.perform(mutation: LikeXModelTypeMutation(id: self.listItems[index].id, email: "zarearia@email.com")) { (result, error) in
+                if let error = error as? AWSAppSyncClientError {
+                    print("Error occurred: \(error.localizedDescription )")
+                }
+
+//            MARK: Is This Really Needed?
+//            if let resultError = result?.errors {
+//                print("Error saving the item on server: \(resultError)")
+//                return
+//            }
+
+                print("Like mutation complete.")
+
+                // updating the item
+                self.appSyncClient?.fetch(query: GetXModelTypeQuery(id: self.listItems[index].id), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
+                    if error != nil {
+                        print(error?.localizedDescription ?? "")
+                        return
+                    }
+
+                    self.listItems[index].likesCount = (result?.data?.getXModelType?.likesCount!)
+
+//                    self.manageHitableObjects()
+
+                    self.listItems[index].isLikedByTheUser = !self.listItems[index].isLikedByTheUser!
+                    self.delegate?.updateListItems(self)
+
+                    print("Update query complete.")
+
+                }
+            }
+        }
 //        likeButton.translatesAutoresizingMaskIntoConstraints = true
         likeButton.setImage(UIImage(systemName: "hand.thumbsup"), for: .normal)
-        bottomStack.addSubview(likeButton)
-        likeButton.frame = CGRect(x: 0, y: 100, width: 50, height: 50)
+        view.addSubview(likeButton)
+//        bottomStack.addSubview(likeButton)
+//        likeButton.frame = CGRect(x: 0, y: 100, width: 50, height: 50)
+        likeButton.addTarget(self, action: #selector(likeItem), for: .touchUpInside)
+
+
+
+
+
+
+
+
+
+
 
         let dislikeButton = UIButton()
 //        dislikeButton.translatesAutoresizingMaskIntoConstraints = true
         dislikeButton.setImage(UIImage(systemName: "hand.thumbsdown"), for: .normal)
-        bottomStack.addSubview(dislikeButton)
+        view.addSubview(dislikeButton)
+//        bottomStack.addSubview(dislikeButton)
         dislikeButton.frame = CGRect(x: 50, y: 100, width: 50, height: 50)
+//        dislikeButton.addTarget(self, action: #selector(likeItem), for: .touchUpInside)
 
         let reportButton = UIButton()
 //        reportButton.translatesAutoresizingMaskIntoConstraints = true
         reportButton.setTitle("Reported", for: .normal)
         reportButton.setTitleColor(.blue, for: .normal)
-        bottomStack.addSubview(reportButton)
+        view.addSubview(reportButton)
+//        bottomStack.addSubview(reportButton)
         reportButton.frame = CGRect(x: 100, y: 100, width: 100, height: 50)
 
         return view
     }
 
+    @objc func likeItem(sender: UIButtonWithAction) {
+        sender.action()
+    }
 
+
+}
+
+
+class UIButtonWithAction: UIButton {
+    var action: (() -> Void)! = nil
+
+    init(frame: CGRect, action: @escaping () -> Void) {
+        super.init(frame: frame)
+        self.action = action
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("cannot create with storyboard")
+    }
 }

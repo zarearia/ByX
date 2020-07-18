@@ -162,32 +162,18 @@ class HomeViewNetworking: ObservableObject {
             self.fetchResults()
         }
     }
+
+    func deleteItem(item: ListXModelTypesQuery.Data.ListXModelType.Item) -> Bool {
+        var errorFlag = true
+        appSyncClient?.perform(mutation: DeleteXModelTypeMutation(id: item.id, email: item.email)) { result, error in
+            if error != nil {
+                print("delete error: \(error?.localizedDescription ?? "")")
+                errorFlag = false
+                return
+            }
+            print("item with title: \(item.title) deleted successfully")
+        }
+        return errorFlag;
+    }
     
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

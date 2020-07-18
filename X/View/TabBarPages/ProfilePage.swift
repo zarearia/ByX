@@ -11,7 +11,15 @@ import SwiftUI
 struct ProfilePage: View {
     
     @ObservedObject var observedObj = HomeViewNetworking()
-    
+
+    init() {
+        // To remove only extra separators below the list:
+        UITableView.appearance().tableFooterView = UIView()
+
+        // To remove all separators including the actual ones:
+        UITableView.appearance().separatorStyle = .none
+    }
+
     var body: some View {
         ZStack {
             Color(hex: "#FAF5E4")
@@ -48,10 +56,11 @@ struct ProfilePage: View {
                         .padding([.leading, .trailing], 5)
                 }
                 
-                ScrollView {
+                List {
                     ForEach(observedObj.listItems, id: \.self.id) { item in
                         TextBox(text: item.title, textColor: Color(hex: "#FAF5E4"), boxColor: Color(hex: "#3BB0BA"), boxOpacity: 0.9, thumbsupColor: Color(hex: "#B39283"), thumbsupNumColor: Color(hex: "#B39283"), thumbsdownNumColor: Color(hex: "#C23B22"), thumbsdownColor: Color(hex: "#C23B22"), seperateLineColor: Color(hex: "#3BB0BA"), isUpgradeable: true, item: item)
                     }
+                        .onDelete(perform: delete)
 
                     Spacer()
                 }
@@ -61,4 +70,17 @@ struct ProfilePage: View {
             self.observedObj.userPosterItemsQuery()
         }
     }
+
+    func delete(at offsets: IndexSet) {
+    /*********************************************************************/
+        if let index = offsets.first {
+            let item = observedObj.listItems[index]
+            observedObj.listItems.remove(atOffsets: offsets)
+            if !observedObj.deleteItem(item: item) {
+        //        TODO: Change this part(apply failed to delete logic)
+                observedObj.listItems.insert(item, at: index)
+            }
+        }
+    }
+
 }
