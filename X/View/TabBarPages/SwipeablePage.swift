@@ -16,50 +16,52 @@ protocol SwipeViewParentUpdateDelegate {
 
 struct SwipeablePageRepresentable: UIViewRepresentable {
 
-    @Binding var listItems: [ListXModelTypesQuery.Data.ListXModelType.Item]
-
+//    @Binding var listItems: [ListXModelTypesQuery.Data.ListXModelType.Item]
+    @EnvironmentObject var environmentObject: HomeViewNetworking
     var idOfCurrentItem: String
 
 
-    class Coordinator: NSObject, SwipeViewParentUpdateDelegate {
-        /*@Binding*/ var listItems: [ListXModelTypesQuery.Data.ListXModelType.Item]
-        init(listItems: /*Binding<*/[ListXModelTypesQuery.Data.ListXModelType.Item]/*>*/) {
-            self.listItems = listItems
-        }
-
-        func updateListItems(_ sender: SwipeablePage) {
-            print("coordinator update troggered")
-            listItems = sender.listItems
-            print(listItems[0].isLikedByTheUser)
-        }
-
-//        @objc func listItemsChanged(_ sender: SwipeablePage) {
-//            self.listItems = sender.listItems
+//    class Coordinator: NSObject, SwipeViewParentUpdateDelegate {
+//        /*@Binding*/ var listItems: [ListXModelTypesQuery.Data.ListXModelType.Item]
+//        init(listItems: /*Binding<*/[ListXModelTypesQuery.Data.ListXModelType.Item]/*>*/) {
+//            self.listItems = listItems
 //        }
-    }
+//
+//        func updateListItems(_ sender: SwipeablePage) {
+//            print("coordinator update troggered")
+//            listItems = sender.listItems
+//            print(listItems[0].isLikedByTheUser)
+//        }
+//
+////        @objc func listItemsChanged(_ sender: SwipeablePage) {
+////            self.listItems = sender.listItems
+////        }
+//    }
 
-    func makeCoordinator() -> Coordinator {
-        return Coordinator(listItems: listItems)
-    }
+//    func makeCoordinator() -> Coordinator {
+//        return Coordinator(listItems: listItems)
+//    }
 
     func makeUIView(context: Context) -> SwipeablePage {
-        let swipeablePage = SwipeablePage(frame: UIScreen.main.bounds, numberOfItems: listItems.count, listItems: listItems)
-        swipeablePage.delegate = context.coordinator
+        let swipeablePage = SwipeablePage(frame: UIScreen.main.bounds, numberOfItems: environmentObject.listItems.count,
+            listItems: environmentObject.listItems)
+//        swipeablePage.delegate = context.coordinator
 
         //TODO: Check this later, is it a right place to put this line of code???
-        swipeablePage.goToItem(at: listItems.firstIndex{ $0.id == idOfCurrentItem} ?? 0 )
+        swipeablePage.goToItem(at: environmentObject.listItems.firstIndex{ $0.id == idOfCurrentItem} ?? 0 )
 //        print("make excuted")
         return swipeablePage
     }
 
     func updateUIView(_ uiView: SwipeablePage, context: Context) {
-        uiView.listItems = listItems
+//        environmentObject.listItems = uiView.listItems
+//        uiView.listItems = listItems
         print("update excuted")
     }
 
-    static func dismantleUIView(_ uiView: UIViewType, coordinator: ()) {
-        print("deinited")
-    }
+//    static func dismantleUIView(_ uiView: UIViewType, coordinator: ()) {
+//        print("deinited")
+//    }
 }
 
 

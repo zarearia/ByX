@@ -11,11 +11,13 @@ import SwiftUI
 struct TabBar: View {
     
     @State var testBool = false
-    
+
+    @EnvironmentObject var environmentObject: HomeViewNetworking
+
     var body: some View {
 
         TabView {
-            HomePage()
+            HomePage().environmentObject(environmentObject)
                 .tabItem {
                     Image(systemName: "house.fill")
                     Text("Home")
@@ -25,7 +27,7 @@ struct TabBar: View {
                     Image(systemName: "plus.circle.fill")
                     Text("Add")
                 }.tag(1)
-            ProfilePage()
+            ProfilePage().environmentObject(environmentObject)
                 .tabItem {
                     Image(systemName: "person.crop.circle")
                     Text("Profile")

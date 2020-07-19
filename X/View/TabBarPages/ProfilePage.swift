@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ProfilePage: View {
     
-    @ObservedObject var observedObj = HomeViewNetworking()
+    @EnvironmentObject var observedObj: HomeViewNetworking
 
     init() {
         // To remove only extra separators below the list:
@@ -58,7 +58,11 @@ struct ProfilePage: View {
                 
                 List {
                     ForEach(observedObj.listItems, id: \.self.id) { item in
-                        TextBox(text: item.title, textColor: Color(hex: "#FAF5E4"), boxColor: Color(hex: "#3BB0BA"), boxOpacity: 0.9, thumbsupColor: Color(hex: "#B39283"), thumbsupNumColor: Color(hex: "#B39283"), thumbsdownNumColor: Color(hex: "#C23B22"), thumbsdownColor: Color(hex: "#C23B22"), seperateLineColor: Color(hex: "#3BB0BA"), isUpgradeable: true, item: item)
+                        TextBox(text: item.title, textColor: Color(hex: "#FAF5E4"), boxColor: Color(hex: "#3BB0BA"),
+                            boxOpacity: 0.9, thumbsupColor: Color(hex: "#B39283"), thumbsupNumColor: Color(hex: "#B39283"),
+                            thumbsdownNumColor: Color(hex: "#C23B22"), thumbsdownColor: Color(hex: "#C23B22"),
+                            seperateLineColor: Color(hex: "#3BB0BA"), isUpgradeable: true, item: item)
+                            .environmentObject(self.observedObj)
                     }
                         .onDelete(perform: delete)
 

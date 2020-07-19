@@ -11,9 +11,20 @@ import AWSAppSync
 
 struct TextBox: View {
 
+    @EnvironmentObject var environmentObject: HomeViewNetworking
     var appSyncClient: AWSAppSyncClient?
+
+    var currentItemIndex: Int {
+        if let index = environmentObject.listItems.firstIndex(where: { $0.id == self.item.id }) {
+            return index
+        } else {
+            fatalError("index wasn't found")
+        }
+    }
     
-    init(text: String, textColor: Color, boxColor: Color, boxOpacity: Double, thumbsupColor: Color, thumbsupNumColor: Color, thumbsdownNumColor: Color, thumbsdownColor: Color, seperateLineColor: Color, isUpgradeable: Bool, item: ListXModelTypesQuery.Data.ListXModelType.Item) {
+    init(text: String, textColor: Color, boxColor: Color, boxOpacity: Double, thumbsupColor: Color, thumbsupNumColor: Color,
+         thumbsdownNumColor: Color, thumbsdownColor: Color, seperateLineColor: Color, isUpgradeable: Bool,
+         item: ListXModelTypesQuery.Data.ListXModelType.Item) {
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         self.appSyncClient = appDelegate.appSyncClient
@@ -156,6 +167,8 @@ struct TextBox: View {
                 }
 
                 self.item.likesCount = (result?.data?.getXModelType?.likesCount!)
+                self.environmentObject.listItems[self.currentItemIndex].likesCount = (result?.data?.getXModelType?.likesCount!)
+                self.environmentObject.listItems[self.currentItemIndex].isLikedByTheUser = !self.environmentObject.listItems[self.currentItemIndex].isLikedByTheUser!
 
                 self.manageHitableObjects()
                 
@@ -185,6 +198,8 @@ struct TextBox: View {
                 }
 
                 self.item.dislikesCount = (result?.data?.getXModelType?.dislikesCount!)
+                self.environmentObject.listItems[self.currentItemIndex].dislikesCount = (result?.data?.getXModelType?.dislikesCount!)
+                self.environmentObject.listItems[self.currentItemIndex].isDislikedByTheUser = !self.environmentObject.listItems[self.currentItemIndex].isDislikedByTheUser!
 
                 self.manageHitableObjects()
                 
@@ -207,7 +222,10 @@ struct TextBox: View {
             print(result)
             
             print("report mutation complete.")
-            
+
+            self.environmentObject.listItems[self.currentItemIndex].isReportedByTheUser = !self.environmentObject.listItems[self.currentItemIndex].isReportedByTheUser!
+
+
             self.manageHitableObjects()
             
             // updating the item
