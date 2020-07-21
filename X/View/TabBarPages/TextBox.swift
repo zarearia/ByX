@@ -11,14 +11,14 @@ import AWSAppSync
 
 struct TextBox: View {
 
-    @EnvironmentObject var environmentObject: HomeViewNetworking
+    @EnvironmentObject var envObject: HomeViewNetworking
     var appSyncClient: AWSAppSyncClient?
 
     var currentItemIndex: Int {
-        if let index = environmentObject.listItems.firstIndex(where: { $0.id == self.item.id }) {
+        if let index = envObject.listItems.firstIndex(where: { $0.id == self.item.id }) {
             return index
         } else {
-            fatalError("index wasn't found")
+            return 0
         }
     }
     
@@ -79,27 +79,27 @@ struct TextBox: View {
                 .padding([.top, .leading, .trailing], 20)
                 .onTapGesture(count: 2) {
                     self.likeAction()
-                    self.localLike = self.item.isLikedByTheUser ?? false
-                    self.item.isLikedByTheUser = !self.localLike
+                    self.localLike = self.envObject.listItems[self.currentItemIndex].isLikedByTheUser ?? false
+                    self.envObject.listItems[self.currentItemIndex].isLikedByTheUser = !self.localLike
                 }
 
             HStack {
                 
-                ToggleImage(isOn: Binding<Bool>($item.isLikedByTheUser) ?? $falseBool, imageName: "hand.thumbsup", action: likeAction)
+                ToggleImage(isOn: Binding<Bool>($envObject.listItems[self.currentItemIndex].isLikedByTheUser) ?? $falseBool, imageName: "hand.thumbsup", action: likeAction)
                     .font(.system(size: 25, weight: .regular))
                     .foregroundColor(thumbsupColor)
                     .allowsHitTesting(isLikeHitable)
-                Text(String(item.likesCount ?? 0))
+                Text(String(envObject.listItems[self.currentItemIndex].likesCount ?? 0))
                     .offset(y: 5)
                     .foregroundColor(thumbsupNumColor)
                     .padding(.trailing, 10)
                 
-                ToggleImage(isOn: Binding<Bool>($item.isDislikedByTheUser) ?? $falseBool, imageName: "hand.thumbsdown", action: dislikeAction)
+                ToggleImage(isOn: Binding<Bool>($envObject.listItems[self.currentItemIndex].isDislikedByTheUser) ?? $falseBool, imageName: "hand.thumbsdown", action: dislikeAction)
                     .font(.system(size: 25, weight: .regular))
                     .foregroundColor(thumbsdownColor)
                     .offset(y: 10)
                     .allowsHitTesting(isDislikeHitable)
-                Text(String(item.dislikesCount ?? 0))
+                Text(String(envObject.listItems[self.currentItemIndex].dislikesCount ?? 0))
                     .foregroundColor(thumbsdownNumColor)
                     .offset(y: 5)
 
@@ -120,7 +120,7 @@ struct TextBox: View {
                             .foregroundColor(Color(hex: "#E8824F"))
                         }
                     } else {
-                        ToggleText(isOn: Binding<Bool>($item.isReportedByTheUser) ?? $falseBool, onText: "Reported", offText: "Report", action: reportAction)
+                        ToggleText(isOn: Binding<Bool>($envObject.listItems[self.currentItemIndex].isReportedByTheUser) ?? $falseBool, onText: "Reported", offText: "Report", action: reportAction)
                             .allowsHitTesting(isReportHitable)
                     }
                 }
@@ -146,7 +146,7 @@ struct TextBox: View {
         
         disableAllHits()
         
-        appSyncClient?.perform(mutation: LikeXModelTypeMutation(id: item.id, email: "zarearia@email.com")) { (result, error) in
+        appSyncClient?.perform(mutation: LikeXModelTypeMutation(id: envObject.listItems[self.currentItemIndex].id, email: "zarearia@email.com")) { (result, error) in
             if let error = error as? AWSAppSyncClientError {
                 print("Error occurred: \(error.localizedDescription )")
             }
@@ -160,15 +160,15 @@ struct TextBox: View {
             print("Like mutation complete.")
             
             // updating the item
-            self.appSyncClient?.fetch(query: GetXModelTypeQuery(id: self.item.id), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
+            self.appSyncClient?.fetch(query: GetXModelTypeQuery(id: self.envObject.listItems[self.currentItemIndex].id), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
                 if error != nil {
                     print(error?.localizedDescription ?? "")
                     return
                 }
 
-                self.item.likesCount = (result?.data?.getXModelType?.likesCount!)
-                self.environmentObject.listItems[self.currentItemIndex].likesCount = (result?.data?.getXModelType?.likesCount!)
-                self.environmentObject.listItems[self.currentItemIndex].isLikedByTheUser = !self.environmentObject.listItems[self.currentItemIndex].isLikedByTheUser!
+//                self.item.likesCount = (result?.data?.getXModelType?.likesCount!)
+                self.envObject.listItems[self.currentItemIndex].likesCount = (result?.data?.getXModelType?.likesCount!)
+//                self.envObject.listItems[self.currentItemIndex].isLikedByTheUser?.toggle()
 
                 self.manageHitableObjects()
                 
@@ -183,7 +183,7 @@ struct TextBox: View {
         
         disableAllHits()
         
-        appSyncClient?.perform(mutation: DislikeXModelTypeMutation(id: item.id, email: "zarearia@email.com")) { (result, error) in
+        appSyncClient?.perform(mutation: DislikeXModelTypeMutation(id: envObject.listItems[self.currentItemIndex].id, email: "zarearia@email.com")) { (result, error) in
             if let error = error as? AWSAppSyncClientError {
                 print("Error occurred: \(error.localizedDescription )")
             }
@@ -191,15 +191,15 @@ struct TextBox: View {
             print("dislike mutation complete.")
             
             // updating the item
-            self.appSyncClient?.fetch(query: GetXModelTypeQuery(id: self.item.id), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
+            self.appSyncClient?.fetch(query: GetXModelTypeQuery(id: self.envObject.listItems[self.currentItemIndex].id), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
                 if error != nil {
                     print(error?.localizedDescription ?? "")
                     return
                 }
 
-                self.item.dislikesCount = (result?.data?.getXModelType?.dislikesCount!)
-                self.environmentObject.listItems[self.currentItemIndex].dislikesCount = (result?.data?.getXModelType?.dislikesCount!)
-                self.environmentObject.listItems[self.currentItemIndex].isDislikedByTheUser = !self.environmentObject.listItems[self.currentItemIndex].isDislikedByTheUser!
+//                self.item.dislikesCount = (result?.data?.getXModelType?.dislikesCount!)
+                self.envObject.listItems[self.currentItemIndex].dislikesCount = (result?.data?.getXModelType?.dislikesCount!)
+//                self.envObject.listItems[self.currentItemIndex].isDislikedByTheUser?.toggle()
 
                 self.manageHitableObjects()
                 
@@ -214,7 +214,7 @@ struct TextBox: View {
         
         disableAllHits()
         
-        appSyncClient?.perform(mutation: ReportXModelTypeMutation(id: item.id, email: "zarearia@email.com")) { (result, error) in
+        appSyncClient?.perform(mutation: ReportXModelTypeMutation(id: envObject.listItems[self.currentItemIndex].id, email: "zarearia@email.com")) { (result, error) in
             if let error = error as? AWSAppSyncClientError {
                 print("Error occurred: \(error.localizedDescription )")
             }
@@ -223,7 +223,7 @@ struct TextBox: View {
             
             print("report mutation complete.")
 
-            self.environmentObject.listItems[self.currentItemIndex].isReportedByTheUser = !self.environmentObject.listItems[self.currentItemIndex].isReportedByTheUser!
+//            self.envObject.listItems[self.currentItemIndex].isReportedByTheUser?.toggle()
 
 
             self.manageHitableObjects()
@@ -246,19 +246,19 @@ struct TextBox: View {
     }
     
     func manageHitableObjects() {
-        if item.isDislikedByTheUser == false && item.isReportedByTheUser == false {
+        if envObject.listItems[self.currentItemIndex].isDislikedByTheUser == false && envObject.listItems[self.currentItemIndex].isReportedByTheUser == false {
             isLikeHitable = true
         } else {
             isLikeHitable = false
         }
         
-        if item.isLikedByTheUser == false && item.isReportedByTheUser == false {
+        if envObject.listItems[self.currentItemIndex].isLikedByTheUser == false && envObject.listItems[self.currentItemIndex].isReportedByTheUser == false {
             isDislikeHitable = true
         } else {
             isDislikeHitable = false
         }
         
-        if item.isLikedByTheUser == false && item.isDislikedByTheUser == false{
+        if envObject.listItems[self.currentItemIndex].isLikedByTheUser == false && envObject.listItems[self.currentItemIndex].isDislikedByTheUser == false{
             isReportHitable = true
         } else {
             isReportHitable = false

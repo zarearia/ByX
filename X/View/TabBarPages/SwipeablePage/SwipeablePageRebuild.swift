@@ -46,6 +46,8 @@ struct SwipeablePageView: UIViewRepresentable {
         let swipeView = SwipeablePageUIView(frame: UIScreen.main.bounds)
         swipeView.swipeView.delegate = context.coordinator
         swipeView.swipeView.dataSource = context.coordinator
+
+        swipeView.goToItem(at: enviromentObject.listItems.firstIndex{ $0.id == currentItem.id} ?? 0 )
         return swipeView
     }
 
@@ -74,5 +76,10 @@ class SwipeablePageUIView: UIView {
 
         self.addSubview(swipeView)
     }
+
+    func goToItem(at index: Int) {
+        swipeView.scrollToItem(at: index, duration: TimeInterval.zero)
+    }
+
 }
 

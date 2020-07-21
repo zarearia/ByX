@@ -9,28 +9,6 @@
 import SwiftUI
 import AWSAppSync
 
-class DesignTest: Identifiable {
-
-    var appSyncClient: AWSAppSyncClient?
-
-    var id = UUID()
-    var text: String
-
-    public init(text: String) {
-        self.text = text
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appSyncClient = appDelegate.appSyncClient
-    }
-
-}
-
-
-extension Collection {
-    func enumeratedArray() -> Array<(offset: Int, element: Self.Element)> {
-        return Array(self.enumerated())
-    }
-}
-
 
 struct HomePage: View {
 
@@ -38,11 +16,6 @@ struct HomePage: View {
     @State var searchText = ""
     @State var searchBarHeight: CGFloat = 0
 
-//    @State var swipeablePage : SwipeablePageRepresentable?
-
-//    init() {
-//        self.observedObj.runQuery()
-//    }
     
     var body: some View {
         NavigationView {
