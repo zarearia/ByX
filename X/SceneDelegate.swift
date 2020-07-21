@@ -9,6 +9,8 @@
 import UIKit
 import SwiftUI
 
+let homeViewNetworking = HomeViewNetworking()
+
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -22,7 +24,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 
     // Create the SwiftUI view that provides the window contents.
-        let contentView = TabBar().environmentObject(HomeViewNetworking())
+//        homeViewNetworking.runQuery()
+//        homeViewNetworking.userPosterItemsQuery()
+        let contentView = TabBar().environmentObject(homeViewNetworking)
 //        let contentView = SwipeablePageView()
 
 

@@ -10,13 +10,14 @@
 		6977440A4F157244C33198FA /* Pods_X.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08CF1BB0F719C81A3D09DE81 /* Pods_X.framework */; };
 		A395104A92FA5B8BE164684C /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39516CC43C0EFCAF39D81C4 /* TabBar.swift */; };
 		A395144C4956A9C10920399C /* AuthenticationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3951CA8F91BA9CAD442F173 /* AuthenticationButton.swift */; };
+		A39514E99DC0836DCD34A3AD /* SwipeablePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3951CAD3EE96CCFB5803A56 /* SwipeablePage.swift */; };
 		A39516137E871918B9A53C45 /* AdminPanelTextBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39517B835EFF53AE2104574 /* AdminPanelTextBar.swift */; };
 		A3951623EB9D37BF98CE5E18 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3951281959CA0973A354CDE /* LaunchScreen.storyboard */; };
 		A39516B7C441089D075FBDDE /* FirstPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3951D7ECF8C497EB31202AE /* FirstPage.swift */; };
 		A39517544A9EAC094B8D3F4E /* HomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3951E832EB47FF0303B426E /* HomePage.swift */; };
+		A39517A4DD3E70353EF621E0 /* SwipeablePageRebuild.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3951CCB5C9B624CE3AC8092 /* SwipeablePageRebuild.swift */; };
 		A39518526F45257CF8A09CEA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3951CC516B278453F92F306 /* SceneDelegate.swift */; };
 		A39519258D762DF42BBE0346 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A39517B2EB2CE17FD5D75B6C /* Preview Assets.xcassets */; };
-		A39519E73CC27E2DE28D1617 /* SwipeablePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39515D6ED9BF7757F63A854 /* SwipeablePage.swift */; };
 		A3951BB8C42E2179FFDA5127 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3951DCA977A324CCA171122 /* AppDelegate.swift */; };
 		A3951C7D3EAAC96461DFEC33 /* SignInUpTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39510C20DBD4F5546DAD257 /* SignInUpTextField.swift */; };
 		A3951D1D976AFB2297A2B8DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A3951FCF0B7C416266737F4C /* Assets.xcassets */; };
@@ -42,13 +43,14 @@
 		A39511DA9BA82B0EF33FF96C /* TextBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextBox.swift; sourceTree = "<group>"; };
 		A39513BF8CC7F32E0013BB60 /* X.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = X.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3951424C2714A99920F9B82 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		A39515D6ED9BF7757F63A854 /* SwipeablePage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeablePage.swift; sourceTree = "<group>"; };
 		A39516CC43C0EFCAF39D81C4 /* TabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		A39517B2EB2CE17FD5D75B6C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		A39517B835EFF53AE2104574 /* AdminPanelTextBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminPanelTextBar.swift; sourceTree = "<group>"; };
 		A3951B615956DCF823960B44 /* SignInPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInPage.swift; sourceTree = "<group>"; };
 		A3951CA8F91BA9CAD442F173 /* AuthenticationButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationButton.swift; sourceTree = "<group>"; };
+		A3951CAD3EE96CCFB5803A56 /* SwipeablePage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeablePage.swift; sourceTree = "<group>"; };
 		A3951CC516B278453F92F306 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		A3951CCB5C9B624CE3AC8092 /* SwipeablePageRebuild.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeablePageRebuild.swift; sourceTree = "<group>"; };
 		A3951D7ECF8C497EB31202AE /* FirstPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstPage.swift; sourceTree = "<group>"; };
 		A3951D93B7328DCD390B111C /* AddPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPage.swift; sourceTree = "<group>"; };
 		A3951DCA977A324CCA171122 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -136,7 +138,7 @@
 				F74238852445B125005D9437 /* ToggleText.swift */,
 				F70FA8A7241F7791005D9942 /* AdminPanelPage.swift */,
 				A39517B835EFF53AE2104574 /* AdminPanelTextBar.swift */,
-				A39515D6ED9BF7757F63A854 /* SwipeablePage.swift */,
+				A3951C0AB74C0087A95F77EB /* SwipeablePage */,
 			);
 			path = TabBarPages;
 			sourceTree = "<group>";
@@ -169,6 +171,15 @@
 				7CBC2A721423645FEE57CC8B /* Pods */,
 				9BECEC8920A9D34A04A7C2BF /* Frameworks */,
 			);
+			sourceTree = "<group>";
+		};
+		A3951C0AB74C0087A95F77EB /* SwipeablePage */ = {
+			isa = PBXGroup;
+			children = (
+				A3951CCB5C9B624CE3AC8092 /* SwipeablePageRebuild.swift */,
+				A3951CAD3EE96CCFB5803A56 /* SwipeablePage.swift */,
+			);
+			path = SwipeablePage;
 			sourceTree = "<group>";
 		};
 		A3951DC6787A35948D70C9B1 /* Preview Content */ = {
@@ -336,7 +347,8 @@
 				F744261B242F69BF00271316 /* API.swift in Sources */,
 				A3951E173ED4CFE33B773915 /* AddPage.swift in Sources */,
 				A39516137E871918B9A53C45 /* AdminPanelTextBar.swift in Sources */,
-				A39519E73CC27E2DE28D1617 /* SwipeablePage.swift in Sources */,
+				A39517A4DD3E70353EF621E0 /* SwipeablePageRebuild.swift in Sources */,
+				A39514E99DC0836DCD34A3AD /* SwipeablePage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

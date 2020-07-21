@@ -53,14 +53,14 @@ struct HomePage: View {
 
                 ScrollView {
                     ForEach(observedObj.listItems, id: \.self.id) { item in
-                        NavigationLink(destination: SwipeablePageRepresentable(/*listItems: self.$observedObj.listItems,*/ idOfCurrentItem: item.id))
+                        NavigationLink(destination: SwipeablePageView(currentItem: item)/*.environmentObject(self.observedObj)*/)
                                                             /*.navigationBarHidden(true)*/
                                                             /*.navigationBarTitle(""))*/ {
                             TextBox(text: item.title, textColor: Color(hex: "#FAF5E4"), boxColor: Color(hex: "#F2A970"),
                                 boxOpacity: 1, thumbsupColor: Color(hex: "#B39283"), thumbsupNumColor: Color(hex: "#CFB997"),
                                 thumbsdownNumColor: Color(hex: "#C23B22"), thumbsdownColor: Color(hex: "#C23B22"),
                                 seperateLineColor: Color(hex: "#3BB0BA"), isUpgradeable: false, item: item)
-                                .environmentObject(self.observedObj)
+                                /*.environmentObject(self.observedObj)*/
                         }
                     }
                         .offset(y: searchBarHeight)
