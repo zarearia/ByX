@@ -97,6 +97,7 @@ struct HomePage: View {
         }
             .navigationViewStyle(StackNavigationViewStyle())
             .onAppear {
+//                self.observedObj.fetchCurrentAuthSession()
                 self.observedObj.runQuery()
             }
     }

@@ -10,6 +10,9 @@ import SwiftUI
 
 struct SignInPage: View {
 
+    @EnvironmentObject var networking: HomeViewNetworking
+
+    @State var pageType: AuthenticationPageType
     @State var email = ""
     @State var password = ""
 
@@ -19,6 +22,7 @@ struct SignInPage: View {
                 VStack {
 
                     SignInUpTextField(text: self.$email, placeHolder: "Email")
+                        .keyboardType(.emailAddress)
                         .padding()
                         .padding(.top, 100)
 
@@ -27,20 +31,27 @@ struct SignInPage: View {
 
                     Spacer()
 
-                    NavigationLink(destination: AuthenticationButton(text: "test", screenWidth: 100).navigationBarHidden(true)) {
-                        AuthenticationButton(text: "Sign in", screenWidth: geo.size.width)
+                        AuthenticationButton(text: self.pageType == .signIn ? "Sign In" : "Sign Up", screenWidth: geo.size.width) {
+                            switch self.pageType {
+                            case .signIn:
+                                print("Implement Sign In")
+                            case .signUp:
+                                self.networking.signUp(email: self.email, password: self.password)
+                            }
+                        }
                             .padding(10)
                             .navigationBarHidden(true)
                             .navigationBarTitle(Text("Home"))
-                    }
-                        .padding(35)
+
+                    NavigationLink(destination: SignUpConfirmPage().environmentObject(self.networking),
+                        isActive: self.$networking.didSendSignUpEmail) { EmptyView() }
 
                     HStack {
 
                         Spacer()
 
                         Button(action: self.buttonAction) {
-                            Text("Sign up!")
+                            Text(self.pageType == .signIn ? "Sign Up" : "Sign In")
                                 .font(.system(size: 21, design: .rounded))
                                 .fontWeight(.semibold)
                                 .foregroundColor(Color(hex: "#3BB0BA"))

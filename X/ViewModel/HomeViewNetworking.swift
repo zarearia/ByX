@@ -8,6 +8,7 @@
 
 import SwiftUI
 import AWSAppSync
+import Amplify
 
 enum SortOptions {
     case mostLiked
@@ -28,6 +29,15 @@ class HomeViewNetworking: ObservableObject {
     @Published var sortedBy: SortOptions = .latest
     
     @Published var searchText = ""
+
+    @Published var isUserSignedIn = false
+
+    @Published var didSendSignUpEmail = false
+
+//    TODO: Password and Email should be stored in user Defaults
+    @Published var userEmail: String!
+    @Published var userPassword: String!
+
     
     init() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -175,5 +185,79 @@ class HomeViewNetworking: ObservableObject {
         }
         return errorFlag;
     }
-    
+
+
+    /*MARK: Authentication*/
+    /*****************************************************************************************************************/
+
+
+    func fetchCurrentAuthSession() {
+        _ = Amplify.Auth.fetchAuthSession { result in
+            switch result {
+            case .success(let session):
+                print("Is user signed in - \(session.isSignedIn)")
+                DispatchQueue.main.async {
+                    self.isUserSignedIn = session.isSignedIn
+                }
+            case .failure(let error):
+                print("Fetch session failed with error \(error)")
+            }
+        }
+    }
+
+
+    func signUp(email: String, password: String) {
+        let userAttributes = [AuthUserAttribute(.email, value: email)]
+        let options = AuthSignUpRequest.Options(userAttributes: userAttributes)
+        _ = Amplify.Auth.signUp(username: email, password: password, options: options) { result in
+            switch result {
+            case .success(let signUpResult):
+                if case let .confirmUser(deliveryDetails, _) = signUpResult.nextStep {
+                    print("Delivery details \(String(describing: deliveryDetails))")
+                    self.userEmail = email
+                    self.userPassword = password
+                    DispatchQueue.main.async {
+                        self.didSendSignUpEmail = true
+                    }
+                } else {
+                    print("SignUp Complete")
+                }
+
+            case .failure(let error):
+                print("An error occurred while registering a user \(error)")
+            }
+        }
+    }
+
+
+    func confirmSignUp(for email: String, with confirmationCode: String) {
+        _ = Amplify.Auth.confirmSignUp(for: email, confirmationCode: confirmationCode) { result in
+            switch result {
+            case .success(_):
+                print("Confirm signUp succeeded")
+//                TODO: Sign in the user after sign up confirmation
+                self.signIn(email: email, password: self.userPassword)
+            case .failure(let error):
+                print("An error occurred while registering a user \(error)")
+            }
+        }
+    }
+
+
+    func signIn(email: String, password: String) {
+        _ = Amplify.Auth.signIn(username: email, password: password) { result in
+            switch result {
+            case .success(_):
+                print("Sign in succeeded")
+                self.userEmail = email
+                self.userPassword = password
+                self.isUserSignedIn = true
+            case .failure(let error):
+                print("Sign in failed \(error)")
+            }
+        }
+    }
+
+
+
 }

@@ -10,6 +10,11 @@
             "StackName": "amplify-xapp-xappenv-111349",
             "StackId": "arn:aws:cloudformation:us-east-1:442286511762:stack/amplify-xapp-xappenv-111349/4eeb06b0-82d2-11ea-bace-0e1aa735f904",
             "AmplifyAppId": "d10901jatioxv6"
+        },
+        "categories": {
+            "auth": {
+                "xapp5b67052c": {}
+            }
         }
     }
 }

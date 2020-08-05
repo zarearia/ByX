@@ -11,16 +11,11 @@ import SwiftUI
 struct AuthenticationButton: View {
     
     var text: String
-//    var action: (() -> Void)
+    var action: (() -> Void)?
     var screenWidth: CGFloat
 
-    public init(text: String, screenWidth: CGFloat) {
-        self.text = text
-//        self.action = action
-        self.screenWidth = screenWidth
-    }
 
-    var body: some View {
+    var label: some View {
         Text(self.text)
             .font(.system(size: 18, design: .rounded))
             .fontWeight(.semibold)
@@ -29,5 +24,29 @@ struct AuthenticationButton: View {
             .background(Color(hex: "#F2A970"))
             .foregroundColor(Color(hex: "#FAF5E4"))
             .cornerRadius(screenWidth / 2)
+    }
+
+
+    public init(text: String, screenWidth: CGFloat, action: @escaping () -> Void) {
+        self.text = text
+        self.action = action
+        self.screenWidth = screenWidth
+    }
+
+    public init(text: String, screenWidth: CGFloat) {
+        self.text = text
+        self.screenWidth = screenWidth
+    }
+
+    var body: some View {
+        Button(action: {
+            (self.action ?? self.empty)()
+        }) {
+            label
+        }
+    }
+
+    func empty() -> Void {
+
     }
 }

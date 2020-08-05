@@ -9,6 +9,9 @@
 import SwiftUI
 
 struct FirstPage: View {
+
+    @EnvironmentObject var enviromentObject: HomeViewNetworking
+
     var body: some View {
 
         NavigationView {
@@ -26,11 +29,16 @@ struct FirstPage: View {
 
                     Spacer()
 
-                    AuthenticationButton(text: "Sign up", screenWidth: geo.size.width)
-                        .padding(10)
+                    NavigationLink(destination: SignInPage(pageType: .signUp).environmentObject(self.enviromentObject)) {
+                        AuthenticationButton(text: "Sign up", screenWidth: geo.size.width).label
+                            .padding(10)
+                            .navigationBarTitle(Text(""))
+                            .navigationBarHidden(true)
+                    }
 
-                    NavigationLink(destination: AuthenticationButton(text: "test", screenWidth: 100).navigationBarHidden(true)) {
-                        AuthenticationButton(text: "Sign in", screenWidth: geo.size.width)
+
+                    NavigationLink(destination: SignInPage(pageType: .signIn).environmentObject(self.enviromentObject)) {
+                        AuthenticationButton(text: "Sign in", screenWidth: geo.size.width).label
                             .padding(10)
                             .navigationBarHidden(true)
                             .navigationBarTitle(Text("Home"))
@@ -80,6 +88,7 @@ struct FirstPage: View {
 
     func buttonAction() {
         print("Hola")
+//        self.enviromentObject.isUserSignedIn.toggle()
     }
 
 }

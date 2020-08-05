@@ -16,27 +16,37 @@ struct TabBar: View {
 
     var body: some View {
 
-        TabView {
-            HomePage().environmentObject(environmentObject)
-                .tabItem {
-                    Image(systemName: "house.fill")
-                    Text("Home")
-                }.tag(0)
-            AddPage()
-                .tabItem {
-                    Image(systemName: "plus.circle.fill")
-                    Text("Add")
-                }.tag(1)
-            ProfilePage().environmentObject(environmentObject)
-                .tabItem {
-                    Image(systemName: "person.crop.circle")
-                    Text("Profile")
-                }.tag(2)
-            AdminPanelPage()
-                .tabItem {
-                    Image(systemName: "person.3.fill")
-                    Text("Admin Panel")
-                }.tag(3)
+        ZStack {
+            if (!self.environmentObject.isUserSignedIn) {
+                FirstPage()
+            } else {
+
+                TabView {
+                    HomePage().environmentObject(environmentObject)
+                        .tabItem {
+                            Image(systemName: "house.fill")
+                            Text("Home")
+                        }.tag(0)
+                    AddPage()
+                        .tabItem {
+                            Image(systemName: "plus.circle.fill")
+                            Text("Add")
+                        }.tag(1)
+                    ProfilePage().environmentObject(environmentObject)
+                        .tabItem {
+                            Image(systemName: "person.crop.circle")
+                            Text("Profile")
+                        }.tag(2)
+                    AdminPanelPage()
+                        .tabItem {
+                            Image(systemName: "person.3.fill")
+                            Text("Admin Panel")
+                        }.tag(3)
+                }
+            }
+        }
+        .onAppear {
+            self.environmentObject.fetchCurrentAuthSession()
         }
 //            .edgesIgnoringSafeArea(.top)
     }

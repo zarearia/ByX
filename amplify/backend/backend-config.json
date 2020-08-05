@@ -1,1 +1,10 @@
-{}
+{
+	"auth": {
+		"xapp5b67052c": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [],
+			"customAuth": false
+		}
+	}
+}

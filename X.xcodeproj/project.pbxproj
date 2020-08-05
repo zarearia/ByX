@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		6977440A4F157244C33198FA /* Pods_X.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08CF1BB0F719C81A3D09DE81 /* Pods_X.framework */; };
 		A395104A92FA5B8BE164684C /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39516CC43C0EFCAF39D81C4 /* TabBar.swift */; };
+		A395104F4F9FD5FF947BEC18 /* SignUpConfirmPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3951C1B4603375B738FD192 /* SignUpConfirmPage.swift */; };
 		A395144C4956A9C10920399C /* AuthenticationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3951CA8F91BA9CAD442F173 /* AuthenticationButton.swift */; };
 		A39514E99DC0836DCD34A3AD /* SwipeablePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3951CAD3EE96CCFB5803A56 /* SwipeablePage.swift */; };
 		A39516137E871918B9A53C45 /* AdminPanelTextBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39517B835EFF53AE2104574 /* AdminPanelTextBar.swift */; };
@@ -21,8 +22,10 @@
 		A3951BB8C42E2179FFDA5127 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3951DCA977A324CCA171122 /* AppDelegate.swift */; };
 		A3951C7D3EAAC96461DFEC33 /* SignInUpTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39510C20DBD4F5546DAD257 /* SignInUpTextField.swift */; };
 		A3951D1D976AFB2297A2B8DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A3951FCF0B7C416266737F4C /* Assets.xcassets */; };
+		A3951DF737F48A17C320DAC8 /* AuthenticationPageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39514648B1C58A7323346E5 /* AuthenticationPageType.swift */; };
 		A3951E173ED4CFE33B773915 /* AddPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3951D93B7328DCD390B111C /* AddPage.swift */; };
 		A3951E7A49DFC159E961BD7A /* TextBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39511DA9BA82B0EF33FF96C /* TextBox.swift */; };
+		A3951EAC1C6D6887637B607C /* amplifyconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = A3951735A5A578835CB3529D /* amplifyconfiguration.json */; };
 		A3951EB8F844DB6FD729EC5B /* SignInPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3951B615956DCF823960B44 /* SignInPage.swift */; };
 		F70FA8A8241F7791005D9942 /* AdminPanelPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70FA8A7241F7791005D9942 /* AdminPanelPage.swift */; };
 		F74238862445B125005D9437 /* ToggleText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74238852445B125005D9437 /* ToggleText.swift */; };
@@ -43,10 +46,13 @@
 		A39511DA9BA82B0EF33FF96C /* TextBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextBox.swift; sourceTree = "<group>"; };
 		A39513BF8CC7F32E0013BB60 /* X.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = X.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3951424C2714A99920F9B82 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A39514648B1C58A7323346E5 /* AuthenticationPageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationPageType.swift; sourceTree = "<group>"; };
 		A39516CC43C0EFCAF39D81C4 /* TabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
+		A3951735A5A578835CB3529D /* amplifyconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = amplifyconfiguration.json; sourceTree = SOURCE_ROOT; };
 		A39517B2EB2CE17FD5D75B6C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		A39517B835EFF53AE2104574 /* AdminPanelTextBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminPanelTextBar.swift; sourceTree = "<group>"; };
 		A3951B615956DCF823960B44 /* SignInPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInPage.swift; sourceTree = "<group>"; };
+		A3951C1B4603375B738FD192 /* SignUpConfirmPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpConfirmPage.swift; sourceTree = "<group>"; };
 		A3951CA8F91BA9CAD442F173 /* AuthenticationButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationButton.swift; sourceTree = "<group>"; };
 		A3951CAD3EE96CCFB5803A56 /* SwipeablePage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeablePage.swift; sourceTree = "<group>"; };
 		A3951CC516B278453F92F306 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -121,6 +127,7 @@
 				A395180671726A4EFA43F8D1 /* View */,
 				F7442615242F595E00271316 /* ViewModel */,
 				A3951DC6787A35948D70C9B1 /* Preview Content */,
+				A3951735A5A578835CB3529D /* amplifyconfiguration.json */,
 			);
 			path = X;
 			sourceTree = "<group>";
@@ -150,6 +157,8 @@
 				A39510C20DBD4F5546DAD257 /* SignInUpTextField.swift */,
 				A3951D7ECF8C497EB31202AE /* FirstPage.swift */,
 				A3951CA8F91BA9CAD442F173 /* AuthenticationButton.swift */,
+				A39514648B1C58A7323346E5 /* AuthenticationPageType.swift */,
+				A3951C1B4603375B738FD192 /* SignUpConfirmPage.swift */,
 			);
 			path = AuthenticationViews;
 			sourceTree = "<group>";
@@ -262,6 +271,7 @@
 				A3951D1D976AFB2297A2B8DD /* Assets.xcassets in Resources */,
 				A3951623EB9D37BF98CE5E18 /* LaunchScreen.storyboard in Resources */,
 				A39519258D762DF42BBE0346 /* Preview Assets.xcassets in Resources */,
+				A3951EAC1C6D6887637B607C /* amplifyconfiguration.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,7 +286,14 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-X/Pods-X-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/AWSAppSync/AWSAppSync.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSAuthCore/AWSAuthCore.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSCognitoIdentityProvider/AWSCognitoIdentityProvider.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSCognitoIdentityProviderASF/AWSCognitoIdentityProviderASF.framework",
 				"${BUILT_PRODUCTS_DIR}/AWSCore/AWSCore.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSMobileClient/AWSMobileClient.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSPluginsCore/AWSPluginsCore.framework",
+				"${BUILT_PRODUCTS_DIR}/Amplify/Amplify.framework",
+				"${BUILT_PRODUCTS_DIR}/AmplifyPlugins/AmplifyPlugins.framework",
 				"${BUILT_PRODUCTS_DIR}/AppSyncRealTimeClient/AppSyncRealTimeClient.framework",
 				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
@@ -286,7 +303,14 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSAppSync.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSAuthCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCognitoIdentityProvider.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCognitoIdentityProviderASF.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSMobileClient.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSPluginsCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Amplify.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AmplifyPlugins.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AppSyncRealTimeClient.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
@@ -349,6 +373,8 @@
 				A39516137E871918B9A53C45 /* AdminPanelTextBar.swift in Sources */,
 				A39517A4DD3E70353EF621E0 /* SwipeablePageRebuild.swift in Sources */,
 				A39514E99DC0836DCD34A3AD /* SwipeablePage.swift in Sources */,
+				A3951DF737F48A17C320DAC8 /* AuthenticationPageType.swift in Sources */,
+				A395104F4F9FD5FF947BEC18 /* SignUpConfirmPage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
