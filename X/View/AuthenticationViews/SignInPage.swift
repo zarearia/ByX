@@ -36,7 +36,8 @@ struct SignInPage: View {
                             case .signIn:
                                 print("Implement Sign In")
                             case .signUp:
-                                self.networking.signUp(email: self.email, password: self.password)
+                                print("Implement Sign Up")
+//                                self.networking.signUp(email: self.email, password: self.password)
                             }
                         }
                             .padding(10)

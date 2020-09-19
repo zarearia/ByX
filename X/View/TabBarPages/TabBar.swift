@@ -45,9 +45,9 @@ struct TabBar: View {
                 }
             }
         }
-        .onAppear {
-            self.environmentObject.fetchCurrentAuthSession()
-        }
+//        .onAppear {
+//            self.environmentObject.fetchCurrentAuthSession()
+//        }
 //            .edgesIgnoringSafeArea(.top)
     }
 }

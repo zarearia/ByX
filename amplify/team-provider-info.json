@@ -1,20 +1,15 @@
 {
-    "xappenv": {
+    "dev": {
         "awscloudformation": {
-            "AuthRoleName": "amplify-xapp-xappenv-111349-authRole",
-            "UnauthRoleArn": "arn:aws:iam::442286511762:role/amplify-xapp-xappenv-111349-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::442286511762:role/amplify-xapp-xappenv-111349-authRole",
+            "AuthRoleName": "amplify-xappamplify-dev-113405-authRole",
+            "UnauthRoleArn": "arn:aws:iam::442286511762:role/amplify-xappamplify-dev-113405-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::442286511762:role/amplify-xappamplify-dev-113405-authRole",
             "Region": "us-east-1",
-            "DeploymentBucketName": "amplify-xapp-xappenv-111349-deployment",
-            "UnauthRoleName": "amplify-xapp-xappenv-111349-unauthRole",
-            "StackName": "amplify-xapp-xappenv-111349",
-            "StackId": "arn:aws:cloudformation:us-east-1:442286511762:stack/amplify-xapp-xappenv-111349/4eeb06b0-82d2-11ea-bace-0e1aa735f904",
-            "AmplifyAppId": "d10901jatioxv6"
-        },
-        "categories": {
-            "auth": {
-                "xapp5b67052c": {}
-            }
+            "DeploymentBucketName": "amplify-xappamplify-dev-113405-deployment",
+            "UnauthRoleName": "amplify-xappamplify-dev-113405-unauthRole",
+            "StackName": "amplify-xappamplify-dev-113405",
+            "StackId": "arn:aws:cloudformation:us-east-1:442286511762:stack/amplify-xappamplify-dev-113405/86157c20-dec5-11ea-bbc1-12002b7e66d1",
+            "AmplifyAppId": "d353qan66sisw3"
         }
     }
 }

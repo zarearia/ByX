@@ -8,7 +8,5 @@ target 'X' do
   # Pods for X
 pod 'AWSAppSync', '~> 3.1.0'
 pod 'SwipeView'
-pod 'Amplify'
-pod 'AmplifyPlugins/AWSCognitoAuthPlugin'
 
 end

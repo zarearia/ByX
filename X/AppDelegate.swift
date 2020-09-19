@@ -8,8 +8,6 @@
 
 import UIKit
 import AWSAppSync
-import Amplify
-import AmplifyPlugins
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,26 +18,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     // Override point for customization after application launch.
         do {
+            // Header
+            let urlSessionConfiguration = URLSessionConfiguration.default
+            urlSessionConfiguration.httpAdditionalHeaders = ["AuthToken": "token"]
+            
             // You can choose the directory in which AppSync stores its persistent cache databases
             let cacheConfiguration = try AWSAppSyncCacheConfiguration()
 
             // AppSync configuration & client initialization
             let appSyncServiceConfig = try AWSAppSyncServiceConfig()
             let appSyncConfig = try AWSAppSyncClientConfiguration(appSyncServiceConfig: appSyncServiceConfig,
-                                                                  cacheConfiguration: cacheConfiguration)
+                urlSessionConfiguration: urlSessionConfiguration, cacheConfiguration: cacheConfiguration)
             appSyncClient = try AWSAppSyncClient(appSyncConfig: appSyncConfig)
             print("Initialized appsync client.")
         } catch {
             print("Error initializing appsync client. \(error)")
         }
 
-        do {
-            try Amplify.add(plugin: AWSCognitoAuthPlugin())
-            try Amplify.configure()
-            print("Amplify configured with auth plugin")
-        } catch {
-            print("Failed to initialize Amplify with \(error)")
-        }
 
         return true
     }

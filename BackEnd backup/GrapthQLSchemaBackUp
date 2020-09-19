@@ -1,0 +1,127 @@
+input CreateXModelTypeInput {
+	email: AWSEmail!
+	title: String!
+}
+
+type LastEvaluatedKey {
+	id: String
+	dateCreated: String
+	isSpam: Int
+}
+
+type LastEvaluatedKeyDisikesSorted {
+	id: String
+	dislikesCount: Int
+	isSpam: Int
+}
+
+type LastEvaluatedKeyLikesSorted {
+	id: String
+	likesCount: Int
+	isSpam: Int
+}
+
+type LastEvaluatedKeyScanTags {
+	id: String
+}
+
+type LastEvaluatedKeyUserItems {
+	id: String
+	email: AWSEmail
+	dateCreated: String
+}
+
+type Mutation {
+	createXModelType(
+		email: AWSEmail!,
+		title: String!,
+		isUpgraded: Int,
+		tags: String
+	): XModelType
+	updateXModelType(
+		id: ID!,
+		title: String!,
+		isUpgraded: Int!,
+		tags: String!
+	): XModelType
+	deleteXModelType(id: ID!, email: AWSEmail!): XModelType
+	likeXModelType(id: ID!, email: AWSEmail!): XModelType
+	dislikeXModelType(id: ID!, email: AWSEmail!): XModelType
+	reportXModelType(id: ID!, email: AWSEmail!): XModelType
+	adminChangeXModelType(id: ID!, accept: Boolean): XModelType
+}
+
+type Query {
+	getXModelType(id: ID!): XModelType
+	listXModelTypes(
+		id: ID,
+		dateCreated: String,
+		isSpam: Int,
+		email: AWSEmail
+	): XModelTypeConnection
+	listXModelTypesLikesSorted(
+		id: ID,
+		likesCount: Int,
+		isSpam: Int,
+		email: AWSEmail
+	): XModelTypeConnectionLikesSorted
+	listXModelTypesDislikesSorted(
+		id: ID,
+		dislikesCount: Int,
+		isSpam: Int,
+		email: AWSEmail
+	): XModelTypeConnectionDislikesSorted
+	listXModelTypesSearchTags(id: ID, tags: String, email: AWSEmail): XModelTypeConnectionScanTags
+	listXModelTypesUserItems(id: ID, email: AWSEmail, dateCreated: String): XModelTypeConnectionUserItems
+}
+
+type XModelType {
+	id: ID!
+	email: AWSEmail!
+	title: String!
+	isUpgraded: Int
+	tags: String
+	dateCreated: AWSDateTime
+	dateUpgraded: AWSDateTime
+	dislikesCount: Int
+	likesCount: Int
+	isReported: Int
+	isSpam: Int
+	reportsCount: Int
+	likers: [AWSEmail]
+	dislikers: [AWSEmail]
+	reporters: [AWSEmail]
+	isLikedByTheUser: Boolean
+	isDislikedByTheUser: Boolean
+	isReportedByTheUser: Boolean
+}
+
+type XModelTypeConnection {
+	Items: [XModelType]
+	LastEvaluatedKey: LastEvaluatedKey
+}
+
+type XModelTypeConnectionDislikesSorted {
+	Items: [XModelType]
+	LastEvaluatedKey: LastEvaluatedKeyDisikesSorted
+}
+
+type XModelTypeConnectionLikesSorted {
+	Items: [XModelType]
+	LastEvaluatedKey: LastEvaluatedKeyLikesSorted
+}
+
+type XModelTypeConnectionScanTags {
+	Items: [XModelType]
+	LastEvaluatedKey: LastEvaluatedKeyScanTags
+}
+
+type XModelTypeConnectionUserItems {
+	Items: [XModelType]
+	LastEvaluatedKey: LastEvaluatedKeyUserItems
+}
+
+schema {
+	query: Query
+	mutation: Mutation
+}

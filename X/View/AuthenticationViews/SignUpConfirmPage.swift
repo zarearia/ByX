@@ -18,7 +18,7 @@ struct SignUpConfirmPage: View {
             TextField("Enter Code Here", text: $approveCode)
 
             Button(action: {
-                self.networking.confirmSignUp(for: homeViewNetworking.userEmail, with: self.approveCode)
+//                self.networking.confirmSignUp(for: homeViewNetworking.userEmail, with: self.approveCode)
             }) {
                 Text("Approve")
             }
