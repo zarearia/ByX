@@ -17,8 +17,8 @@ struct AdminPanelPage: View {
         
         ZStack {
 
-            Color(hex: "#FAF5E4")
-                .edgesIgnoringSafeArea(.all)
+//            Color(hex: "#FAF5E4")
+//                .edgesIgnoringSafeArea(.all)
             
             ScrollView {
 
@@ -29,9 +29,9 @@ struct AdminPanelPage: View {
                     .padding()
                     .onReceive([self.contentType].publisher.first()) { (value) in
                         if value == 0 {
-                            self.observedObj.spamsQuery()
+//                            self.observedObj.spamsQuery()
                         } else {
-                            self.observedObj.reportedQuery()
+//                            self.observedObj.reportedQuery()
                         }
                     }
 
@@ -42,9 +42,9 @@ struct AdminPanelPage: View {
         }
             .onAppear {
                 if self.contentType == 0 {
-                    self.observedObj.spamsQuery()
+//                    self.observedObj.spamsQuery()
                 } else {
-                    self.observedObj.reportedQuery()
+//                    self.observedObj.reportedQuery()
                 }
             }
     }

@@ -10,6 +10,7 @@
 		6977440A4F157244C33198FA /* Pods_X.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08CF1BB0F719C81A3D09DE81 /* Pods_X.framework */; };
 		A395104A92FA5B8BE164684C /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39516CC43C0EFCAF39D81C4 /* TabBar.swift */; };
 		A395104F4F9FD5FF947BEC18 /* SignUpConfirmPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3951C1B4603375B738FD192 /* SignUpConfirmPage.swift */; };
+		A39513ADE3AC89AB242DE761 /* CornerSpecificRadus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39511C6F5E56A5CEE9F859F /* CornerSpecificRadus.swift */; };
 		A395144C4956A9C10920399C /* AuthenticationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3951CA8F91BA9CAD442F173 /* AuthenticationButton.swift */; };
 		A39514E99DC0836DCD34A3AD /* SwipeablePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3951CAD3EE96CCFB5803A56 /* SwipeablePage.swift */; };
 		A39516137E871918B9A53C45 /* AdminPanelTextBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39517B835EFF53AE2104574 /* AdminPanelTextBar.swift */; };
@@ -43,6 +44,7 @@
 		08CF1BB0F719C81A3D09DE81 /* Pods_X.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_X.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		296B309E87893A00B229A087 /* Pods-X.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-X.release.xcconfig"; path = "Target Support Files/Pods-X/Pods-X.release.xcconfig"; sourceTree = "<group>"; };
 		A39510C20DBD4F5546DAD257 /* SignInUpTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInUpTextField.swift; sourceTree = "<group>"; };
+		A39511C6F5E56A5CEE9F859F /* CornerSpecificRadus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CornerSpecificRadus.swift; sourceTree = "<group>"; };
 		A39511DA9BA82B0EF33FF96C /* TextBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextBox.swift; sourceTree = "<group>"; };
 		A39513BF8CC7F32E0013BB60 /* X.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = X.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3951424C2714A99920F9B82 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 				F70FA8A7241F7791005D9942 /* AdminPanelPage.swift */,
 				A39517B835EFF53AE2104574 /* AdminPanelTextBar.swift */,
 				A3951C0AB74C0087A95F77EB /* SwipeablePage */,
+				A39511C6F5E56A5CEE9F859F /* CornerSpecificRadus.swift */,
 			);
 			path = TabBarPages;
 			sourceTree = "<group>";
@@ -236,7 +239,7 @@
 		A3951E3318E23E300EA600C3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				ORGANIZATIONNAME = ___FULLUSERNAME___;
+				ORGANIZATIONNAME = "___FULLUSERNAME___";
 				TargetAttributes = {
 					A395178522F66DF254DBEA42 = {
 						DevelopmentTeam = GG7GN7L79A;
@@ -361,6 +364,7 @@
 				A39514E99DC0836DCD34A3AD /* SwipeablePage.swift in Sources */,
 				A3951DF737F48A17C320DAC8 /* AuthenticationPageType.swift in Sources */,
 				A395104F4F9FD5FF947BEC18 /* SignUpConfirmPage.swift in Sources */,
+				A39513ADE3AC89AB242DE761 /* CornerSpecificRadus.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -22,8 +22,8 @@ struct ProfilePage: View {
 
     var body: some View {
         ZStack {
-            Color(hex: "#FAF5E4")
-                .edgesIgnoringSafeArea(.all)
+//            Color(hex: "#FAF5E4")
+//                .edgesIgnoringSafeArea(.all)
             
             VStack(alignment: .leading, spacing: 0) {
                 
@@ -31,7 +31,7 @@ struct ProfilePage: View {
                     
                     HStack {
                         Text("My Posts")
-                            .foregroundColor(Color(hex: "#E8824F"))
+                            .foregroundColor(Color(hex: "#6CAF26"))
                             .font(.system(size: 30, weight: .semibold, design: .rounded))
                             .padding(.leading, 10)
                         
@@ -41,7 +41,7 @@ struct ProfilePage: View {
                             
                         }) {
                             Image(systemName: "info.circle")
-                                .foregroundColor(Color(hex: "#E8824F"))
+                                .foregroundColor(Color(hex: "#6CAF26"))
                                 .font(.system(size: 35, weight: .regular, design: .rounded))
                                 .padding(.top, 5)
                                 .padding(.trailing, 20)
@@ -50,7 +50,7 @@ struct ProfilePage: View {
                     
                     
                     Rectangle()
-                        .foregroundColor(Color(hex: "#E8824F"))
+                        .foregroundColor(Color(hex: "#6CAF26"))
                         .frame(minWidth: 0, maxWidth: .infinity)
                         .frame(height: 2)
                         .padding([.leading, .trailing], 5)
@@ -58,20 +58,25 @@ struct ProfilePage: View {
                 
                 List {
                     ForEach(observedObj.listItems, id: \.self.id) { item in
-                        TextBox(text: item.title, textColor: Color(hex: "#FAF5E4"), boxColor: Color(hex: "#3BB0BA"),
-                            boxOpacity: 0.9, thumbsupColor: Color(hex: "#B39283"), thumbsupNumColor: Color(hex: "#B39283"),
-                            thumbsdownNumColor: Color(hex: "#C23B22"), thumbsdownColor: Color(hex: "#C23B22"),
+//                        TextBox(text: item.title, textColor: Color(hex: "#FAF5E4"), boxColor: Color(hex: "#3BB0BA"),
+//                            boxOpacity: 0.9, thumbsupColor: Color(hex: "#B39283"), thumbsupNumColor: Color(hex: "#B39283"),
+//                            thumbsdownNumColor: Color(hex: "#C23B22"), thumbsdownColor: Color(hex: "#C23B22"),
+//                            seperateLineColor: Color(hex: "#3BB0BA"), isUpgradeable: true, item: item)
+                        TextBox(text: item.title, textColor: Color(.white), boxColor: Color(hex: "#4891E1"),
+                            boxOpacity: 1, thumbsupColor: Color(hex: "#4891E1"), thumbsupNumColor: Color(hex: "#4891E1"),
+                            thumbsdownNumColor: Color(hex: "#9F9F9F"), thumbsdownColor: Color(hex: "#9F9F9F"),
                             seperateLineColor: Color(hex: "#3BB0BA"), isUpgradeable: true, item: item)
                             .environmentObject(self.observedObj)
                     }
                         .onDelete(perform: delete)
+                        .padding([.leading, .trailing], -20)
 
                     Spacer()
                 }
             }
         }
         .onAppear {
-            self.observedObj.userPosterItemsQuery()
+//            self.observedObj.userPosterItemsQuery()
         }
     }
 

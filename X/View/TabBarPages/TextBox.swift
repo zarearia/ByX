@@ -73,9 +73,9 @@ struct TextBox: View {
                     .foregroundColor(textColor)
             }
                 .fixedSize(horizontal: false, vertical: true)
-                .background(boxColor)
-                .cornerRadius(23)
-                .opacity(boxOpacity)
+//                .background(Color(.white))
+//                .cornerRadius(23)
+//                .opacity(boxOpacity)
                 .padding([.top, .leading, .trailing], 20)
                 .onTapGesture(count: 2) {
                     self.likeAction()
@@ -110,14 +110,14 @@ struct TextBox: View {
                         HStack {
                             Text("Upgrade")
                             .font(.system(size: 20, weight: .medium, design: .rounded))
-                            .foregroundColor(Color(hex: "#E8824F"))
+                            .foregroundColor(Color(hex: "#6CAF26"))
                             
 /******************************************************************************/
                             
 //                            TODO: - Fix This Part
                             ToggleImage(isOn: $falseBool, imageName: "star", action: upgradeAction)
                             .font(.system(size: 25, weight: .medium, design: .rounded))
-                            .foregroundColor(Color(hex: "#E8824F"))
+                            .foregroundColor(Color(hex: "#6CAF26"))
                         }
                     } else {
                         ToggleText(isOn: Binding<Bool>($envObject.listItems[self.currentItemIndex].isReportedByTheUser) ?? $falseBool, onText: "Reported", offText: "Report", action: reportAction)
@@ -126,16 +126,28 @@ struct TextBox: View {
                 }
             }
                 .padding([.leading, .trailing], 35)
+                .padding(.bottom, 18)
+                .padding(.top, 10)
+                .background(Color(.white))
 
-            Rectangle()
-                .foregroundColor(seperateLineColor)
-                .frame(minWidth: 0, maxWidth: .infinity)
-                .frame(height: 2)
-                .padding(5)
+//            Spacer(minLength: 20)
+//                .background(Color(.white))
+
+//            Rectangle()
+//                .foregroundColor(.white)
+//                .frame(minWidth: 0, maxWidth: .infinity)
+//                .frame(height: 20)
+//                .offset(y: -20)
+////                .padding(5)
         }
-        .onAppear{
-            self.manageHitableObjects()
-        }
+            .background(boxColor)
+            .cornerRadius(5)
+            .opacity(boxOpacity)
+            .shadow(color: Color(hex: "#757575"),radius: 5, x: 1, y: 2)
+            .padding([.top, .leading, .trailing], 20)
+            .onAppear{
+                self.manageHitableObjects()
+            }
 
     }
     

@@ -21,18 +21,22 @@ struct HomePage: View {
         NavigationView {
             ZStack {
 
-                Color(hex: "#FAF5E4")
-                    .edgesIgnoringSafeArea(.all)
+//                Color(hex: "#FAF5E4")
+//                    .edgesIgnoringSafeArea(.all)
 
                 ScrollView {
                     ForEach(observedObj.listItems, id: \.self.id) { item in
                         NavigationLink(destination: SwipeablePageView(currentItem: item)/*.environmentObject(self.observedObj)*/)
                                                             /*.navigationBarHidden(true)*/
                                                             /*.navigationBarTitle(""))*/ {
-                            TextBox(text: item.title, textColor: Color(hex: "#FAF5E4"), boxColor: Color(hex: "#F2A970"),
-                                boxOpacity: 1, thumbsupColor: Color(hex: "#B39283"), thumbsupNumColor: Color(hex: "#CFB997"),
-                                thumbsdownNumColor: Color(hex: "#C23B22"), thumbsdownColor: Color(hex: "#C23B22"),
+                            TextBox(text: item.title, textColor: Color(.white), boxColor: Color(hex: "#4891E1"),
+                                boxOpacity: 1, thumbsupColor: Color(hex: "#4891E1"), thumbsupNumColor: Color(hex: "#4891E1"),
+                                thumbsdownNumColor: Color(hex: "#9F9F9F"), thumbsdownColor: Color(hex: "#9F9F9F"),
                                 seperateLineColor: Color(hex: "#3BB0BA"), isUpgradeable: false, item: item)
+//                            TextBox(text: item.title, textColor: Color(hex: "#FAF5E4"), boxColor: Color(hex: "#F2A970"),
+//                                boxOpacity: 1, thumbsupColor: Color(hex: "#B39283"), thumbsupNumColor: Color(hex: "#CFB997"),
+//                                thumbsdownNumColor: Color(hex: "#C23B22"), thumbsdownColor: Color(hex: "#C23B22"),
+//                                seperateLineColor: Color(hex: "#3BB0BA"), isUpgradeable: false, item: item)
                                 /*.environmentObject(self.observedObj)*/
                         }
                     }
@@ -81,13 +85,13 @@ struct HomePage: View {
                         }
 
                     }
-                        .background(Color(hex: "#FAF5E4"))
+//                        .background(Color(hex: "#FAF5E4"))
                         .opacity(0.95)
-                        .overlay(
-                            Color(hex: "#FAF5E4")
-                                .opacity(0.95)
-                                .offset(x: 0, y: -self.searchBarHeight)
-                        )
+//                        .overlay(
+//                            Color(hex: "#FAF5E4")
+//                                .opacity(0.95)
+//                                .offset(x: 0, y: -self.searchBarHeight)
+//                        )
 
                     Spacer()
                 }
@@ -101,7 +105,7 @@ struct HomePage: View {
 
 
 //            TODO: Uncomment this line(commented for design test)
-                self.observedObj.runQuery()
+//                self.observedObj.runQuery()
             }
     }
 }

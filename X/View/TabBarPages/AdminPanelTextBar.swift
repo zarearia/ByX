@@ -33,12 +33,12 @@ struct AdminPanelTextBar: View {
                 HStack {
                     Text(title)
                         .padding()
-                        .foregroundColor(Color(hex: "#FAF5E4"))
+                        .foregroundColor(Color(.white))
                     Spacer()
                 }
             }
                 .fixedSize(horizontal: false, vertical: true)
-                .background(Color(hex: "#F2A970"))
+//                .background(Color(hex: "#F2A970"))
                 .cornerRadius(23)
                 .padding()
 
@@ -50,12 +50,12 @@ struct AdminPanelTextBar: View {
                     self.approvalMutation(accepted: true)
                 }) {
                     Text(approveButtonString)
-                        .foregroundColor(.white)
+                        .foregroundColor(Color(hex: "#4891E1"))
                         .bold()
                 }
                     .padding()
-                    .background(Color(hex: "#3BB0BA"))
-                    .cornerRadius(15)
+//                    .background(Color(hex: "#3BB0BA"))
+                    .cornerRadius(5)
 
                 Spacer()
 
@@ -63,23 +63,29 @@ struct AdminPanelTextBar: View {
                     self.approvalMutation(accepted: false)
                 }) {
                     Text(disapproveButtonString)
-                        .foregroundColor(.white)
+                        .foregroundColor(Color(.red))
                         .bold()
                 }
                     .padding()
-                    .background(Color(hex: "#B61A0E"))
-                    .cornerRadius(15)
+//                    .background(Color(hex: "#B61A0E"))
+                    .cornerRadius(5)
 
                 Spacer()
             }
+                .padding(7)
+                .background(Color(.white))
 
-            Rectangle()
-                .foregroundColor(Color(hex: "#3BB0BA"))
-                .frame(minWidth: 0, maxWidth: .infinity)
-                .frame(height: 2)
-                .padding(5)
+//            Rectangle()
+//                .foregroundColor(Color(hex: "#3BB0BA"))
+//                .frame(minWidth: 0, maxWidth: .infinity)
+//                .frame(height: 2)
+//                .padding(5)
 
         }
+            .background(Color(hex: "#4891E1"))
+            .cornerRadius(5)
+            .shadow(color: Color(hex: "#757575"),radius: 5, x: 1, y: 2)
+            .padding([.top, .leading, .trailing], 20)
     }
 
     func approvalMutation(accepted: Bool) {

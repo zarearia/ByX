@@ -56,14 +56,14 @@ struct AddPage: View {
     var body: some View {
 
         GeometryReader { geo in
-            Color(hex: "#FAF5E4")
+            Color(.white)
                 .edgesIgnoringSafeArea(.all)
 
             VStack {
                 Text("Hi X, what's going through your mind right now?")
                     .font(.system(size: 25, weight: .bold, design: .rounded))
                     .padding()
-                    .foregroundColor(Color(hex: "#E8824F"))
+                    .foregroundColor(Color(hex: "#6CAF26"))
 
                 ZStack {
                     Color(hex: "#3BB0BA")
@@ -80,7 +80,7 @@ struct AddPage: View {
                             .padding([.top, .bottom], 7)
 
 //                        MultilineTextView(text: self.$observedObj.textFieldsText)
-                        TextView(text: self.$observedObj.textFieldsText, isEditing: self.$isEditing)
+                        TextView(text: self.$observedObj.textFieldsText, isEditing: self.$isEditing, textColor: .white)
 //                        TextField("Tap to start writing", text: self.$observedObj.textFieldsText)
 //                            .lineLimit(30)
 //                            .foregroundColor(Color(hex: "#FAF5E4"))
@@ -115,6 +115,9 @@ struct AddPage: View {
                             .padding([.top, .bottom], 15)
                        
                     }
+                        .background(Color(hex: "#4891E1"))
+                        .cornerRadius(5)
+                        .shadow(color: Color(hex: "#757575"),radius: 5, x: 1, y: 2)
                 }
                     .frame(height: geo.size.height / 2)
                     .padding([.trailing, .leading, .bottom])
@@ -123,11 +126,11 @@ struct AddPage: View {
                     Spacer()
                     Text("Upgrade")
                         .font(.system(size: 20, weight: .medium, design: .rounded))
-                        .foregroundColor(Color(hex: "#E8824F"))
+                        .foregroundColor(Color(hex: "#6CAF26"))
                         
                     ToggleImage(isOn: self.$observedObj.isUpgraded, imageName: "star", action: self.mbdTest)
                         .font(.system(size: 25, weight: .medium, design: .rounded))
-                        .foregroundColor(Color(hex: "#E8824F"))
+                        .foregroundColor(Color(hex: "#6CAF26"))
                 }
                     .padding()
                     .padding(.trailing, 15)

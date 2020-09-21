@@ -17,13 +17,15 @@ struct AuthenticationButton: View {
 
     var label: some View {
         Text(self.text)
-            .font(.system(size: 18, design: .rounded))
+            .font(.system(size: 23, design: .rounded))
             .fontWeight(.semibold)
             .frame(minWidth: 0, maxWidth: screenWidth / 1.3)
             .frame(minHeight: 0, maxHeight: screenWidth / 5.5)
-            .background(Color(hex: "#F2A970"))
-            .foregroundColor(Color(hex: "#FAF5E4"))
-            .cornerRadius(screenWidth / 2)
+//            .background(Color(hex: "#F2A970"))
+            .background(Color(hex: "#4891E1"))
+            .foregroundColor(.white)
+            .cornerRadius(5)
+            .shadow(color: Color(hex: "#414141"),radius: 6, x: 2, y: 3)
     }
 
 
