@@ -23,13 +23,13 @@ query GetXModelType($id: ID!) {
 }
 query ListXModelTypes(
   $id: ID
-  $dateCreated: String
+  $isUpgraded: Int
   $isSpam: Int
   $email: AWSEmail
 ) {
   listXModelTypes(
     id: $id
-    dateCreated: $dateCreated
+    isUpgraded: $isUpgraded
     isSpam: $isSpam
     email: $email
   ) {

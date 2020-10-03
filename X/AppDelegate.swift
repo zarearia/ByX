@@ -20,8 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         do {
             // Header
             let urlSessionConfiguration = URLSessionConfiguration.default
-            urlSessionConfiguration.httpAdditionalHeaders = ["AuthToken": "token"]
-            
+            urlSessionConfiguration.httpAdditionalHeaders = ["token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InhhcHBlbWFpbHRlc3QyMDIwQGdtYWlsLmNvbSJ9.iB8bTlPF7wotCLkvJAsOyHpFNEx4gkgJ1215qF4nR54"]
+
             // You can choose the directory in which AppSync stores its persistent cache databases
             let cacheConfiguration = try AWSAppSyncCacheConfiguration()
 

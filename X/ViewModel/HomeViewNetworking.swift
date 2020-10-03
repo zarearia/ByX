@@ -49,18 +49,36 @@ class HomeViewNetworking: ObservableObject {
         switch sortedBy {
             
         case .latest:
-            
-            appSyncClient?.fetch(query: ListXModelTypesQuery(id: "", dateCreated: "", isSpam: 0, email: "zarearia@email.com"), cachePolicy:  .fetchIgnoringCacheData) { (result, error) in
-                    
-                    if error != nil {
-                        print(error?.localizedDescription ?? "")
-                        return
-                    }
-                    print("Latest Sort Query complete.")
-                    self.rawListItems = (result!.data!.listXModelTypes!.items!) as! [ListXModelTypesQuery.Data.ListXModelType.Item]
-                    
-                    self.fetchResults()
+
+            appSyncClient?.fetch(query: ListXModelTypesQuery(id: "", isUpgraded: 0, isSpam: 0, email: "xappemailtest2020@gmail.com"), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
+
+                if error != nil {
+                    print(error?.localizedDescription ?? "")
+                    return
                 }
+                print("Latest Sort Query complete.")
+
+                print(result?.data)
+
+                self.rawListItems = (result!.data!.listXModelTypes!.items!) as! [ListXModelTypesQuery.Data.ListXModelType.Item]
+
+                self.fetchResults()
+            }
+
+//            appSyncClient?.fetch(query: ListXModelTypesQuery(id: "", dateCreated: "", isSpam: 0, email: "zarearia@email.com"), cachePolicy:  .fetchIgnoringCacheData) { (result, error) in
+//
+//                    if error != nil {
+//                        print(error?.localizedDescription ?? "")
+//                        return
+//                    }
+//                    print("Latest Sort Query complete.")
+//
+//                    print(result)
+//
+//                    self.rawListItems = (result!.data!.listXModelTypes!.items!) as! [ListXModelTypesQuery.Data.ListXModelType.Item]
+//
+//                    self.fetchResults()
+//                }
             
         case .mostLiked:
             
@@ -146,31 +164,33 @@ class HomeViewNetworking: ObservableObject {
     }
 
     func spamsQuery() {
-        appSyncClient?.fetch(query: ListXModelTypesQuery(id: "", dateCreated: "", isSpam: 1, email: "zarearia@email.com"), cachePolicy:  .fetchIgnoringCacheData) { (result, error) in
-
-            if error != nil {
-                print(error?.localizedDescription ?? "")
-                return
-            }
-            print("Latest Sort Query complete.")
-            self.rawListItems = (result!.data!.listXModelTypes!.items!) as! [ListXModelTypesQuery.Data.ListXModelType.Item]
-
-            self.fetchResults()
-        }
+        //TODO: Change This (commented because of changes I am applying in schema and tests)
+//        appSyncClient?.fetch(query: ListXModelTypesQuery(id: "", dateCreated: "", isSpam: 1, email: "zarearia@email.com"), cachePolicy:  .fetchIgnoringCacheData) { (result, error) in
+//
+//            if error != nil {
+//                print(error?.localizedDescription ?? "")
+//                return
+//            }
+//            print("Latest Sort Query complete.")
+//            self.rawListItems = (result!.data!.listXModelTypes!.items!) as! [ListXModelTypesQuery.Data.ListXModelType.Item]
+//
+//            self.fetchResults()
+//        }
     }
 
     func reportedQuery() {
-        appSyncClient?.fetch(query: ListXModelTypesQuery(id: "", dateCreated: "", isSpam: 2, email: "zarearia@email.com"), cachePolicy:  .fetchIgnoringCacheData) { (result, error) in
-
-            if error != nil {
-                print(error?.localizedDescription ?? "")
-                return
-            }
-            print("Latest Sort Query complete.")
-            self.rawListItems = (result!.data!.listXModelTypes!.items!) as! [ListXModelTypesQuery.Data.ListXModelType.Item]
-
-            self.fetchResults()
-        }
+        //TODO: Change This (commented because of changes I am applying in schema and tests)
+//        appSyncClient?.fetch(query: ListXModelTypesQuery(id: "", dateCreated: "", isSpam: 2, email: "zarearia@email.com"), cachePolicy:  .fetchIgnoringCacheData) { (result, error) in
+//
+//            if error != nil {
+//                print(error?.localizedDescription ?? "")
+//                return
+//            }
+//            print("Latest Sort Query complete.")
+//            self.rawListItems = (result!.data!.listXModelTypes!.items!) as! [ListXModelTypesQuery.Data.ListXModelType.Item]
+//
+//            self.fetchResults()
+//        }
     }
 
     func deleteItem(item: ListXModelTypesQuery.Data.ListXModelType.Item) -> Bool {

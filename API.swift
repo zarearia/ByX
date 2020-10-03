@@ -2018,29 +2018,29 @@ public final class GetXModelTypeQuery: GraphQLQuery {
 
 public final class ListXModelTypesQuery: GraphQLQuery {
   public static let operationString =
-    "query ListXModelTypes($id: ID, $dateCreated: String, $isSpam: Int, $email: AWSEmail) {\n  listXModelTypes(id: $id, dateCreated: $dateCreated, isSpam: $isSpam, email: $email) {\n    __typename\n    Items {\n      __typename\n      id\n      email\n      title\n      isUpgraded\n      tags\n      dateCreated\n      dateUpgraded\n      dislikesCount\n      likesCount\n      isReported\n      isSpam\n      reportsCount\n      likers\n      dislikers\n      reporters\n      isLikedByTheUser\n      isDislikedByTheUser\n      isReportedByTheUser\n    }\n    LastEvaluatedKey {\n      __typename\n      id\n      dateCreated\n      isSpam\n    }\n  }\n}"
+    "query ListXModelTypes($id: ID, $isUpgraded: Int, $isSpam: Int, $email: AWSEmail) {\n  listXModelTypes(id: $id, isUpgraded: $isUpgraded, isSpam: $isSpam, email: $email) {\n    __typename\n    Items {\n      __typename\n      id\n      email\n      title\n      isUpgraded\n      tags\n      dateCreated\n      dateUpgraded\n      dislikesCount\n      likesCount\n      isReported\n      isSpam\n      reportsCount\n      likers\n      dislikers\n      reporters\n      isLikedByTheUser\n      isDislikedByTheUser\n      isReportedByTheUser\n    }\n    LastEvaluatedKey {\n      __typename\n      id\n      dateCreated\n      isSpam\n    }\n  }\n}"
 
   public var id: GraphQLID?
-  public var dateCreated: String?
+  public var isUpgraded: Int?
   public var isSpam: Int?
   public var email: String?
 
-  public init(id: GraphQLID? = nil, dateCreated: String? = nil, isSpam: Int? = nil, email: String? = nil) {
+  public init(id: GraphQLID? = nil, isUpgraded: Int? = nil, isSpam: Int? = nil, email: String? = nil) {
     self.id = id
-    self.dateCreated = dateCreated
+    self.isUpgraded = isUpgraded
     self.isSpam = isSpam
     self.email = email
   }
 
   public var variables: GraphQLMap? {
-    return ["id": id, "dateCreated": dateCreated, "isSpam": isSpam, "email": email]
+    return ["id": id, "isUpgraded": isUpgraded, "isSpam": isSpam, "email": email]
   }
 
   public struct Data: GraphQLSelectionSet {
     public static let possibleTypes = ["Query"]
 
     public static let selections: [GraphQLSelection] = [
-      GraphQLField("listXModelTypes", arguments: ["id": GraphQLVariable("id"), "dateCreated": GraphQLVariable("dateCreated"), "isSpam": GraphQLVariable("isSpam"), "email": GraphQLVariable("email")], type: .object(ListXModelType.selections)),
+      GraphQLField("listXModelTypes", arguments: ["id": GraphQLVariable("id"), "isUpgraded": GraphQLVariable("isUpgraded"), "isSpam": GraphQLVariable("isSpam"), "email": GraphQLVariable("email")], type: .object(ListXModelType.selections)),
     ]
 
     public var snapshot: Snapshot
