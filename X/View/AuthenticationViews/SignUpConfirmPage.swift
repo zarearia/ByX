@@ -12,20 +12,35 @@ struct SignUpConfirmPage: View {
     @State var confirmationCode: String = ""
 
     var body: some View {
-        VStack {
-            Spacer()
 
-            TextField("Enter Code Here", text: $confirmationCode)
-                .keyboardType(.numberPad)
+        ZStack {
+            VStack {
 
-            Button(action: {
-                self.networking.confirmEmail(code: Int(self.confirmationCode) ?? 0)
-            }) {
-                Text("Approve")
+                SignInUpTextField(text: self.$confirmationCode, placeHolder: "Enter Code Here")
+                    .keyboardType(.numberPad)
+                    .padding(.top, 100)
+                    .padding()
+
+//                TextField("Enter Code Here", text: $confirmationCode)
+//                    .keyboardType(.numberPad)
+
+                AuthenticationButton(text: "Approve", screenWidth: UIScreen.main.bounds.width) {
+                    self.networking.confirmEmail(code: Int(self.confirmationCode) ?? 0)
+                }
+                    .padding()
+//            Button(action: {
+//
+//            }) {
+//                Text("Approve")
+//                    .padding(.top, 200)
+//            }
+
+                Spacer()
+
             }
-
-            Spacer()
-
         }
+            .onTapGesture {
+                UIApplication.shared.endEditing()
+            }
     }
 }
