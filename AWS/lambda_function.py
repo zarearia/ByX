@@ -238,21 +238,27 @@ def lambda_handler(event, context):
 
     def get_all_items(lastEvaluatedKey):
         (lastEvaluatedKey, email) = detach_evaluatedKey_and_email(lastEvaluatedKey)
+
+        limit = 12
+        if lastEvaluatedKey['isUpgraded'] == 1:
+            limit = 4
+        
         if lastEvaluatedKey['id'] != "":
             response = table.query(
-                IndexName='isSpam-dateCreated-index',
+                IndexName='isSpam-isUpgraded-index',
                 # KeyConditionExpression=Key('isSpam').eq(0),
-                KeyConditionExpression=Key('isSpam').eq(lastEvaluatedKey['isSpam']),
-                Limit=100,
+                KeyConditionExpression=Key('isSpam').eq(lastEvaluatedKey['isSpam']) & Key('isUpgraded').eq(lastEvaluatedKey['isUpgraded']),
+                Limit=limit,
                 ExclusiveStartKey=lastEvaluatedKey,
                 ScanIndexForward=False
             )
         else:
             response = table.query(
-                IndexName='isSpam-dateCreated-index',
+                IndexName='isSpam-isUpgraded-index',
                 # KeyConditionExpression=Key('isSpam').eq(0),
-                KeyConditionExpression=Key('isSpam').eq(lastEvaluatedKey['isSpam']),
-                Limit=100,
+                # ProjectionExpression="isSpam, isUpgraded",
+                KeyConditionExpression=Key('isSpam').eq(lastEvaluatedKey['isSpam']) & Key('isUpgraded').eq(lastEvaluatedKey['isUpgraded']),
+                Limit=limit,
                 ScanIndexForward=False
             )
             
@@ -283,10 +289,16 @@ def lambda_handler(event, context):
     
     def get_all_items_sorted_by_likes(lastEvaluatedKey):
         (lastEvaluatedKey, email) = detach_evaluatedKey_and_email(lastEvaluatedKey)
+
+        limit = 12
+        if lastEvaluatedKey['isUpgraded'] == 1:
+            limit = 4
+
         if lastEvaluatedKey['id'] != "":
             response = table.query(
                 IndexName='isSpam-likesCount-index',
                 KeyConditionExpression=Key('isSpam').eq(0),
+                FilterExpression=Attr('isUpgraded').eq(lastEvaluatedKey['isUpgraded']),
                 Limit=100,
                 ExclusiveStartKey=lastEvaluatedKey,
                 ScanIndexForward=False
@@ -295,6 +307,7 @@ def lambda_handler(event, context):
             response = table.query(
                 IndexName='isSpam-likesCount-index',
                 KeyConditionExpression=Key('isSpam').eq(0),
+                FilterExpression=Attr('isUpgraded').eq(lastEvaluatedKey['isUpgraded']),
                 Limit=100,
                 ScanIndexForward=False
             )
@@ -742,6 +755,10 @@ def lambda_handler(event, context):
             user_item = user_response['Item']
         except:
             is_email_new = True
+        
+        if is_email_new == False:
+            if user_item['Item']['confirmed'] == False:
+                is_email_new = True
 
         if is_email_new == False:
             return {
@@ -806,7 +823,7 @@ def lambda_handler(event, context):
             print(e.response['Error']['Message'])
             return {
                 'statusCode': 500,
-                'body': 'SignUp uncomplete and sending email failed'
+                'body': 'SignUp uncomplete and sending email failed. Error :' + e.response['Error']['Message']
             }
         else:
             print("Email sent! Message ID:"),
@@ -957,6 +974,23 @@ def lambda_handler(event, context):
 
 
 ################################################################################
+
+# Test Get Items
+################################################################################
+
+    def detach_evaluatedKey_and_email(json_data):
+        data = json_data
+        email = event['LastEvaluatedKey']['email']
+        data.pop('email', None)
+        # data = json.dump(data, 4, in)
+        return(data, email)
+
+
+################################################################################
+
+
+
+
 
 
     if event["field"] != 'sign_up' and event["field"] != 'confirm_email' and event["field"] != 'sign_in':
