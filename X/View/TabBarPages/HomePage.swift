@@ -105,7 +105,9 @@ struct HomePage: View {
 
 
 //            TODO: Uncomment this line(commented for design test)
-                self.observedObj.runQuery()
+                if homeViewNetworking.isUserSignedInVar {
+                    self.observedObj.runQuery()
+                }
             }
     }
 }

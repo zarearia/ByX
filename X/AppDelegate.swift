@@ -9,6 +9,8 @@
 import UIKit
 import AWSAppSync
 
+let urlSessionConfiguration = URLSessionConfiguration.default
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -19,8 +21,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Override point for customization after application launch.
         do {
             // Header
-            let urlSessionConfiguration = URLSessionConfiguration.default
-            urlSessionConfiguration.httpAdditionalHeaders = ["token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InhhcHBlbWFpbHRlc3QyMDIwQGdtYWlsLmNvbSJ9.iB8bTlPF7wotCLkvJAsOyHpFNEx4gkgJ1215qF4nR54"]
+//            let urlSessionConfiguration = URLSessionConfiguration.default
+            if let token = userDefaults.value(forKey: "token") {
+                urlSessionConfiguration.httpAdditionalHeaders = ["token": token as! String]
+            } else {
+                urlSessionConfiguration.httpAdditionalHeaders = ["token": ""]
+            }
+
+//            eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InhhcHBlbWFpbHRlc3QyMDIwQGdtYWlsLmNvbSJ9.iB8bTlPF7wotCLkvJAsOyHpFNEx4gkgJ1215qF4nR54
 
             // You can choose the directory in which AppSync stores its persistent cache databases
             let cacheConfiguration = try AWSAppSyncCacheConfiguration()
@@ -37,6 +45,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
         return true
+    }
+
+    func reconfigureAppSyncClient(actionAfterExcution: (() -> Void)) {
+        do {
+            // Header
+//            let urlSessionConfiguration = URLSessionConfiguration.default
+            if let token = userDefaults.value(forKey: "token") {
+                urlSessionConfiguration.httpAdditionalHeaders = ["token": token as! String]
+            } else {
+                urlSessionConfiguration.httpAdditionalHeaders = ["token": ""]
+            }
+//            eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InhhcHBlbWFpbHRlc3QyMDIwQGdtYWlsLmNvbSJ9.iB8bTlPF7wotCLkvJAsOyHpFNEx4gkgJ1215qF4nR54
+
+            // You can choose the directory in which AppSync stores its persistent cache databases
+            let cacheConfiguration = try AWSAppSyncCacheConfiguration()
+
+            // AppSync configuration & client initialization
+            let appSyncServiceConfig = try AWSAppSyncServiceConfig()
+            let appSyncConfig = try AWSAppSyncClientConfiguration(appSyncServiceConfig: appSyncServiceConfig,
+                urlSessionConfiguration: urlSessionConfiguration, cacheConfiguration: cacheConfiguration)
+            appSyncClient = try AWSAppSyncClient(appSyncConfig: appSyncConfig)
+            print("Initialized appsync client.")
+
+            actionAfterExcution()
+
+        } catch {
+            print("Error initializing appsync client. \(error)")
+        }
     }
 
 

@@ -9,16 +9,17 @@ struct SignUpConfirmPage: View {
 
     @EnvironmentObject var networking: HomeViewNetworking
 
-    @State var approveCode: String = ""
+    @State var confirmationCode: String = ""
 
     var body: some View {
         VStack {
             Spacer()
 
-            TextField("Enter Code Here", text: $approveCode)
+            TextField("Enter Code Here", text: $confirmationCode)
+                .keyboardType(.numberPad)
 
             Button(action: {
-//                self.networking.confirmSignUp(for: homeViewNetworking.userEmail, with: self.approveCode)
+                self.networking.confirmEmail(code: Int(self.confirmationCode) ?? 0)
             }) {
                 Text("Approve")
             }

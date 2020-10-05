@@ -9,6 +9,9 @@
 import UIKit
 import SwiftUI
 
+let userEmailKey = "userEmailKey"
+let userPasswordKey = "userPasswordKey"
+
 let homeViewNetworking = HomeViewNetworking()
 let userDefaults = UserDefaults.standard
 
