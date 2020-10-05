@@ -1,15 +1,15 @@
 {
     "dev": {
         "awscloudformation": {
-            "AuthRoleName": "amplify-xwgig1-dev-162234-authRole",
-            "UnauthRoleArn": "arn:aws:iam::442286511762:role/amplify-xwgig1-dev-162234-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::442286511762:role/amplify-xwgig1-dev-162234-authRole",
+            "AuthRoleName": "amplify-xglpms-dev-85930-authRole",
+            "UnauthRoleArn": "arn:aws:iam::442286511762:role/amplify-xglpms-dev-85930-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::442286511762:role/amplify-xglpms-dev-85930-authRole",
             "Region": "us-east-1",
-            "DeploymentBucketName": "amplify-xwgig1-dev-162234-deployment",
-            "UnauthRoleName": "amplify-xwgig1-dev-162234-unauthRole",
-            "StackName": "amplify-xwgig1-dev-162234",
-            "StackId": "arn:aws:cloudformation:us-east-1:442286511762:stack/amplify-xwgig1-dev-162234/90354770-0577-11eb-a482-12717722e021",
-            "AmplifyAppId": "d1c3r5s4kt9ele"
+            "DeploymentBucketName": "amplify-xglpms-dev-85930-deployment",
+            "UnauthRoleName": "amplify-xglpms-dev-85930-unauthRole",
+            "StackName": "amplify-xglpms-dev-85930",
+            "StackId": "arn:aws:cloudformation:us-east-1:442286511762:stack/amplify-xglpms-dev-85930/a07fe690-0602-11eb-af42-0e3b177c99d5",
+            "AmplifyAppId": "d14ybv7g5vs70j"
         }
     }
 }

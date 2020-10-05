@@ -594,12 +594,12 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "dateCreated",
+          "name" : "isUpgraded",
           "description" : null,
           "args" : [ ],
           "type" : {
             "kind" : "SCALAR",
-            "name" : "String",
+            "name" : "Int",
             "ofType" : null
           },
           "isDeprecated" : false,
@@ -1177,6 +1177,35 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
+          "name" : "increaseUserCoupens",
+          "description" : null,
+          "args" : [ {
+            "name" : "email",
+            "description" : null,
+            "type" : {
+              "kind" : "SCALAR",
+              "name" : "AWSEmail",
+              "ofType" : null
+            },
+            "defaultValue" : null
+          }, {
+            "name" : "numberOfCoupens",
+            "description" : null,
+            "type" : {
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
+            },
+            "defaultValue" : null
+          } ],
+          "type" : {
+            "kind" : "OBJECT",
+            "name" : "ResponseWithBody",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
           "name" : "adminChangeXModelType",
           "description" : null,
           "args" : [ {
@@ -1205,6 +1234,175 @@
           "type" : {
             "kind" : "OBJECT",
             "name" : "XModelType",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "signUpUser",
+          "description" : null,
+          "args" : [ {
+            "name" : "name",
+            "description" : null,
+            "type" : {
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
+            },
+            "defaultValue" : null
+          }, {
+            "name" : "email",
+            "description" : null,
+            "type" : {
+              "kind" : "SCALAR",
+              "name" : "AWSEmail",
+              "ofType" : null
+            },
+            "defaultValue" : null
+          }, {
+            "name" : "password",
+            "description" : null,
+            "type" : {
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
+            },
+            "defaultValue" : null
+          } ],
+          "type" : {
+            "kind" : "OBJECT",
+            "name" : "ResponseWithBody",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "confirmUserEmail",
+          "description" : null,
+          "args" : [ {
+            "name" : "email",
+            "description" : null,
+            "type" : {
+              "kind" : "SCALAR",
+              "name" : "AWSEmail",
+              "ofType" : null
+            },
+            "defaultValue" : null
+          }, {
+            "name" : "confirmationCode",
+            "description" : null,
+            "type" : {
+              "kind" : "SCALAR",
+              "name" : "Int",
+              "ofType" : null
+            },
+            "defaultValue" : null
+          } ],
+          "type" : {
+            "kind" : "OBJECT",
+            "name" : "ResponseWithTokenAndBody",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "signInUser",
+          "description" : null,
+          "args" : [ {
+            "name" : "email",
+            "description" : null,
+            "type" : {
+              "kind" : "SCALAR",
+              "name" : "AWSEmail",
+              "ofType" : null
+            },
+            "defaultValue" : null
+          }, {
+            "name" : "password",
+            "description" : null,
+            "type" : {
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
+            },
+            "defaultValue" : null
+          } ],
+          "type" : {
+            "kind" : "OBJECT",
+            "name" : "ResponseWithTokenAndBody",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        } ],
+        "inputFields" : null,
+        "interfaces" : [ ],
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "OBJECT",
+        "name" : "ResponseWithBody",
+        "description" : null,
+        "fields" : [ {
+          "name" : "statusCode",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "body",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        } ],
+        "inputFields" : null,
+        "interfaces" : [ ],
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "OBJECT",
+        "name" : "ResponseWithTokenAndBody",
+        "description" : null,
+        "fields" : [ {
+          "name" : "statusCode",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "body",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "token",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
             "ofType" : null
           },
           "isDeprecated" : false,

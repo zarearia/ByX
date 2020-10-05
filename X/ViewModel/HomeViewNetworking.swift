@@ -29,8 +29,10 @@ class HomeViewNetworking: ObservableObject {
     
     @Published var searchText = ""
 
-    //    TODO: Change to false
-    @Published var isUserSignedIn = true
+    //    TODO: Change to false(is the following line still necessary?)
+//    @Published var isUserSignedIn = true
+    @Published var signUpStatusText = ""
+    @State var signUpStatusError = false
 
     @Published var didSendSignUpEmail = false
 
@@ -64,21 +66,6 @@ class HomeViewNetworking: ObservableObject {
 
                 self.fetchResults()
             }
-
-//            appSyncClient?.fetch(query: ListXModelTypesQuery(id: "", dateCreated: "", isSpam: 0, email: "zarearia@email.com"), cachePolicy:  .fetchIgnoringCacheData) { (result, error) in
-//
-//                    if error != nil {
-//                        print(error?.localizedDescription ?? "")
-//                        return
-//                    }
-//                    print("Latest Sort Query complete.")
-//
-//                    print(result)
-//
-//                    self.rawListItems = (result!.data!.listXModelTypes!.items!) as! [ListXModelTypesQuery.Data.ListXModelType.Item]
-//
-//                    self.fetchResults()
-//                }
             
         case .mostLiked:
             
@@ -205,6 +192,75 @@ class HomeViewNetworking: ObservableObject {
         }
         return errorFlag;
     }
+
+    /*MARK: Authentication Amplify (delete soon)*/
+    /*****************************************************************************************************************/
+
+    func isUserSignedIn() -> Bool {
+        return userDefaults.value(forKey: "token") != nil 
+    }
+
+    func signUp(name: String, email: String, password: String) {
+
+        if name == "" || password == "" || email == "" {
+            signUpStatusText = "Please fill all the required information"
+            signUpStatusError = true
+        }
+
+        if !isValidEmail(email: email) {
+            signUpStatusText = "Email is invalid"
+            signUpStatusError = true
+        }
+
+        if password.count < 8 {
+            signUpStatusText = "Password is too short"
+            signUpStatusError = true
+        }
+
+        appSyncClient?.perform(mutation: SignUpUserMutation(name: name, email: email, password: password)) { result, error in
+            if error != nil {
+                print(error?.localizedDescription ?? "")
+                return
+            }
+
+            var data = result!.data!.jsonObject
+            guard let dictionaryResult = data["signUpUser"] as? [String: Any] else {
+                fatalError("couldn't convert signUpData to JSON")
+            }
+
+            var statusResult = dictionaryResult["statusCode"] as! Int
+
+            switch statusResult {
+            case 200:
+                self.signUpStatusText = dictionaryResult["body"] as! String
+                self.signUpStatusError = false
+                print("200")
+                self.didSendSignUpEmail = true
+            case 403:
+                self.signUpStatusText = dictionaryResult["body"] as! String
+                self.signUpStatusError = true
+                print("403")
+            case 500:
+                self.signUpStatusText = dictionaryResult["body"] as! String
+                self.signUpStatusError = true
+                print("500")
+            default:
+                print("default")
+            }
+        }
+        self.signUpStatusError = true
+    }
+
+
+
+    func isValidEmail(email: String) -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+
+        let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailPred.evaluate(with: email)
+    }
+
+    /*****************************************************************************************************************/
 
 
     /*MARK: Authentication Amplify (delete soon)*/

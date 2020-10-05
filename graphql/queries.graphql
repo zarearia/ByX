@@ -55,7 +55,7 @@ query ListXModelTypes(
     }
     LastEvaluatedKey {
       id
-      dateCreated
+      isUpgraded
       isSpam
     }
   }

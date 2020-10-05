@@ -1,3 +1,9 @@
+input CreateNewUser {
+	name: String!
+	email: AWSEmail!
+	password: String!
+}
+
 input CreateXModelTypeInput {
 	email: AWSEmail!
 	title: String!
@@ -5,7 +11,7 @@ input CreateXModelTypeInput {
 
 type LastEvaluatedKey {
 	id: String
-	dateCreated: String
+	isUpgraded: Int
 	isSpam: Int
 }
 
@@ -48,14 +54,18 @@ type Mutation {
 	likeXModelType(id: ID!, email: AWSEmail!): XModelType
 	dislikeXModelType(id: ID!, email: AWSEmail!): XModelType
 	reportXModelType(id: ID!, email: AWSEmail!): XModelType
+	increaseUserCoupens(email: AWSEmail, numberOfCoupens: String): ResponseWithBody
 	adminChangeXModelType(id: ID!, accept: Boolean): XModelType
+	signUpUser(name: String, email: AWSEmail, password: String): ResponseWithBody
+	confirmUserEmail(email: AWSEmail, confirmationCode: Int): ResponseWithTokenAndBody
+	signInUser(email: AWSEmail, password: String): ResponseWithTokenAndBody
 }
 
 type Query {
 	getXModelType(id: ID!): XModelType
 	listXModelTypes(
 		id: ID,
-		dateCreated: String,
+		isUpgraded: Int,
 		isSpam: Int,
 		email: AWSEmail
 	): XModelTypeConnection
@@ -73,6 +83,17 @@ type Query {
 	): XModelTypeConnectionDislikesSorted
 	listXModelTypesSearchTags(id: ID, tags: String, email: AWSEmail): XModelTypeConnectionScanTags
 	listXModelTypesUserItems(id: ID, email: AWSEmail, dateCreated: String): XModelTypeConnectionUserItems
+}
+
+type ResponseWithBody {
+	statusCode: Int
+	body: String
+}
+
+type ResponseWithTokenAndBody {
+	statusCode: Int
+	body: String
+	token: String
 }
 
 type XModelType {

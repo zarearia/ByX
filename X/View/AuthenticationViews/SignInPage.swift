@@ -15,19 +15,30 @@ struct SignInPage: View {
     @State var pageType: AuthenticationPageType
     @State var email = ""
     @State var password = ""
+    @State var name = ""
 
     var body: some View {
         NavigationView {
             GeometryReader { geo in
                 VStack {
 
+                    if self.pageType == .signUp {
+                        SignInUpTextField(text: self.$name, placeHolder: "Name")
+                            .keyboardType(.emailAddress)
+                            .padding()
+                            .padding(.top, 100)
+                    }
+
+
                     SignInUpTextField(text: self.$email, placeHolder: "Email")
                         .keyboardType(.emailAddress)
                         .padding()
-                        .padding(.top, 100)
 
                     SignInUpTextField(text: self.$password, placeHolder: "Password")
                         .padding()
+
+                    Text(self.networking.signUpStatusText)
+                        .foregroundColor(.red)
 
                     Spacer()
 
@@ -36,8 +47,8 @@ struct SignInPage: View {
                             case .signIn:
                                 print("Implement Sign In")
                             case .signUp:
-                                print("Implement Sign Up")
-//                                self.networking.signUp(email: self.email, password: self.password)
+
+                                self.networking.signUp(name: self.name, email: self.email, password: self.password)
                             }
                         }
                             .padding(10)

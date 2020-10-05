@@ -16,7 +16,7 @@ struct FirstPage: View {
 
         NavigationView {
             GeometryReader { geo in
-                Color(hex: "#FAF5E4")
+                Color(.white)
                     .edgesIgnoringSafeArea(.all)
 
                 VStack(alignment: .center) {

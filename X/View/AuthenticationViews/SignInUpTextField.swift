@@ -16,7 +16,7 @@ struct SignInUpTextField: View {
 
     var body: some View {
         VStack {
-            TextField(placeHolder, text: $text, onCommit: onCommit ?? doNothing)
+            TextField(placeHolder, text: $text, onCommit: onCommit ?? dismissKeyboard)
                 .font(.system(size: 23, design: .rounded))
                 .foregroundColor(.gray)
                 .padding(.leading, 5)
@@ -27,7 +27,9 @@ struct SignInUpTextField: View {
             .padding()
     }
     
-    func doNothing() -> Void { }
+    func dismissKeyboard() -> Void {
+        UIApplication.shared.endEditing()
+    }
     
 }
 

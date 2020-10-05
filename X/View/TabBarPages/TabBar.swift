@@ -17,7 +17,7 @@ struct TabBar: View {
     var body: some View {
 
         ZStack {
-            if (!self.environmentObject.isUserSignedIn) {
+            if (!self.environmentObject.isUserSignedIn()) {
                 FirstPage()
             } else {
 

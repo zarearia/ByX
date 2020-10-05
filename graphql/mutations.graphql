@@ -151,6 +151,12 @@ mutation ReportXModelType($id: ID!, $email: AWSEmail!) {
     isReportedByTheUser
   }
 }
+mutation IncreaseUserCoupens($email: AWSEmail, $numberOfCoupens: String) {
+  increaseUserCoupens(email: $email, numberOfCoupens: $numberOfCoupens) {
+    statusCode
+    body
+  }
+}
 mutation AdminChangeXModelType($id: ID!, $accept: Boolean) {
   adminChangeXModelType(id: $id, accept: $accept) {
     id
@@ -171,5 +177,25 @@ mutation AdminChangeXModelType($id: ID!, $accept: Boolean) {
     isLikedByTheUser
     isDislikedByTheUser
     isReportedByTheUser
+  }
+}
+mutation SignUpUser($name: String, $email: AWSEmail, $password: String) {
+  signUpUser(name: $name, email: $email, password: $password) {
+    statusCode
+    body
+  }
+}
+mutation ConfirmUserEmail($email: AWSEmail, $confirmationCode: Int) {
+  confirmUserEmail(email: $email, confirmationCode: $confirmationCode) {
+    statusCode
+    body
+    token
+  }
+}
+mutation SignInUser($email: AWSEmail, $password: String) {
+  signInUser(email: $email, password: $password) {
+    statusCode
+    body
+    token
   }
 }

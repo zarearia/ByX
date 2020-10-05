@@ -10,7 +10,7 @@ import UIKit
 import SwiftUI
 
 let homeViewNetworking = HomeViewNetworking()
-
+let userDefaults = UserDefaults.standard
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
