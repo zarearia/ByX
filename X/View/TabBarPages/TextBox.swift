@@ -58,6 +58,7 @@ struct TextBox: View {
     @State var localLike = false
     
     @State var falseBool: Bool = false
+    @State var isUpgradedBool: Bool = false
     
     @State var isLikeHitable = false
     @State var isDislikeHitable = false
@@ -105,6 +106,7 @@ struct TextBox: View {
 
                 Spacer()
 
+                //report and upgrade button
                 Button(action: reportAction) {
                     if isUpgradeable {
                         HStack {
@@ -115,7 +117,16 @@ struct TextBox: View {
 /******************************************************************************/
                             
 //                            TODO: - Fix This Part
-                            ToggleImage(isOn: $falseBool, imageName: "star", action: upgradeAction)
+                            ToggleImage(isOn: $isUpgradedBool/*$falseBool*/, imageName: "star") {
+
+                                self.envObject.upgradePost(id: self.envObject.listItems[self.currentItemIndex].id,
+                                    title: self.envObject.listItems[self.currentItemIndex].title,
+                                    isUpgraded: self.envObject.listItems[self.currentItemIndex].isUpgraded == 0 ? 1 : 0,
+                                    tags: self.envObject.listItems[self.currentItemIndex].tags ?? "",
+                                    itemIndex: self.currentItemIndex) {
+                                    self.isUpgradedBool = self.envObject.listItems[self.currentItemIndex].isUpgraded == 0 ? false : true
+                                }
+                            }
                             .font(.system(size: 25, weight: .medium, design: .rounded))
                             .foregroundColor(Color(hex: "#6CAF26"))
                         }
@@ -146,6 +157,7 @@ struct TextBox: View {
             .shadow(color: Color(hex: "#757575"),radius: 5, x: 1, y: 2)
             .padding([.top, .leading, .trailing], 20)
             .onAppear{
+                self.isUpgradedBool = self.envObject.listItems[self.currentItemIndex].isUpgraded == 0 ? false : true
                 self.manageHitableObjects()
             }
 
@@ -288,8 +300,5 @@ struct TextBox: View {
         isDislikeHitable = true
         isReportHitable = true
     }
-    
-    func upgradeAction() {
-        print("hello world from upgrade")
-    }
+
 }

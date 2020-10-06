@@ -16,22 +16,22 @@ enum SortOptions {
 }
 
 class HomeViewNetworking: ObservableObject {
-    
+
     var appSyncClient: AWSAppSyncClient?
-    
+
     @Published var rawListItems = [ListXModelTypesQuery.Data.ListXModelType.Item]()
     @Published var listItems = [ListXModelTypesQuery.Data.ListXModelType.Item(id: "0", email: "12341234", title: "klanwfblawladk")]
-    
+
     @Published var rawListItemsLikeSorted = [ListXModelTypesLikesSortedQuery.Data.ListXModelTypesLikesSorted.Item]()
     @Published var listItemsLikeSorted = [ListXModelTypesLikesSortedQuery.Data.ListXModelTypesLikesSorted.Item(id: "0", email: "12341234", title: "klanwfblawladk")]
-    
+
     @Published var sortedBy: SortOptions = .latest
-    
+
     @Published var searchText = ""
 
     //    TODO: Change to false(is the following line still necessary?)
 //    @Published var isUserSignedIn = true
-    @Published var signUpStatusText = ""
+    @Published var signInUpStatusText = ""
 //    @State var signUpStatusError = false
 
     @Published var didSendSignUpEmail = false
@@ -63,7 +63,7 @@ class HomeViewNetworking: ObservableObject {
         appSyncClient = appDelegate.appSyncClient
     }
 
-    func runQuery(){
+    func runQuery() {
 
         switch sortedBy {
 
@@ -86,7 +86,7 @@ class HomeViewNetworking: ObservableObject {
 
         case .mostLiked:
 
-            appSyncClient?.fetch(query: ListXModelTypesLikesSortedQuery(id: "", likesCount: 0, isSpam: 0, email: "zarearia@email.com"), cachePolicy:  .fetchIgnoringCacheData) { (result, error) in
+            appSyncClient?.fetch(query: ListXModelTypesLikesSortedQuery(id: "", likesCount: 0, isSpam: 0, email: "zarearia@email.com"), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
 
                 if error != nil {
                     print(error?.localizedDescription ?? "")
@@ -103,7 +103,7 @@ class HomeViewNetworking: ObservableObject {
 
         case .mostDisliked:
 
-            appSyncClient?.fetch(query: ListXModelTypesDislikesSortedQuery(id: "", dislikesCount: 0, isSpam: 0, email: "zarearia@email.com"), cachePolicy:  .fetchIgnoringCacheData) { (result, error) in
+            appSyncClient?.fetch(query: ListXModelTypesDislikesSortedQuery(id: "", dislikesCount: 0, isSpam: 0, email: "zarearia@email.com"), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
 
                 if error != nil {
                     print(error?.localizedDescription ?? "")
@@ -223,15 +223,15 @@ class HomeViewNetworking: ObservableObject {
     func signUp(name: String, email: String, password: String) {
 
         if name == "" || password == "" || email == "" {
-            signUpStatusText = "Please fill all the required information"
+            signInUpStatusText = "Please fill all the required information"
         }
 
         if !isValidEmail(email: email) {
-            signUpStatusText = "Email is invalid"
+            signInUpStatusText = "Email is invalid"
         }
 
         if password.count < 8 {
-            signUpStatusText = "Password is too short"
+            signInUpStatusText = "Password is too short"
         }
 
         appSyncClient?.perform(mutation: SignUpUserMutation(name: name, email: email, password: password)) { result, error in
@@ -240,29 +240,25 @@ class HomeViewNetworking: ObservableObject {
                 return
             }
 
-            let data = result!.data!.jsonObject
-            guard let dictionaryResult = data["signUpUser"] as? [String: Any] else {
+            let data = result?.data?.jsonObject
+            guard let dictionaryResult = data?["signUpUser"] as? [String: Any] else {
                 fatalError("couldn't convert signUpData to JSON")
             }
 
-            let statusResult = dictionaryResult["statusCode"] as! Int
+            let statusResult = dictionaryResult["statusCode"] as? Int ?? 0
 
             switch statusResult {
             case 200:
-                self.signUpStatusText = dictionaryResult["body"] as! String
+                self.signInUpStatusText = dictionaryResult["body"] as? String ?? ""
                 self.userEmail = email
                 self.userPassword = password
-                print("200")
+                print(statusResult)
                 self.didSendSignUpEmail = true
-            case 403:
-                self.signUpStatusText = dictionaryResult["body"] as! String
-                print("403")
-            case 500:
-                self.signUpStatusText = dictionaryResult["body"] as! String
-                print("500")
+            case 0:
+                print("unknown error or problem")    
             default:
-                self.emailConfirmStatusError = "Unknown Error"
-                print("signUp switch default")
+                self.signInUpStatusText = dictionaryResult["body"] as? String ?? "unknown error"
+                print(statusResult)
             }
         }
     }
@@ -276,15 +272,14 @@ class HomeViewNetworking: ObservableObject {
                 return
             }
 
-            let data = result!.data!.jsonObject
-            print(result!.data!.jsonObject)
-            guard let dictionaryResult = data["confirmUserEmail"] as? [String: Any] else {
+            let data = result?.data?.jsonObject
+            guard let dictionaryResult = data?["confirmUserEmail"] as? [String: Any] else {
                 fatalError("couldn't convert Confirming email to JSON")
             }
 
-            let statusResult = dictionaryResult["statusCode"] as! Int
+            let statusResult = dictionaryResult["statusCode"] as? Int ?? 0
 
-            switch statusResult{
+            switch statusResult {
             case 200:
                 self.token = dictionaryResult["token"] as? String
                 let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -293,17 +288,54 @@ class HomeViewNetworking: ObservableObject {
                     self.isUserSignedInVar = self.isUserSignedIn()
                 }
 
-                self.emailConfirmStatusError = dictionaryResult["body"] as! String
-                print("200")
-            case 201:
-                self.emailConfirmStatusError = dictionaryResult["body"] as! String
-                print("201")
-            case 403:
-                self.emailConfirmStatusError = dictionaryResult["body"] as! String
-                print("403")
+                self.emailConfirmStatusError = dictionaryResult["body"] as? String ?? ""
+                print(statusResult)
+
             default:
-                self.emailConfirmStatusError = "Unknown Error"
-                print("confirmEmail switch default")
+                self.emailConfirmStatusError = dictionaryResult["body"] as? String ?? "Unknown Error"
+                print(statusResult)
+            }
+        }
+    }
+
+    /*exp: Sign In*/
+    func signIn(email: String, password: String) {
+
+        if password == "" || email == "" {
+            signInUpStatusText = "Please fill all the required information"
+        }
+        if !isValidEmail(email: email) {
+            signInUpStatusText = "Email is invalid"
+        }
+        if password.count < 8 {
+            signInUpStatusText = "Password incorrect(Too short)"
+        }
+
+        appSyncClient?.perform(mutation: SignInUserMutation(email: email, password: password)) { result, error in
+            if error != nil {
+                print(error?.localizedDescription ?? "")
+                return
+            }
+
+            let data = result?.data?.jsonObject
+            guard let dictionaryResult = data?["signInUser"] as? [String: Any] else {
+                fatalError("couldn't convert Sign In email to JSON")
+            }
+
+            let statusResult = dictionaryResult["statusCode"] as? Int ?? 0
+
+            switch statusResult {
+            case 200:
+                self.token = dictionaryResult["token"] as? String
+                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                appDelegate.reconfigureAppSyncClient {
+                    self.appSyncClient = appDelegate.appSyncClient
+                    self.isUserSignedInVar = self.isUserSignedIn()
+                }
+
+            default:
+                self.signInUpStatusText = dictionaryResult["body"] as? String ?? "Unknown Error"
+                print(statusResult)
             }
         }
     }
@@ -313,81 +345,36 @@ class HomeViewNetworking: ObservableObject {
     func isValidEmail(email: String) -> Bool {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
 
-        let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        let emailPred = NSPredicate(format: "SELF MATCHES %@", emailRegEx)
         return emailPred.evaluate(with: email)
     }
 
     /*****************************************************************************************************************/
 
 
-    /*MARK: Authentication Amplify (delete soon)*/
-    /*****************************************************************************************************************/
-//
-//
-//    func fetchCurrentAuthSession() {
-//        _ = Amplify.Auth.fetchAuthSession { result in
-//            switch result {
-//            case .success(let session):
-//                print("Is user signed in - \(session.isSignedIn)")
-//                DispatchQueue.main.async {
-//                    self.isUserSignedIn = session.isSignedIn
-//                }
-//            case .failure(let error):
-//                print("Fetch session failed with error \(error)")
-//            }
-//        }
-//    }
-//
-//
-//    func signUp(email: String, password: String) {
-//        let userAttributes = [AuthUserAttribute(.email, value: email)]
-//        let options = AuthSignUpRequest.Options(userAttributes: userAttributes)
-//        _ = Amplify.Auth.signUp(username: email, password: password, options: options) { result in
-//            switch result {
-//            case .success(let signUpResult):
-//                if case let .confirmUser(deliveryDetails, _) = signUpResult.nextStep {
-//                    print("Delivery details \(String(describing: deliveryDetails))")
-//                    self.userEmail = email
-//                    self.userPassword = password
-//                    DispatchQueue.main.async {
-//                        self.didSendSignUpEmail = true
-//                    }
-//                } else {
-//                    print("SignUp Complete")
-//                }
-//
-//            case .failure(let error):
-//                print("An error occurred while registering a user \(error)")
-//            }
-//        }
-//    }
-//
-//
-//    func confirmSignUp(for email: String, with confirmationCode: String) {
-//        _ = Amplify.Auth.confirmSignUp(for: email, confirmationCode: confirmationCode) { result in
-//            switch result {
-//            case .success(_):
-//                print("Confirm signUp succeeded")
-////                TODO: Sign in the user after sign up confirmation
-//                self.signIn(email: email, password: self.userPassword)
-//            case .failure(let error):
-//                print("An error occurred while registering a user \(error)")
-//            }
-//        }
-//    }
-//
-//
-//    func signIn(email: String, password: String) {
-//        _ = Amplify.Auth.signIn(username: email, password: password) { result in
-//            switch result {
-//            case .success(_):
-//                print("Sign in succeeded")
-//                self.userEmail = email
-//                self.userPassword = password
-//                self.isUserSignedIn = true
-//            case .failure(let error):
-//                print("Sign in failed \(error)")
-//            }
-//        }
-//    }
+    func upgradePost(id: String, title: String, isUpgraded: Int, tags: String, itemIndex: Int, action: @escaping (() -> Void)) {
+
+        appSyncClient?.perform(mutation: UpdateXModelTypeMutation(id: id, title: title, isUpgraded: isUpgraded, tags: tags)) { result, error in
+            if error != nil {
+                print(error?.localizedDescription ?? "")
+
+                return
+            }
+
+            print("Upgrade mutation excuted")
+
+            // updating the item after mutation
+            let data = result?.data?.jsonObject
+            guard let dictionaryResult = data?["updateXModelType"] as? [String: Any] else {
+                fatalError("couldn't convert Upgrade Post email to JSON")
+            }
+
+            self.listItems[itemIndex].isUpgraded = dictionaryResult["isUpgraded"] as! Int
+
+            print("is upgraded : \(dictionaryResult["isUpgraded"])")
+
+            action()
+        }
+    }
+
 }

@@ -37,7 +37,7 @@ struct SignInPage: View {
                     SignInUpTextField(text: self.$password, placeHolder: "Password")
                         .padding()
 
-                    Text(self.networking.signUpStatusText)
+                    Text(self.networking.signInUpStatusText)
                         .foregroundColor(.red)
 
                     Spacer()
@@ -45,9 +45,8 @@ struct SignInPage: View {
                         AuthenticationButton(text: self.pageType == .signIn ? "Sign In" : "Sign Up", screenWidth: geo.size.width) {
                             switch self.pageType {
                             case .signIn:
-                                print("Implement Sign In")
+                                self.networking.signIn(email: self.email, password: self.password)
                             case .signUp:
-
                                 self.networking.signUp(name: self.name, email: self.email, password: self.password)
                             }
                         }
