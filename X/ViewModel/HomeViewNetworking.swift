@@ -92,8 +92,8 @@ class HomeViewNetworking: ObservableObject {
                     print(error?.localizedDescription ?? "")
                     return
                 }
-                print("Like Query complete.")
-
+                print("MostLiked Query complete.")
+                print(result?.data?.jsonObject)
                 let resultJson = result?.data?.listXModelTypesLikesSorted?.jsonObject
                 let reslutList = try! ListXModelTypesQuery.Data.ListXModelType.init(jsonObject: resultJson as! JSONObject)
                 self.rawListItems = reslutList.items! as! [ListXModelTypesQuery.Data.ListXModelType.Item]
@@ -121,7 +121,77 @@ class HomeViewNetworking: ObservableObject {
     }
 
     func fetchResults() {
-        listItems = rawListItems
+//        listItems = rawListItems
+        mergeUpgradedAndNotUpgradedPosts()
+    }
+
+    func mergeUpgradedAndNotUpgradedPosts() {
+        let postRatio = 2
+
+        appSyncClient?.fetch(query: ListXModelTypesQuery(id: "", isUpgraded: 1, isSpam: 0, email: "xappemailtest2020@gmail.com"), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
+
+            if error != nil {
+                print(error?.localizedDescription ?? "")
+                return
+            }
+            print("Latest Sort Query Upgraded complete.")
+            print(result?.data)
+
+            let itemsLocal = (result!.data!.listXModelTypes!.items!) as! [ListXModelTypesQuery.Data.ListXModelType.Item]
+
+            if itemsLocal.count == 0 {
+                self.listItems = self.rawListItems
+                return
+            }
+
+            var mergedArrayCount = self.rawListItems.count + (itemsLocal.count/postRatio) + 1
+            print("upgraded Items are not more than expected")
+            if itemsLocal.count >= self.rawListItems.count / postRatio {
+                mergedArrayCount = self.rawListItems.count + itemsLocal.count
+                print("upgraded Items were more than expected")
+            }
+
+            var underflowFlag = false
+
+            var underflow = 0
+            var mergedArray: [ListXModelTypesQuery.Data.ListXModelType.Item] = (0 ..< mergedArrayCount).map {
+
+                if underflowFlag {
+                    underflow += 1
+                } else {
+                    underflow = $0 - ($0/postRatio) - 1
+                }
+                print("$0: \($0) ")
+                print("underflow: \(underflow) ")
+
+                if underflow == -1 && itemsLocal.indices.contains($0/postRatio) {
+                    return itemsLocal[0]
+                }
+
+                if itemsLocal.indices.contains($0/postRatio) && self.rawListItems.indices.contains(underflow) {
+                    return $0 % postRatio == 0 ? itemsLocal[$0/postRatio] : self.rawListItems[underflow]
+                } else if itemsLocal.indices.contains($0/postRatio){
+                    if !underflowFlag {
+                        underflowFlag = true
+                        underflow += 1
+                        return itemsLocal[underflow]
+                    }
+                    return itemsLocal[underflow]
+                } else {
+                    if !underflowFlag {
+                        underflowFlag = true
+                        underflow += 1
+                        return self.rawListItems[underflow]
+                    }
+                    underflowFlag = true
+                    return self.rawListItems[underflow]
+                }
+            }
+
+            print(mergedArray)
+            self.listItems = mergedArray
+        }
+
     }
 
 
@@ -327,6 +397,8 @@ class HomeViewNetworking: ObservableObject {
             switch statusResult {
             case 200:
                 self.token = dictionaryResult["token"] as? String
+                self.userEmail = email
+                self.userPassword = password
                 let appDelegate = UIApplication.shared.delegate as! AppDelegate
                 appDelegate.reconfigureAppSyncClient {
                     self.appSyncClient = appDelegate.appSyncClient

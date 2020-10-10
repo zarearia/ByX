@@ -135,11 +135,13 @@ struct AddPage: View {
                     .padding()
                     .padding(.trailing, 15)
 
-                Button(action: {
+//                Button(action: {
+//
+//                }) {
+                AuthenticationButton(text: "Post", screenWidth: geo.size.width) {
                     self.observedObj.runMutation()
-                }) {
-                    AuthenticationButton(text: "Post", screenWidth: geo.size.width)
                 }
+//                }
                     .allowsHitTesting(self.observedObj.textFieldsText.count <= 128)
                     .padding()
 

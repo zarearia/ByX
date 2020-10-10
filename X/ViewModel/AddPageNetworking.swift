@@ -47,14 +47,19 @@ class AddPageNetworking: ObservableObject {
         print(tags)
         
         let isUpgraded_binary = isUpgraded ? 1 : 0
-        appSyncClient?.perform(mutation: CreateXModelTypeMutation(email: "zarearia@email.com", title: textFieldsText, isUpgraded: isUpgraded_binary, tags: tags)) { (result, error) in
+        appSyncClient?.perform(mutation: CreateXModelTypeMutation(email: userDefaults.value(forKey: userEmailKey) as? String ?? "", title: textFieldsText, isUpgraded: isUpgraded_binary, tags: tags)) { (result, error) in
             if let error = error as? AWSAppSyncClientError {
                 print("Error occurred: \(error.localizedDescription )")
+                return
             }
+
 //            if let resultError = result?.errors {
 //                print("Error saving the item on server: \(resultError)")
+//                return
 //            }
+
             print("Mutation complete.")
+            print(result)
             
             self.textFieldsText = ""
             self.isUpgraded = false

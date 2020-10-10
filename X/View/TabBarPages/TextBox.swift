@@ -151,7 +151,8 @@ struct TextBox: View {
 //                .offset(y: -20)
 ////                .padding(5)
         }
-            .background(boxColor)
+//            TODO: Improve Box Color for upgraded posts !?
+            .background(envObject.listItems[currentItemIndex].isUpgraded == 0 ? boxColor : Color.red)
             .cornerRadius(5)
             .opacity(boxOpacity)
             .shadow(color: Color(hex: "#757575"),radius: 5, x: 1, y: 2)
