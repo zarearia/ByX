@@ -25,24 +25,29 @@ struct HomePage: View {
 //                    .edgesIgnoringSafeArea(.all)
 
                 ScrollView {
-                    ForEach(observedObj.listItems, id: \.self.id) { item in
-                        NavigationLink(destination: SwipeablePageView(currentItem: item)/*.environmentObject(self.observedObj)*/)
-                                                            /*.navigationBarHidden(true)*/
-                                                            /*.navigationBarTitle(""))*/ {
-                            TextBox(text: item.title, textColor: Color(.white), boxColor: Color(hex: "#4891E1"),
-                                boxOpacity: 1, thumbsupColor: Color(hex: "#4891E1"), thumbsupNumColor: Color(hex: "#4891E1"),
-                                thumbsdownNumColor: Color(hex: "#9F9F9F"), thumbsdownColor: Color(hex: "#9F9F9F"),
-                                seperateLineColor: Color(hex: "#3BB0BA"), isUpgradeable: false, item: item)
+                    VStack {
+                        ForEach(observedObj.listItems, id: \.self.id) { item in
+                            NavigationLink(destination: SwipeablePageView(currentItem: item)/*.environmentObject(self.observedObj)*/)
+                            /*.navigationBarHidden(true)*/
+                            /*.navigationBarTitle(""))*/ {
+                                TextBox(text: item.title, textColor: Color(.white), boxColor: Color(hex: "#4891E1"),
+                                    boxOpacity: 1, thumbsupColor: Color(hex: "#4891E1"), thumbsupNumColor: Color(hex: "#4891E1"),
+                                    thumbsdownNumColor: Color(hex: "#9F9F9F"), thumbsdownColor: Color(hex: "#9F9F9F"),
+                                    seperateLineColor: Color(hex: "#3BB0BA"), isUpgradeable: false, item: item)
 //                            TextBox(text: item.title, textColor: Color(hex: "#FAF5E4"), boxColor: Color(hex: "#F2A970"),
 //                                boxOpacity: 1, thumbsupColor: Color(hex: "#B39283"), thumbsupNumColor: Color(hex: "#CFB997"),
 //                                thumbsdownNumColor: Color(hex: "#C23B22"), thumbsdownColor: Color(hex: "#C23B22"),
 //                                seperateLineColor: Color(hex: "#3BB0BA"), isUpgradeable: false, item: item)
                                 /*.environmentObject(self.observedObj)*/
+                            }
                         }
                     }
                         .offset(y: searchBarHeight)
-
-                    Spacer()
+                        .padding([.bottom],searchBarHeight)
+                    Button(action: {  print("ss")  }) {
+                        Text("Button")
+                    }
+                        .padding(.top, searchBarHeight)
                 }
 
                 VStack {

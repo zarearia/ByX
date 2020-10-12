@@ -81,7 +81,7 @@ class HomeViewNetworking: ObservableObject {
 
                 self.rawListItems = (result!.data!.listXModelTypes!.items!) as! [ListXModelTypesQuery.Data.ListXModelType.Item]
 
-                self.fetchResults()
+                self.MergeResults()
             }
 
         case .mostLiked:
@@ -98,7 +98,7 @@ class HomeViewNetworking: ObservableObject {
                 let reslutList = try! ListXModelTypesQuery.Data.ListXModelType.init(jsonObject: resultJson as! JSONObject)
                 self.rawListItems = reslutList.items! as! [ListXModelTypesQuery.Data.ListXModelType.Item]
 
-                self.fetchResults()
+                self.MergeResults()
             }
 
         case .mostDisliked:
@@ -115,18 +115,12 @@ class HomeViewNetworking: ObservableObject {
                 let reslutList = try! ListXModelTypesQuery.Data.ListXModelType.init(jsonObject: resultJson as! JSONObject)
                 self.rawListItems = reslutList.items! as! [ListXModelTypesQuery.Data.ListXModelType.Item]
 
-                self.fetchResults()
+                self.MergeResults()
             }
         }
     }
 
-    func fetchResults() {
-//        listItems = rawListItems
-        mergeUpgradedAndNotUpgradedPosts()
-    }
-
-    func mergeUpgradedAndNotUpgradedPosts() {
-        let postRatio = 2
+    func MergeResults() {
 
         appSyncClient?.fetch(query: ListXModelTypesQuery(id: "", isUpgraded: 1, isSpam: 0, email: "xappemailtest2020@gmail.com"), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
 
@@ -139,59 +133,72 @@ class HomeViewNetworking: ObservableObject {
 
             let itemsLocal = (result!.data!.listXModelTypes!.items!) as! [ListXModelTypesQuery.Data.ListXModelType.Item]
 
-            if itemsLocal.count == 0 {
-                self.listItems = self.rawListItems
-                return
-            }
+            let mergedResult = self.mergeUpgradedAndNotUpgradedPosts(upgradedItems: itemsLocal,
+                nonupgradedItems: self.rawListItems)
 
-            var mergedArrayCount = self.rawListItems.count + (itemsLocal.count/postRatio) + 1
-            print("upgraded Items are not more than expected")
-            if itemsLocal.count >= self.rawListItems.count / postRatio {
-                mergedArrayCount = self.rawListItems.count + itemsLocal.count
-                print("upgraded Items were more than expected")
-            }
-
-            var underflowFlag = false
-
-            var underflow = 0
-            var mergedArray: [ListXModelTypesQuery.Data.ListXModelType.Item] = (0 ..< mergedArrayCount).map {
-
-                if underflowFlag {
-                    underflow += 1
-                } else {
-                    underflow = $0 - ($0/postRatio) - 1
-                }
-                print("$0: \($0) ")
-                print("underflow: \(underflow) ")
-
-                if underflow == -1 && itemsLocal.indices.contains($0/postRatio) {
-                    return itemsLocal[0]
-                }
-
-                if itemsLocal.indices.contains($0/postRatio) && self.rawListItems.indices.contains(underflow) {
-                    return $0 % postRatio == 0 ? itemsLocal[$0/postRatio] : self.rawListItems[underflow]
-                } else if itemsLocal.indices.contains($0/postRatio){
-                    if !underflowFlag {
-                        underflowFlag = true
-                        underflow += 1
-                        return itemsLocal[underflow]
-                    }
-                    return itemsLocal[underflow]
-                } else {
-                    if !underflowFlag {
-                        underflowFlag = true
-                        underflow += 1
-                        return self.rawListItems[underflow]
-                    }
-                    underflowFlag = true
-                    return self.rawListItems[underflow]
-                }
-            }
-
-            print(mergedArray)
-            self.listItems = mergedArray
+            self.listItems = mergedResult
         }
 
+    }
+
+    /*exp: result array will be the result of combining two arrays and will be returned at the end*/
+    func mergeUpgradedAndNotUpgradedPosts(upgradedItems: [ListXModelTypesQuery.Data.ListXModelType.Item],
+                                          nonupgradedItems: [ListXModelTypesQuery.Data.ListXModelType.Item]) -> [ListXModelTypesQuery.Data.ListXModelType.Item] {
+
+        let postRatio = 2
+
+        if upgradedItems.count == 0 {
+            self.listItems = nonupgradedItems
+            return nonupgradedItems
+        }
+
+        var mergedArrayCount = nonupgradedItems.count + (upgradedItems.count/postRatio) + 1
+        print("upgraded Items are not more than expected")
+        if upgradedItems.count >= nonupgradedItems.count / postRatio {
+            mergedArrayCount = nonupgradedItems.count + upgradedItems.count
+            print("upgraded Items were more than expected")
+        }
+
+        var underflowFlag = false
+
+        var underflow = 0
+        var mergedArray: [ListXModelTypesQuery.Data.ListXModelType.Item] = (0 ..< mergedArrayCount).map {
+
+            if underflowFlag {
+                underflow += 1
+            } else {
+                underflow = $0 - ($0/postRatio) - 1
+            }
+            print("$0: \($0) ")
+            print("underflow: \(underflow) ")
+
+            if underflow == -1 && upgradedItems.indices.contains($0/postRatio) {
+                return upgradedItems[0]
+            }
+
+            if upgradedItems.indices.contains($0/postRatio) && nonupgradedItems.indices.contains(underflow) {
+                return $0 % postRatio == 0 ? upgradedItems[$0/postRatio] : nonupgradedItems[underflow]
+            } else if upgradedItems.indices.contains($0/postRatio){
+                if !underflowFlag {
+                    underflowFlag = true
+                    underflow += 1
+                    return upgradedItems[underflow]
+                }
+                return upgradedItems[underflow]
+            } else {
+                if !underflowFlag {
+                    underflowFlag = true
+                    underflow += 1
+                    return nonupgradedItems[underflow]
+                }
+                underflowFlag = true
+                return nonupgradedItems[underflow]
+            }
+        }
+
+        print(mergedArray)
+        return mergedArray
+//        self.listItems = mergedArray
     }
 
 
@@ -211,7 +218,7 @@ class HomeViewNetworking: ObservableObject {
                 self.rawListItems = reslutList.items! as! [ListXModelTypesQuery.Data.ListXModelType.Item]
                 print(result?.data?.listXModelTypesSearchTags?.items)
 
-                self.fetchResults()
+                self.MergeResults()
             }
         } else {
             runQuery()
@@ -232,7 +239,7 @@ class HomeViewNetworking: ObservableObject {
             self.rawListItems = reslutList.items! as! [ListXModelTypesQuery.Data.ListXModelType.Item]
             print(result?.data?.listXModelTypesUserItems?.items)
 
-            self.fetchResults()
+            self.MergeResults()
 
         }
     }
