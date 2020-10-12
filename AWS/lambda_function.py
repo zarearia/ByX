@@ -10,8 +10,10 @@ import jwt
 
 # Notes
 ################################################################################
-# I Didn't use isReported attribute, insted isSpam = 1 means spam and isSpam = 2
+# I didn't use isReported attribute, insted isSpam = 1 means spam and isSpam = 2
 # means reported.
+
+# Some status codes are made up for forend simplisity
 ################################################################################
 
 # Helper class to convert a DynamoDB item to JSON.
@@ -239,9 +241,9 @@ def lambda_handler(event, context):
     def get_all_items(lastEvaluatedKey):
         (lastEvaluatedKey, email) = detach_evaluatedKey_and_email(lastEvaluatedKey)
 
-        limit = 12
+        limit = 120
         if lastEvaluatedKey['isUpgraded'] == 1:
-            limit = 4
+            limit = limit // 3
         
         if lastEvaluatedKey['id'] != "":
             response = table.query(
@@ -289,17 +291,18 @@ def lambda_handler(event, context):
     
     def get_all_items_sorted_by_likes(lastEvaluatedKey):
         (lastEvaluatedKey, email) = detach_evaluatedKey_and_email(lastEvaluatedKey)
+        (lastEvaluatedKey, isUpgraded) = detach_evaluatedKey_and_isUpgraded(lastEvaluatedKey)
 
-        limit = 12
-        if lastEvaluatedKey['isUpgraded'] == 1:
-            limit = 4
+        limit = 120
+        if isUpgraded == 1:
+            limit = limit // 3
 
         if lastEvaluatedKey['id'] != "":
             response = table.query(
                 IndexName='isSpam-likesCount-index',
                 KeyConditionExpression=Key('isSpam').eq(0),
-                FilterExpression=Attr('isUpgraded').eq(lastEvaluatedKey['isUpgraded']),
-                Limit=100,
+                FilterExpression=Attr('isUpgraded').eq(isUpgraded),
+                Limit=limit,
                 ExclusiveStartKey=lastEvaluatedKey,
                 ScanIndexForward=False
             )
@@ -307,8 +310,8 @@ def lambda_handler(event, context):
             response = table.query(
                 IndexName='isSpam-likesCount-index',
                 KeyConditionExpression=Key('isSpam').eq(0),
-                FilterExpression=Attr('isUpgraded').eq(lastEvaluatedKey['isUpgraded']),
-                Limit=100,
+                FilterExpression=Attr('isUpgraded').eq(isUpgraded),
+                Limit=limit,
                 ScanIndexForward=False
             )
             
@@ -339,11 +342,18 @@ def lambda_handler(event, context):
         
     def get_all_items_sorted_by_dislikes(lastEvaluatedKey):
         (lastEvaluatedKey, email) = detach_evaluatedKey_and_email(lastEvaluatedKey)
+        (lastEvaluatedKey, isUpgraded) = detach_evaluatedKey_and_isUpgraded(lastEvaluatedKey)
+
+        limit = 120
+        if isUpgraded == 1:
+            limit = limit // 3
+
         if lastEvaluatedKey['id'] != "":
             response = table.query(
                 IndexName='isSpam-dislikesCount-index',
                 KeyConditionExpression=Key('isSpam').eq(0),
-                Limit=100,
+                FilterExpression=Attr('isUpgraded').eq(isUpgraded),
+                Limit=limit,
                 ExclusiveStartKey=lastEvaluatedKey,
                 ScanIndexForward=False
             )
@@ -351,7 +361,8 @@ def lambda_handler(event, context):
             response = table.query(
                 IndexName='isSpam-dislikesCount-index',
                 KeyConditionExpression=Key('isSpam').eq(0),
-                Limit=100,
+                FilterExpression=Attr('isUpgraded').eq(isUpgraded),
+                Limit=limit,
                 ScanIndexForward=False
             )
             
@@ -756,15 +767,21 @@ def lambda_handler(event, context):
         except:
             is_email_new = True
         
+        is_old_email_verified = True
         if is_email_new == False:
-            if user_item['Item']['confirmed'] == False:
-                is_email_new = True
+            if user_item['confirmed'] == False:
+                is_old_email_verified = False
+            else:
+                return {
+                    'statusCode': 403,
+                    'body': 'email is taken'
+                }
 
-        if is_email_new == False:
-            return {
-                'statusCode': 403,
-                'body': 'email is taken'
-            }
+        # if is_email_new == False:
+        #     return {
+        #         'statusCode': 403,
+        #         'body': 'email is taken'
+        #     }
         
         password = bytes(args['password'], 'ascii')
 
@@ -775,20 +792,32 @@ def lambda_handler(event, context):
         
         # exp: 'password': hashed_password_str[2,-1] converting binery to string and 
         # removing b'' in b'<encodedpassword>' and then just remains the encodedpassword
-        response = users_table.put_item(
-            Item={
-                'email': args['email'],
-                'name': args['name'],
-                'confirmationCode': confirmation_code,
-                'confirmed': False,
-                'numberOfCoupens': 0,
-                'password': hashed_password_str[2: -1],
-                'liked': {'null'},
-                'disliked': {'null'},
-                'reported': {'null'},
-            },
-            ReturnValues="ALL_OLD"
-        )
+
+        if is_old_email_verified == False and is_email_new == False:
+            users_table.update_item(
+                Key={
+                    'email': args['email']
+                },
+                UpdateExpression="set confirmationCode = :value",
+                ExpressionAttributeValues={
+                    ":value": confirmation_code
+                }
+            )
+        else:
+            response = users_table.put_item(
+                Item={
+                    'email': args['email'],
+                    'name': args['name'],
+                    'confirmationCode': confirmation_code,
+                    'confirmed': False,
+                    'numberOfCoupens': 0,
+                    'password': hashed_password_str[2: -1],
+                    'liked': {'null'},
+                    'disliked': {'null'},
+                    'reported': {'null'},
+                },
+                ReturnValues="ALL_OLD"
+            )
         print("Signed_Up succeeded")
 
         # Sending Email
@@ -882,7 +911,7 @@ def lambda_handler(event, context):
             }
         else:
             return {
-                'statusCode': 200,
+                'statusCode': 201,
                 'body': 'Confirmation code doesnt match',
                 'token': ''
             }
@@ -918,7 +947,7 @@ def lambda_handler(event, context):
             user_item = user_response['Item']
         except:
             return {
-                'statusCode': 403,
+                'statusCode': 404,
                 'body': 'invalid email',
                 'token': ''
             }
@@ -942,7 +971,7 @@ def lambda_handler(event, context):
             }
         else:
             return {
-                'statusCode': 200,
+                'statusCode': 201,
                 'body': 'invalid password',
                 'token': ''
             }
@@ -984,6 +1013,13 @@ def lambda_handler(event, context):
         data.pop('email', None)
         # data = json.dump(data, 4, in)
         return(data, email)
+
+    def detach_evaluatedKey_and_isUpgraded(json_data):
+        data = json_data
+        isUpgraded = event['LastEvaluatedKey']['isUpgraded']
+        data.pop('isUpgraded', None)
+        # data = json.dump(data, 4, in)
+        return(data, isUpgraded)
 
 
 ################################################################################
