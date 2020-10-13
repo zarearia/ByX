@@ -65,12 +65,14 @@ query ListXModelTypesLikesSorted(
   $likesCount: Int
   $isSpam: Int
   $email: AWSEmail
+  $isUpgraded: Int
 ) {
   listXModelTypesLikesSorted(
     id: $id
     likesCount: $likesCount
     isSpam: $isSpam
     email: $email
+    isUpgraded: $isUpgraded
   ) {
     Items {
       id
@@ -96,6 +98,7 @@ query ListXModelTypesLikesSorted(
       id
       likesCount
       isSpam
+      isUpgraded
     }
   }
 }
@@ -104,12 +107,14 @@ query ListXModelTypesDislikesSorted(
   $dislikesCount: Int
   $isSpam: Int
   $email: AWSEmail
+  $isUpgraded: Int
 ) {
   listXModelTypesDislikesSorted(
     id: $id
     dislikesCount: $dislikesCount
     isSpam: $isSpam
     email: $email
+    isUpgraded: $isUpgraded
   ) {
     Items {
       id
@@ -135,6 +140,7 @@ query ListXModelTypesDislikesSorted(
       id
       dislikesCount
       isSpam
+      isUpgraded
     }
   }
 }

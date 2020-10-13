@@ -2763,29 +2763,31 @@ public final class ListXModelTypesQuery: GraphQLQuery {
 
 public final class ListXModelTypesLikesSortedQuery: GraphQLQuery {
   public static let operationString =
-    "query ListXModelTypesLikesSorted($id: ID, $likesCount: Int, $isSpam: Int, $email: AWSEmail) {\n  listXModelTypesLikesSorted(id: $id, likesCount: $likesCount, isSpam: $isSpam, email: $email) {\n    __typename\n    Items {\n      __typename\n      id\n      email\n      title\n      isUpgraded\n      tags\n      dateCreated\n      dateUpgraded\n      dislikesCount\n      likesCount\n      isReported\n      isSpam\n      reportsCount\n      likers\n      dislikers\n      reporters\n      isLikedByTheUser\n      isDislikedByTheUser\n      isReportedByTheUser\n    }\n    LastEvaluatedKey {\n      __typename\n      id\n      likesCount\n      isSpam\n    }\n  }\n}"
+    "query ListXModelTypesLikesSorted($id: ID, $likesCount: Int, $isSpam: Int, $email: AWSEmail, $isUpgraded: Int) {\n  listXModelTypesLikesSorted(id: $id, likesCount: $likesCount, isSpam: $isSpam, email: $email, isUpgraded: $isUpgraded) {\n    __typename\n    Items {\n      __typename\n      id\n      email\n      title\n      isUpgraded\n      tags\n      dateCreated\n      dateUpgraded\n      dislikesCount\n      likesCount\n      isReported\n      isSpam\n      reportsCount\n      likers\n      dislikers\n      reporters\n      isLikedByTheUser\n      isDislikedByTheUser\n      isReportedByTheUser\n    }\n    LastEvaluatedKey {\n      __typename\n      id\n      likesCount\n      isSpam\n      isUpgraded\n    }\n  }\n}"
 
   public var id: GraphQLID?
   public var likesCount: Int?
   public var isSpam: Int?
   public var email: String?
+  public var isUpgraded: Int?
 
-  public init(id: GraphQLID? = nil, likesCount: Int? = nil, isSpam: Int? = nil, email: String? = nil) {
+  public init(id: GraphQLID? = nil, likesCount: Int? = nil, isSpam: Int? = nil, email: String? = nil, isUpgraded: Int? = nil) {
     self.id = id
     self.likesCount = likesCount
     self.isSpam = isSpam
     self.email = email
+    self.isUpgraded = isUpgraded
   }
 
   public var variables: GraphQLMap? {
-    return ["id": id, "likesCount": likesCount, "isSpam": isSpam, "email": email]
+    return ["id": id, "likesCount": likesCount, "isSpam": isSpam, "email": email, "isUpgraded": isUpgraded]
   }
 
   public struct Data: GraphQLSelectionSet {
     public static let possibleTypes = ["Query"]
 
     public static let selections: [GraphQLSelection] = [
-      GraphQLField("listXModelTypesLikesSorted", arguments: ["id": GraphQLVariable("id"), "likesCount": GraphQLVariable("likesCount"), "isSpam": GraphQLVariable("isSpam"), "email": GraphQLVariable("email")], type: .object(ListXModelTypesLikesSorted.selections)),
+      GraphQLField("listXModelTypesLikesSorted", arguments: ["id": GraphQLVariable("id"), "likesCount": GraphQLVariable("likesCount"), "isSpam": GraphQLVariable("isSpam"), "email": GraphQLVariable("email"), "isUpgraded": GraphQLVariable("isUpgraded")], type: .object(ListXModelTypesLikesSorted.selections)),
     ]
 
     public var snapshot: Snapshot
@@ -3068,6 +3070,7 @@ public final class ListXModelTypesLikesSortedQuery: GraphQLQuery {
           GraphQLField("id", type: .scalar(String.self)),
           GraphQLField("likesCount", type: .scalar(Int.self)),
           GraphQLField("isSpam", type: .scalar(Int.self)),
+          GraphQLField("isUpgraded", type: .scalar(Int.self)),
         ]
 
         public var snapshot: Snapshot
@@ -3076,8 +3079,8 @@ public final class ListXModelTypesLikesSortedQuery: GraphQLQuery {
           self.snapshot = snapshot
         }
 
-        public init(id: String? = nil, likesCount: Int? = nil, isSpam: Int? = nil) {
-          self.init(snapshot: ["__typename": "LastEvaluatedKeyLikesSorted", "id": id, "likesCount": likesCount, "isSpam": isSpam])
+        public init(id: String? = nil, likesCount: Int? = nil, isSpam: Int? = nil, isUpgraded: Int? = nil) {
+          self.init(snapshot: ["__typename": "LastEvaluatedKeyLikesSorted", "id": id, "likesCount": likesCount, "isSpam": isSpam, "isUpgraded": isUpgraded])
         }
 
         public var __typename: String {
@@ -3115,6 +3118,15 @@ public final class ListXModelTypesLikesSortedQuery: GraphQLQuery {
             snapshot.updateValue(newValue, forKey: "isSpam")
           }
         }
+
+        public var isUpgraded: Int? {
+          get {
+            return snapshot["isUpgraded"] as? Int
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "isUpgraded")
+          }
+        }
       }
     }
   }
@@ -3122,29 +3134,31 @@ public final class ListXModelTypesLikesSortedQuery: GraphQLQuery {
 
 public final class ListXModelTypesDislikesSortedQuery: GraphQLQuery {
   public static let operationString =
-    "query ListXModelTypesDislikesSorted($id: ID, $dislikesCount: Int, $isSpam: Int, $email: AWSEmail) {\n  listXModelTypesDislikesSorted(id: $id, dislikesCount: $dislikesCount, isSpam: $isSpam, email: $email) {\n    __typename\n    Items {\n      __typename\n      id\n      email\n      title\n      isUpgraded\n      tags\n      dateCreated\n      dateUpgraded\n      dislikesCount\n      likesCount\n      isReported\n      isSpam\n      reportsCount\n      likers\n      dislikers\n      reporters\n      isLikedByTheUser\n      isDislikedByTheUser\n      isReportedByTheUser\n    }\n    LastEvaluatedKey {\n      __typename\n      id\n      dislikesCount\n      isSpam\n    }\n  }\n}"
+    "query ListXModelTypesDislikesSorted($id: ID, $dislikesCount: Int, $isSpam: Int, $email: AWSEmail, $isUpgraded: Int) {\n  listXModelTypesDislikesSorted(id: $id, dislikesCount: $dislikesCount, isSpam: $isSpam, email: $email, isUpgraded: $isUpgraded) {\n    __typename\n    Items {\n      __typename\n      id\n      email\n      title\n      isUpgraded\n      tags\n      dateCreated\n      dateUpgraded\n      dislikesCount\n      likesCount\n      isReported\n      isSpam\n      reportsCount\n      likers\n      dislikers\n      reporters\n      isLikedByTheUser\n      isDislikedByTheUser\n      isReportedByTheUser\n    }\n    LastEvaluatedKey {\n      __typename\n      id\n      dislikesCount\n      isSpam\n      isUpgraded\n    }\n  }\n}"
 
   public var id: GraphQLID?
   public var dislikesCount: Int?
   public var isSpam: Int?
   public var email: String?
+  public var isUpgraded: Int?
 
-  public init(id: GraphQLID? = nil, dislikesCount: Int? = nil, isSpam: Int? = nil, email: String? = nil) {
+  public init(id: GraphQLID? = nil, dislikesCount: Int? = nil, isSpam: Int? = nil, email: String? = nil, isUpgraded: Int? = nil) {
     self.id = id
     self.dislikesCount = dislikesCount
     self.isSpam = isSpam
     self.email = email
+    self.isUpgraded = isUpgraded
   }
 
   public var variables: GraphQLMap? {
-    return ["id": id, "dislikesCount": dislikesCount, "isSpam": isSpam, "email": email]
+    return ["id": id, "dislikesCount": dislikesCount, "isSpam": isSpam, "email": email, "isUpgraded": isUpgraded]
   }
 
   public struct Data: GraphQLSelectionSet {
     public static let possibleTypes = ["Query"]
 
     public static let selections: [GraphQLSelection] = [
-      GraphQLField("listXModelTypesDislikesSorted", arguments: ["id": GraphQLVariable("id"), "dislikesCount": GraphQLVariable("dislikesCount"), "isSpam": GraphQLVariable("isSpam"), "email": GraphQLVariable("email")], type: .object(ListXModelTypesDislikesSorted.selections)),
+      GraphQLField("listXModelTypesDislikesSorted", arguments: ["id": GraphQLVariable("id"), "dislikesCount": GraphQLVariable("dislikesCount"), "isSpam": GraphQLVariable("isSpam"), "email": GraphQLVariable("email"), "isUpgraded": GraphQLVariable("isUpgraded")], type: .object(ListXModelTypesDislikesSorted.selections)),
     ]
 
     public var snapshot: Snapshot
@@ -3427,6 +3441,7 @@ public final class ListXModelTypesDislikesSortedQuery: GraphQLQuery {
           GraphQLField("id", type: .scalar(String.self)),
           GraphQLField("dislikesCount", type: .scalar(Int.self)),
           GraphQLField("isSpam", type: .scalar(Int.self)),
+          GraphQLField("isUpgraded", type: .scalar(Int.self)),
         ]
 
         public var snapshot: Snapshot
@@ -3435,8 +3450,8 @@ public final class ListXModelTypesDislikesSortedQuery: GraphQLQuery {
           self.snapshot = snapshot
         }
 
-        public init(id: String? = nil, dislikesCount: Int? = nil, isSpam: Int? = nil) {
-          self.init(snapshot: ["__typename": "LastEvaluatedKeyDisikesSorted", "id": id, "dislikesCount": dislikesCount, "isSpam": isSpam])
+        public init(id: String? = nil, dislikesCount: Int? = nil, isSpam: Int? = nil, isUpgraded: Int? = nil) {
+          self.init(snapshot: ["__typename": "LastEvaluatedKeyDisikesSorted", "id": id, "dislikesCount": dislikesCount, "isSpam": isSpam, "isUpgraded": isUpgraded])
         }
 
         public var __typename: String {
@@ -3472,6 +3487,15 @@ public final class ListXModelTypesDislikesSortedQuery: GraphQLQuery {
           }
           set {
             snapshot.updateValue(newValue, forKey: "isSpam")
+          }
+        }
+
+        public var isUpgraded: Int? {
+          get {
+            return snapshot["isUpgraded"] as? Int
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "isUpgraded")
           }
         }
       }
