@@ -86,7 +86,7 @@ class HomeViewNetworking: ObservableObject {
 
         case .mostLiked:
 
-            appSyncClient?.fetch(query: ListXModelTypesLikesSortedQuery(id: "", likesCount: 0, isSpam: 0, email: "zarearia@email.com"), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
+            appSyncClient?.fetch(query: ListXModelTypesLikesSortedQuery(id: "", likesCount: 0, isSpam: 0, email: "xappemailtest2020@gmail.com", isUpgraded: 0), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
 
                 if error != nil {
                     print(error?.localizedDescription ?? "")
@@ -95,49 +95,126 @@ class HomeViewNetworking: ObservableObject {
                 print("MostLiked Query complete.")
                 print(result?.data?.jsonObject)
                 let resultJson = result?.data?.listXModelTypesLikesSorted?.jsonObject
-                let reslutList = try! ListXModelTypesQuery.Data.ListXModelType.init(jsonObject: resultJson as! JSONObject)
-                self.rawListItems = reslutList.items! as! [ListXModelTypesQuery.Data.ListXModelType.Item]
-
-                self.MergeResults()
+                do {
+                    if let resultJsonObject = resultJson as? JSONObject {
+                        let resultList = try ListXModelTypesQuery.Data.ListXModelType.init(jsonObject: resultJsonObject)
+                        self.rawListItems = resultList.items! as! [ListXModelTypesQuery.Data.ListXModelType.Item]
+                        self.MergeResults()
+                        print("MostLiked Query data parsed")
+                    } else {
+                        print("MostLiked Query data parse error")
+                    }
+                } catch {
+                    print("List Likes Sorted nonupgraded parse error")
+                }
             }
 
         case .mostDisliked:
 
-            appSyncClient?.fetch(query: ListXModelTypesDislikesSortedQuery(id: "", dislikesCount: 0, isSpam: 0, email: "zarearia@email.com"), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
+            appSyncClient?.fetch(query: ListXModelTypesDislikesSortedQuery(id: "", dislikesCount: 0, isSpam: 0, email: "xappemailtest2020@gmail.com", isUpgraded: 0), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
 
                 if error != nil {
                     print(error?.localizedDescription ?? "")
                     return
                 }
-                print("Dislike Query complete.")
+                print("MostDislike Query complete.")
 
                 let resultJson = result?.data?.listXModelTypesDislikesSorted?.jsonObject
-                let reslutList = try! ListXModelTypesQuery.Data.ListXModelType.init(jsonObject: resultJson as! JSONObject)
-                self.rawListItems = reslutList.items! as! [ListXModelTypesQuery.Data.ListXModelType.Item]
 
-                self.MergeResults()
+                do {
+                    if let resultJsonObject = resultJson as? JSONObject {
+                        let resultList = try ListXModelTypesQuery.Data.ListXModelType.init(jsonObject: resultJsonObject)
+                        self.rawListItems = resultList.items! as! [ListXModelTypesQuery.Data.ListXModelType.Item]
+                        self.MergeResults()
+                        print("MostDisliked Query data parsed")
+                    }
+                    else {
+                        print("MostDisliked Query data parse error")
+                    }
+                } catch {
+                    print("List Likes Sorted nonupgraded parse error")
+                }
+
+//                let reslutList = try! ListXModelTypesQuery.Data.ListXModelType.init(jsonObject: resultJson as! JSONObject)
+//                self.rawListItems = reslutList.items! as! [ListXModelTypesQuery.Data.ListXModelType.Item]
+//
+//                self.MergeResults()
             }
         }
     }
 
     func MergeResults() {
 
-        appSyncClient?.fetch(query: ListXModelTypesQuery(id: "", isUpgraded: 1, isSpam: 0, email: "xappemailtest2020@gmail.com"), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
+        switch sortedBy {
+        case .latest:
+            appSyncClient?.fetch(query: ListXModelTypesQuery(id: "", isUpgraded: 1, isSpam: 0, email: "xappemailtest2020@gmail.com"), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
 
-            if error != nil {
-                print(error?.localizedDescription ?? "")
-                return
+                if error != nil {
+                    print(error?.localizedDescription ?? "")
+                    return
+                }
+                print("Latest Sort Query Upgraded complete.")
+                print(result?.data)
+
+                let itemsLocal = (result!.data!.listXModelTypes!.items!) as! [ListXModelTypesQuery.Data.ListXModelType.Item]
+
+                let mergedResult = self.mergeUpgradedAndNotUpgradedPosts(upgradedItems: itemsLocal,
+                    nonupgradedItems: self.rawListItems)
+
+                self.listItems = mergedResult
             }
-            print("Latest Sort Query Upgraded complete.")
-            print(result?.data)
 
-            let itemsLocal = (result!.data!.listXModelTypes!.items!) as! [ListXModelTypesQuery.Data.ListXModelType.Item]
 
-            let mergedResult = self.mergeUpgradedAndNotUpgradedPosts(upgradedItems: itemsLocal,
-                nonupgradedItems: self.rawListItems)
+        case .mostLiked:
+            appSyncClient?.fetch(query: ListXModelTypesLikesSortedQuery(id: "", likesCount: 0, isSpam: 0, email: "xappemailtest2020@gmail.com", isUpgraded: 1), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
 
-            self.listItems = mergedResult
+                if error != nil {
+                    print(error?.localizedDescription ?? "")
+                    return
+                }
+                print("MostLike Sort Query Upgraded complete.")
+                print(result?.data?.jsonObject)
+                let resultJson = result?.data?.listXModelTypesLikesSorted?.jsonObject
+                do {
+                    if let resultJsonObject = resultJson as? JSONObject {
+                        let resultList = try ListXModelTypesQuery.Data.ListXModelType.init(jsonObject: resultJsonObject)
+                        let itemsLocal = resultList.items! as! [ListXModelTypesQuery.Data.ListXModelType.Item]
+                        let mergedResult = self.mergeUpgradedAndNotUpgradedPosts(upgradedItems: itemsLocal,
+                            nonupgradedItems: self.rawListItems)
+                        self.listItems = mergedResult
+                    }
+                } catch {
+                    print("List Likes Sorted nonupgraded parse error")
+                }
+            }
+
+
+        case .mostDisliked:
+            appSyncClient?.fetch(query: ListXModelTypesDislikesSortedQuery(id: "", dislikesCount: 0, isSpam: 0, email: "xappemailtest2020@gmail.com", isUpgraded: 1), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
+
+                if error != nil {
+                    print(error?.localizedDescription ?? "")
+                    return
+                }
+                print("MostDislike Sort Query Upgraded complete.")
+                print(result?.data?.jsonObject)
+                let resultJson = result?.data?.listXModelTypesDislikesSorted?.jsonObject
+                do {
+                    if let resultJsonObject = resultJson as? JSONObject {
+                        let resultList = try ListXModelTypesQuery.Data.ListXModelType.init(jsonObject: resultJsonObject)
+                        let itemsLocal = resultList.items! as! [ListXModelTypesQuery.Data.ListXModelType.Item]
+                        let mergedResult = self.mergeUpgradedAndNotUpgradedPosts(upgradedItems: itemsLocal,
+                            nonupgradedItems: self.rawListItems)
+                        self.listItems = mergedResult
+                    }
+                } catch {
+                    print("List Likes Sorted nonupgraded parse error")
+                }
+            }
+
         }
+
+
 
     }
 
