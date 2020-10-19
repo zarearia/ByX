@@ -53,10 +53,10 @@ class AddPageNetworking: ObservableObject {
                 return
             }
 
-//            if let resultError = result?.errors {
-//                print("Error saving the item on server: \(resultError)")
-//                return
-//            }
+            if let resultError = result?.errors {
+                print("Error saving the item on server: \(resultError)")
+                return
+            }
 
             print("Mutation complete.")
             print(result)

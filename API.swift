@@ -2404,29 +2404,31 @@ public final class GetXModelTypeQuery: GraphQLQuery {
 
 public final class ListXModelTypesQuery: GraphQLQuery {
   public static let operationString =
-    "query ListXModelTypes($id: ID, $isUpgraded: Int, $isSpam: Int, $email: AWSEmail) {\n  listXModelTypes(id: $id, isUpgraded: $isUpgraded, isSpam: $isSpam, email: $email) {\n    __typename\n    Items {\n      __typename\n      id\n      email\n      title\n      isUpgraded\n      tags\n      dateCreated\n      dateUpgraded\n      dislikesCount\n      likesCount\n      isReported\n      isSpam\n      reportsCount\n      likers\n      dislikers\n      reporters\n      isLikedByTheUser\n      isDislikedByTheUser\n      isReportedByTheUser\n    }\n    LastEvaluatedKey {\n      __typename\n      id\n      isUpgraded\n      isSpam\n    }\n  }\n}"
+    "query ListXModelTypes($id: ID, $isUpgraded: Int, $isSpam: Int, $email: AWSEmail, $dateCreated: AWSDateTime) {\n  listXModelTypes(id: $id, isUpgraded: $isUpgraded, isSpam: $isSpam, email: $email, dateCreated: $dateCreated) {\n    __typename\n    Items {\n      __typename\n      id\n      email\n      title\n      isUpgraded\n      tags\n      dateCreated\n      dateUpgraded\n      dislikesCount\n      likesCount\n      isReported\n      isSpam\n      reportsCount\n      likers\n      dislikers\n      reporters\n      isLikedByTheUser\n      isDislikedByTheUser\n      isReportedByTheUser\n    }\n    LastEvaluatedKey {\n      __typename\n      id\n      isUpgraded\n      isSpam\n      dateCreated\n    }\n  }\n}"
 
   public var id: GraphQLID?
   public var isUpgraded: Int?
   public var isSpam: Int?
   public var email: String?
+  public var dateCreated: String?
 
-  public init(id: GraphQLID? = nil, isUpgraded: Int? = nil, isSpam: Int? = nil, email: String? = nil) {
+  public init(id: GraphQLID? = nil, isUpgraded: Int? = nil, isSpam: Int? = nil, email: String? = nil, dateCreated: String? = nil) {
     self.id = id
     self.isUpgraded = isUpgraded
     self.isSpam = isSpam
     self.email = email
+    self.dateCreated = dateCreated
   }
 
   public var variables: GraphQLMap? {
-    return ["id": id, "isUpgraded": isUpgraded, "isSpam": isSpam, "email": email]
+    return ["id": id, "isUpgraded": isUpgraded, "isSpam": isSpam, "email": email, "dateCreated": dateCreated]
   }
 
   public struct Data: GraphQLSelectionSet {
     public static let possibleTypes = ["Query"]
 
     public static let selections: [GraphQLSelection] = [
-      GraphQLField("listXModelTypes", arguments: ["id": GraphQLVariable("id"), "isUpgraded": GraphQLVariable("isUpgraded"), "isSpam": GraphQLVariable("isSpam"), "email": GraphQLVariable("email")], type: .object(ListXModelType.selections)),
+      GraphQLField("listXModelTypes", arguments: ["id": GraphQLVariable("id"), "isUpgraded": GraphQLVariable("isUpgraded"), "isSpam": GraphQLVariable("isSpam"), "email": GraphQLVariable("email"), "dateCreated": GraphQLVariable("dateCreated")], type: .object(ListXModelType.selections)),
     ]
 
     public var snapshot: Snapshot
@@ -2709,6 +2711,7 @@ public final class ListXModelTypesQuery: GraphQLQuery {
           GraphQLField("id", type: .scalar(String.self)),
           GraphQLField("isUpgraded", type: .scalar(Int.self)),
           GraphQLField("isSpam", type: .scalar(Int.self)),
+          GraphQLField("dateCreated", type: .scalar(String.self)),
         ]
 
         public var snapshot: Snapshot
@@ -2717,8 +2720,8 @@ public final class ListXModelTypesQuery: GraphQLQuery {
           self.snapshot = snapshot
         }
 
-        public init(id: String? = nil, isUpgraded: Int? = nil, isSpam: Int? = nil) {
-          self.init(snapshot: ["__typename": "LastEvaluatedKey", "id": id, "isUpgraded": isUpgraded, "isSpam": isSpam])
+        public init(id: String? = nil, isUpgraded: Int? = nil, isSpam: Int? = nil, dateCreated: String? = nil) {
+          self.init(snapshot: ["__typename": "LastEvaluatedKey", "id": id, "isUpgraded": isUpgraded, "isSpam": isSpam, "dateCreated": dateCreated])
         }
 
         public var __typename: String {
@@ -2754,6 +2757,15 @@ public final class ListXModelTypesQuery: GraphQLQuery {
           }
           set {
             snapshot.updateValue(newValue, forKey: "isSpam")
+          }
+        }
+
+        public var dateCreated: String? {
+          get {
+            return snapshot["dateCreated"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "dateCreated")
           }
         }
       }

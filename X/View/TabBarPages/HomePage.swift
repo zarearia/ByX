@@ -44,10 +44,11 @@ struct HomePage: View {
                     }
                         .offset(y: searchBarHeight)
                         .padding([.bottom],searchBarHeight)
-                    Button(action: {  print("ss")  }) {
-                        Text("Button")
+                    Button(action: self.observedObj.loadMoreItems) {
+                        Text("Load More")
                     }
-                        .padding(.top, searchBarHeight)
+                        .padding(30)
+//                        .padding(.bottom, searchBarHeight)
                 }
 
                 VStack {
@@ -65,12 +66,23 @@ struct HomePage: View {
 
                         Button(action: {
 
+                            self.observedObj.shouldReloadTheFullList = true
+
+                            func resetLastEvaluateKeys() {
+                                self.observedObj.lastEvaluateNonupgradedItem.id = ""
+                                self.observedObj.lastEvaluateUpgradedItem.id = ""
+                            }
+
                             if self.observedObj.sortedBy == .latest {
+                                /*exp: Since the list is going to update from scratch I have to set lastEvaluatedKey to nil so the will update instead of extend*/
+                                resetLastEvaluateKeys()
                                 self.observedObj.sortedBy = .mostLiked
                             } else if self.observedObj.sortedBy == .mostLiked {
+                                resetLastEvaluateKeys()
                                 self.observedObj.sortedBy = .mostDisliked
                             } else {
                                 self.observedObj.sortedBy = .latest
+                                resetLastEvaluateKeys()
                             }
 
                             self.observedObj.runQuery()

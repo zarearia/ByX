@@ -14,6 +14,8 @@ let userPasswordKey = "userPasswordKey"
 
 let homeViewNetworking = HomeViewNetworking()
 let userDefaults = UserDefaults.standard
+let null_dateTime = "2000-01-01T01:01:01.000000z"//"2019-02-06T00:35:01.746Z"
+
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 

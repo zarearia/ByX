@@ -26,12 +26,14 @@ query ListXModelTypes(
   $isUpgraded: Int
   $isSpam: Int
   $email: AWSEmail
+  $dateCreated: AWSDateTime
 ) {
   listXModelTypes(
     id: $id
     isUpgraded: $isUpgraded
     isSpam: $isSpam
     email: $email
+    dateCreated: $dateCreated
   ) {
     Items {
       id
@@ -57,6 +59,7 @@ query ListXModelTypes(
       id
       isUpgraded
       isSpam
+      dateCreated
     }
   }
 }
