@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftUI
+import FBSDKCoreKit
 
 let userEmailKey = "userEmailKey"
 let userPasswordKey = "userPasswordKey"
@@ -15,6 +16,8 @@ let userPasswordKey = "userPasswordKey"
 let homeViewNetworking = HomeViewNetworking()
 let userDefaults = UserDefaults.standard
 let null_dateTime = "2000-01-01T01:01:01.000000z"//"2019-02-06T00:35:01.746Z"
+
+let thirdPartyRegisteredUsersToken = "kjSFaas721nf"
 
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -32,6 +35,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //        homeViewNetworking.fetchCurrentAuthSession()
 //        homeViewNetworking.runQuery()
 //        homeViewNetworking.userPosterItemsQuery()
+        print(userDefaults.value(forKey: userEmailKey))
+        if let userEmail = userDefaults.value(forKey: userEmailKey) {
+            homeViewNetworking.userEmail = userEmail as? String ?? ""
+        }
+        if let userPassword = userDefaults.value(forKey: userPasswordKey) {
+            homeViewNetworking.userPassword = userPassword as? String ?? ""
+        }
+        if let token = userDefaults.value(forKey: "token") {
+            homeViewNetworking.token = token as? String ?? ""
+        }
+
         let contentView = TabBar().environmentObject(homeViewNetworking)
 
 
@@ -43,6 +57,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             window.makeKeyAndVisible()
         }
     }
+
+    /*Mark: FaceBook*/
+    /****************************/
+
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        guard let url = URLContexts.first?.url else {
+            return
+        }
+
+        ApplicationDelegate.shared.application(
+            UIApplication.shared,
+            open: url,
+            sourceApplication: nil,
+            annotation: [UIApplication.OpenURLOptionsKey.annotation]
+        )
+    }
+    /****************************/
 
 
     func sceneDidDisconnect(_ scene: UIScene) {

@@ -91,6 +91,6 @@ struct SignInPage: View {
     }
 
     func buttonAction() {
-
+        self.pageType = self.pageType == .signUp  ? .signIn : .signUp
     }
 }

@@ -42,9 +42,9 @@ struct AdminPanelPage: View {
         }
             .onAppear {
                 if self.contentType == 0 {
-//                    self.observedObj.spamsQuery()
+                    self.observedObj.spamsQuery()
                 } else {
-//                    self.observedObj.reportedQuery()
+                    self.observedObj.reportedQuery()
                 }
             }
     }

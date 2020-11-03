@@ -199,3 +199,9 @@ mutation SignInUser($email: AWSEmail, $password: String) {
     token
   }
 }
+mutation SignUpWith3rdPartyService($email: AWSEmail, $name: String) {
+  signUpWith3rdPartyService(email: $email, name: $name) {
+    statusCode
+    body
+  }
+}

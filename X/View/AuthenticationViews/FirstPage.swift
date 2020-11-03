@@ -43,6 +43,11 @@ struct FirstPage: View {
                             .navigationBarHidden(true)
                             .navigationBarTitle(Text("Home"))
                     }
+                    
+                    AuthenticationButton.init(text: "Login with FACEBOOK", screenWidth: geo.size.width) {
+                        self.enviromentObject.signInWithFacebook()
+                    }
+                        .padding(10)
 
                     Button(action: self.buttonAction) {
                         Text("Forgot password?")

@@ -152,7 +152,7 @@ struct TextBox: View {
 ////                .padding(5)
         }
 //            TODO: Improve Box Color for upgraded posts !?
-            .background(envObject.listItems[currentItemIndex].isUpgraded == 0 ? boxColor : Color.red)
+            .background(envObject.listItems[currentItemIndex].isUpgraded == 0 ? boxColor : Color.purple)
             .cornerRadius(5)
             .opacity(boxOpacity)
             .shadow(color: Color(hex: "#757575"),radius: 5, x: 1, y: 2)
@@ -168,10 +168,12 @@ struct TextBox: View {
     
     func likeAction() {
         print("like exc")
-        
+        print(envObject.userEmail)
+        print(envObject.userPassword)
+        print(envObject.token)
         disableAllHits()
         
-        appSyncClient?.perform(mutation: LikeXModelTypeMutation(id: envObject.listItems[self.currentItemIndex].id, email: "zarearia@email.com")) { (result, error) in
+        appSyncClient?.perform(mutation: LikeXModelTypeMutation(id: envObject.listItems[self.currentItemIndex].id, email: self.envObject.userEmail)) { (result, error) in
             if let error = error as? AWSAppSyncClientError {
                 print("Error occurred: \(error.localizedDescription )")
             }
@@ -208,7 +210,7 @@ struct TextBox: View {
         
         disableAllHits()
         
-        appSyncClient?.perform(mutation: DislikeXModelTypeMutation(id: envObject.listItems[self.currentItemIndex].id, email: "zarearia@email.com")) { (result, error) in
+        appSyncClient?.perform(mutation: DislikeXModelTypeMutation(id: envObject.listItems[self.currentItemIndex].id, email: self.envObject.userEmail)) { (result, error) in
             if let error = error as? AWSAppSyncClientError {
                 print("Error occurred: \(error.localizedDescription )")
             }
@@ -239,7 +241,7 @@ struct TextBox: View {
         
         disableAllHits()
         
-        appSyncClient?.perform(mutation: ReportXModelTypeMutation(id: envObject.listItems[self.currentItemIndex].id, email: "zarearia@email.com")) { (result, error) in
+        appSyncClient?.perform(mutation: ReportXModelTypeMutation(id: envObject.listItems[self.currentItemIndex].id, email: self.envObject.userEmail)) { (result, error) in
             if let error = error as? AWSAppSyncClientError {
                 print("Error occurred: \(error.localizedDescription )")
             }

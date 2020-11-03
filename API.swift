@@ -2153,6 +2153,97 @@ public final class SignInUserMutation: GraphQLMutation {
   }
 }
 
+public final class SignUpWith3rdPartyServiceMutation: GraphQLMutation {
+  public static let operationString =
+    "mutation SignUpWith3rdPartyService($email: AWSEmail, $name: String) {\n  signUpWith3rdPartyService(email: $email, name: $name) {\n    __typename\n    statusCode\n    body\n  }\n}"
+
+  public var email: String?
+  public var name: String?
+
+  public init(email: String? = nil, name: String? = nil) {
+    self.email = email
+    self.name = name
+  }
+
+  public var variables: GraphQLMap? {
+    return ["email": email, "name": name]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Mutation"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("signUpWith3rdPartyService", arguments: ["email": GraphQLVariable("email"), "name": GraphQLVariable("name")], type: .object(SignUpWith3rdPartyService.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(signUpWith3rdPartyService: SignUpWith3rdPartyService? = nil) {
+      self.init(snapshot: ["__typename": "Mutation", "signUpWith3rdPartyService": signUpWith3rdPartyService.flatMap { $0.snapshot }])
+    }
+
+    public var signUpWith3rdPartyService: SignUpWith3rdPartyService? {
+      get {
+        return (snapshot["signUpWith3rdPartyService"] as? Snapshot).flatMap { SignUpWith3rdPartyService(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "signUpWith3rdPartyService")
+      }
+    }
+
+    public struct SignUpWith3rdPartyService: GraphQLSelectionSet {
+      public static let possibleTypes = ["ResponseWithBody"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("statusCode", type: .scalar(Int.self)),
+        GraphQLField("body", type: .scalar(String.self)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(statusCode: Int? = nil, body: String? = nil) {
+        self.init(snapshot: ["__typename": "ResponseWithBody", "statusCode": statusCode, "body": body])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var statusCode: Int? {
+        get {
+          return snapshot["statusCode"] as? Int
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "statusCode")
+        }
+      }
+
+      public var body: String? {
+        get {
+          return snapshot["body"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "body")
+        }
+      }
+    }
+  }
+}
+
 public final class GetXModelTypeQuery: GraphQLQuery {
   public static let operationString =
     "query GetXModelType($id: ID!) {\n  getXModelType(id: $id) {\n    __typename\n    id\n    email\n    title\n    isUpgraded\n    tags\n    dateCreated\n    dateUpgraded\n    dislikesCount\n    likesCount\n    isReported\n    isSpam\n    reportsCount\n    likers\n    dislikers\n    reporters\n    isLikedByTheUser\n    isDislikedByTheUser\n    isReportedByTheUser\n  }\n}"

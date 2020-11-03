@@ -27,7 +27,7 @@ struct HomePage: View {
                 ScrollView {
                     VStack {
                         ForEach(observedObj.listItems, id: \.self.id) { item in
-                            NavigationLink(destination: SwipeablePageView(currentItem: item)/*.environmentObject(self.observedObj)*/)
+                            NavigationLink(destination: SwipeablePageView(currentItem: item).padding(.top, -(UIScreen.main.bounds.height / 3))/*.environmentObject(self.observedObj)*/)
                             /*.navigationBarHidden(true)*/
                             /*.navigationBarTitle(""))*/ {
                                 TextBox(text: item.title, textColor: Color(.white), boxColor: Color(hex: "#4891E1"),
@@ -119,7 +119,7 @@ struct HomePage: View {
             .navigationViewStyle(StackNavigationViewStyle())
             .onAppear {
 //                self.observedObj.fetchCurrentAuthSession()
-
+//                self.observedObj.runQuery()
 
 //            TODO: Uncomment this line(commented for design test)
                 if homeViewNetworking.isUserSignedInVar {

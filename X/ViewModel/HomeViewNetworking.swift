@@ -8,6 +8,7 @@
 
 import SwiftUI
 import AWSAppSync
+import FBSDKLoginKit
 
 /*MARK: SortOptions Enum */
 /*****************************************************************************************************************/
@@ -93,7 +94,7 @@ class HomeViewNetworking: ObservableObject {
 
         case .latest:
 
-            appSyncClient?.fetch(query: ListXModelTypesQuery(id: lastEvaluateNonupgradedItem.id, isUpgraded: 0, isSpam: 0, email: "xappemailtest2020@gmail.com", dateCreated: lastEvaluateNonupgradedItem.dateCreated), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
+            appSyncClient?.fetch(query: ListXModelTypesQuery(id: lastEvaluateNonupgradedItem.id, isUpgraded: 0, isSpam: 0, email: self.userEmail, dateCreated: lastEvaluateNonupgradedItem.dateCreated), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
 
                 if error != nil {
                     print(error?.localizedDescription ?? "")
@@ -123,7 +124,7 @@ class HomeViewNetworking: ObservableObject {
 
        case .mostLiked:
 
-           appSyncClient?.fetch(query: ListXModelTypesLikesSortedQuery(id: lastEvaluateNonupgradedItem.id, likesCount: lastEvaluateNonupgradedItem.likesCount, isSpam: 0, email: "xappemailtest2020@gmail.com", isUpgraded: 0), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
+           appSyncClient?.fetch(query: ListXModelTypesLikesSortedQuery(id: lastEvaluateNonupgradedItem.id, likesCount: lastEvaluateNonupgradedItem.likesCount, isSpam: 0, email: self.userEmail, isUpgraded: 0), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
 
                if error != nil {
                    print(error?.localizedDescription ?? "")
@@ -163,7 +164,7 @@ class HomeViewNetworking: ObservableObject {
 
         case .mostDisliked:
 
-           appSyncClient?.fetch(query: ListXModelTypesDislikesSortedQuery(id: lastEvaluateNonupgradedItem.id, dislikesCount: lastEvaluateNonupgradedItem.dislikesCount, isSpam: 0, email: "xappemailtest2020@gmail.com", isUpgraded: 0), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
+           appSyncClient?.fetch(query: ListXModelTypesDislikesSortedQuery(id: lastEvaluateNonupgradedItem.id, dislikesCount: lastEvaluateNonupgradedItem.dislikesCount, isSpam: 0, email: self.userEmail, isUpgraded: 0), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
 
                if error != nil {
                    print(error?.localizedDescription ?? "")
@@ -213,7 +214,7 @@ class HomeViewNetworking: ObservableObject {
 
        switch sortedBy {
        case .latest:
-           appSyncClient?.fetch(query: ListXModelTypesQuery(id: lastEvaluateUpgradedItem.id, isUpgraded: 1, isSpam: 0, email: "xappemailtest2020@gmail.com", dateCreated: lastEvaluateUpgradedItem.dateCreated), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
+           appSyncClient?.fetch(query: ListXModelTypesQuery(id: lastEvaluateUpgradedItem.id, isUpgraded: 1, isSpam: 0, email: self.userEmail, dateCreated: lastEvaluateUpgradedItem.dateCreated), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
 
                if error != nil {
                    print(error?.localizedDescription ?? "")
@@ -246,7 +247,7 @@ class HomeViewNetworking: ObservableObject {
        /*****************************************************************************/
 
        case .mostLiked:
-           appSyncClient?.fetch(query: ListXModelTypesLikesSortedQuery(id: lastEvaluateUpgradedItem.id, likesCount: lastEvaluateUpgradedItem.likesCount, isSpam: 0, email: "xappemailtest2020@gmail.com", isUpgraded: 1), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
+           appSyncClient?.fetch(query: ListXModelTypesLikesSortedQuery(id: lastEvaluateUpgradedItem.id, likesCount: lastEvaluateUpgradedItem.likesCount, isSpam: 0, email: self.userEmail, isUpgraded: 1), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
 
                if error != nil {
                    print(error?.localizedDescription ?? "")
@@ -282,7 +283,7 @@ class HomeViewNetworking: ObservableObject {
        /*****************************************************************************/
 
        case .mostDisliked:
-           appSyncClient?.fetch(query: ListXModelTypesDislikesSortedQuery(id: lastEvaluateUpgradedItem.id, dislikesCount: lastEvaluateUpgradedItem.dislikesCount, isSpam: 0, email: "xappemailtest2020@gmail.com", isUpgraded: 1), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
+           appSyncClient?.fetch(query: ListXModelTypesDislikesSortedQuery(id: lastEvaluateUpgradedItem.id, dislikesCount: lastEvaluateUpgradedItem.dislikesCount, isSpam: 0, email: self.userEmail, isUpgraded: 1), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
 
                if error != nil {
                    print(error?.localizedDescription ?? "")
@@ -414,7 +415,7 @@ class HomeViewNetworking: ObservableObject {
    func searchTag() {
 
        if searchText != "" {
-           appSyncClient?.fetch(query: ListXModelTypesSearchTagsQuery(id: lastEvaluateNonupgradedItem.id, tags: searchText, email: "xappemailtest2020@gmail.com"), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
+           appSyncClient?.fetch(query: ListXModelTypesSearchTagsQuery(id: lastEvaluateNonupgradedItem.id, tags: searchText, email: self.userEmail), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
 
                if error != nil {
                    print(error?.localizedDescription ?? "")
@@ -435,7 +436,7 @@ class HomeViewNetworking: ObservableObject {
    }
 
    func userPosterItemsQuery() {
-       appSyncClient?.fetch(query: ListXModelTypesUserItemsQuery(id: "", email: "xappemailtest2020@gmail.com", dateCreated: ""), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
+       appSyncClient?.fetch(query: ListXModelTypesUserItemsQuery(id: "", email: self.userEmail, dateCreated: ""), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
 
            if error != nil {
                print(error?.localizedDescription ?? "")
@@ -455,17 +456,16 @@ class HomeViewNetworking: ObservableObject {
 
    func spamsQuery() {
        //TODO: Change This (commented because of changes I am applying in schema and tests)
-//        appSyncClient?.fetch(query: ListXModelTypesQuery(id: "", isSpam: 1, dateCreated: "", email: "xappemailtest2020@gmail.com"), cachePolicy:  .fetchIgnoringCacheData) { (result, error) in
-//
-//            if error != nil {
-//                print(error?.localizedDescription ?? "")
-//                return
-//            }
-//            print("Latest Sort Query complete.")
-//            self.rawListItems = (result!.data!.listXModelTypes!.items!) as! [ListXModelTypesQuery.Data.ListXModelType.Item]
-//
-//            self.fetchResults()
-//        }
+        appSyncClient?.fetch(query: ListXModelTypesQuery(id: "", isUpgraded: 1, isSpam: 1, email: "xappemailtest2020@gmail.com"), cachePolicy: .fetchIgnoringCacheData)  { (result, error) in
+            if error != nil {
+                print(error?.localizedDescription ?? "")
+                return
+            }
+            print("Latest Sort Query complete.")
+            self.rawListItems = (result!.data!.listXModelTypes!.items!) as! [ListXModelTypesQuery.Data.ListXModelType.Item]
+
+            self.listItems = self.rawListItems
+        }
    }
 
    func reportedQuery() {
@@ -481,6 +481,16 @@ class HomeViewNetworking: ObservableObject {
 //
 //            self.fetchResults()
 ////        }
+       appSyncClient?.fetch(query: ListXModelTypesQuery(id: "", isUpgraded: 1, isSpam: 2, email: "xappemailtest2020@gmail.com"), cachePolicy: .fetchIgnoringCacheData)  { (result, error) in
+           if error != nil {
+               print(error?.localizedDescription ?? "")
+               return
+           }
+           print("Latest Sort Query complete.")
+           self.rawListItems = (result!.data!.listXModelTypes!.items!) as! [ListXModelTypesQuery.Data.ListXModelType.Item]
+
+           self.listItems = self.rawListItems
+       }
    }
 
    func deleteItem(item: ListXModelTypesQuery.Data.ListXModelType.Item) -> Bool {
@@ -636,6 +646,78 @@ class HomeViewNetworking: ObservableObject {
        let emailPred = NSPredicate(format: "SELF MATCHES %@", emailRegEx)
        return emailPred.evaluate(with: email)
    }
+
+
+    /*exp: FACEBOOK auth functions*/
+
+    func signInWithFacebook() {
+        let facebookLoginManager = FBSDKLoginKit.LoginManager()
+        facebookLoginManager.logIn(permissions: ["email"], from: nil) { (LoginManagerLoginResult, Error) in
+
+            if Error != nil {
+                print("Error logging in with facebook")
+                return
+            }
+            if let result = LoginManagerLoginResult {
+                if result.isCancelled {
+                    print("Log in with facebook was cancelled")
+                } else {
+                    print("Successfully logged in with facebook")
+                    print(LoginManagerLoginResult?.accessibilityValue)
+
+
+                    guard let accessToken = FBSDKLoginKit.AccessToken.current else { return }
+                    let graphRequest = FBSDKLoginKit.GraphRequest(graphPath: "me",
+                        parameters: ["fields": "email, name"],
+                        tokenString: accessToken.tokenString,
+                        version: nil,
+                        httpMethod: .get)
+                    graphRequest.start { (connection, result, error) -> Void in
+                        if error == nil {
+                            if let dict = result as? [String: Any] {
+                                let email = dict["email"] as? String ?? ""
+                                let name = dict["name"] as? String ?? ""
+                                self.appSyncClient?.perform(mutation: SignUpWith3rdPartyServiceMutation(email: email, name: name)) { (result, error) in
+                                    if error != nil {
+                                        print(error?.localizedDescription ?? "")
+                                        return
+                                    }
+
+                                    let data = result?.data?.jsonObject
+                                    guard let dictionaryResult = data?["signUpWith3rdPartyService"] as? [String: Any] else {
+                                        fatalError("couldn't convert Sign In email to JSON")
+                                    }
+
+                                    let statusResult = dictionaryResult["statusCode"] as? Int ?? 0
+                                    let resultsBodyMessage = dictionaryResult["body"] as? String ?? "Unknown Error"
+
+                                    self.token = thirdPartyRegisteredUsersToken
+                                    self.userEmail = email
+
+                                    print("************ \n ThirdParty SignIn Results: ")
+                                    print("Status Result: \(statusResult)")
+                                    print("result Body: \(resultsBodyMessage) \n ************")
+
+//                                    self.isUserSignedInVar = true
+                                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                                    appDelegate.reconfigureAppSyncClient {
+                                        self.appSyncClient = appDelegate.appSyncClient
+                                        self.isUserSignedInVar = self.isUserSignedIn()
+                                    }
+
+                                }
+                            } else {
+                                print("Couldn't convert facebook results ro Dictionary")
+                            }
+                        }
+                        else {
+                            print("error \(error)")
+                        }
+                    }
+                }
+            }
+        }
+    }
 
    /*****************************************************************************************************************/
 
