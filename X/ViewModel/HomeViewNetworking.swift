@@ -9,6 +9,7 @@
 import SwiftUI
 import AWSAppSync
 import FBSDKLoginKit
+import AuthenticationServices
 
 /*MARK: SortOptions Enum */
 /*****************************************************************************************************************/
@@ -694,7 +695,7 @@ class HomeViewNetworking: ObservableObject {
                                     self.token = thirdPartyRegisteredUsersToken
                                     self.userEmail = email
 
-                                    print("************ \n ThirdParty SignIn Results: ")
+                                    print("************ \n ThirdParty SignIn Results (FaceBook): ")
                                     print("Status Result: \(statusResult)")
                                     print("result Body: \(resultsBodyMessage) \n ************")
 
@@ -716,6 +717,43 @@ class HomeViewNetworking: ObservableObject {
                     }
                 }
             }
+        }
+    }
+
+
+    func signInWithApple(credential: ASAuthorizationAppleIDCredential) {
+        let name = "\(credential.fullName?.givenName) \(credential.fullName?.familyName)"
+        guard let email = credential.email else {
+            fatalError("Sign In With Apple: Email credential doesn't exist")
+        }
+        self.appSyncClient?.perform(mutation: SignUpWith3rdPartyServiceMutation(email: email, name: name)) { (result, error) in
+            if error != nil {
+                print(error?.localizedDescription ?? "")
+                return
+            }
+
+            let data = result?.data?.jsonObject
+            guard let dictionaryResult = data?["signUpWith3rdPartyService"] as? [String: Any] else {
+                fatalError("couldn't convert Sign In email to JSON")
+            }
+
+            let statusResult = dictionaryResult["statusCode"] as? Int ?? 0
+            let resultsBodyMessage = dictionaryResult["body"] as? String ?? "Unknown Error"
+
+            self.token = thirdPartyRegisteredUsersToken
+            self.userEmail = email
+
+            print("************ \n ThirdParty SignIn Results (Apple): ")
+            print("Status Result: \(statusResult)")
+            print("result Body: \(resultsBodyMessage) \n ************")
+
+//                                    self.isUserSignedInVar = true
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            appDelegate.reconfigureAppSyncClient {
+                self.appSyncClient = appDelegate.appSyncClient
+                self.isUserSignedInVar = self.isUserSignedIn()
+            }
+
         }
     }
 

@@ -7,10 +7,14 @@
 //
 
 import SwiftUI
+import AuthenticationServices
 
 struct FirstPage: View {
 
     @EnvironmentObject var enviromentObject: HomeViewNetworking
+    
+    @State var appleSignInDelegates: SignInWithAppleDelegates! = nil
+    @State var sceneDelegate: SceneDelegate! = nil
 
     var body: some View {
 
@@ -47,6 +51,12 @@ struct FirstPage: View {
                     AuthenticationButton.init(text: "Login with FACEBOOK", screenWidth: geo.size.width) {
                         self.enviromentObject.signInWithFacebook()
                     }
+                        .padding(10)
+                    
+                    SignInWithAppleButton()
+                        .frame(width: geo.size.width/1.3)
+                        .frame(height: geo.size.width/5.5)
+                        .onTapGesture(perform: showAppleLogin)
                         .padding(10)
 
                     Button(action: self.buttonAction) {
@@ -92,8 +102,26 @@ struct FirstPage: View {
     }
 
     func buttonAction() {
-        print("Hola")
+        print("Button pressed")
 //        self.enviromentObject.isUserSignedIn.toggle()
+    }
+    
+    func showAppleLogin() {
+        print("Apple login pressed")
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        
+        request.requestedScopes = [.email, .fullName]
+        
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        
+        authorizationController.delegate = appleSignInDelegates
+
+
+        authorizationController.presentationContextProvider = sceneDelegate
+
+        authorizationController.performRequests()
+        
     }
 
 }

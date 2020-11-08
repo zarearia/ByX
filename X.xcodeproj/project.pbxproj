@@ -20,6 +20,7 @@
 		A39517A4DD3E70353EF621E0 /* SwipeablePageRebuild.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3951CCB5C9B624CE3AC8092 /* SwipeablePageRebuild.swift */; };
 		A39518526F45257CF8A09CEA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3951CC516B278453F92F306 /* SceneDelegate.swift */; };
 		A39519258D762DF42BBE0346 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A39517B2EB2CE17FD5D75B6C /* Preview Assets.xcassets */; };
+		A3951B26C006F84DA9781345 /* ApplePayPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39512667EB71FF0EE2DA8F2 /* ApplePayPage.swift */; };
 		A3951BB8C42E2179FFDA5127 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3951DCA977A324CCA171122 /* AppDelegate.swift */; };
 		A3951C7D3EAAC96461DFEC33 /* SignInUpTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39510C20DBD4F5546DAD257 /* SignInUpTextField.swift */; };
 		A3951D1D976AFB2297A2B8DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A3951FCF0B7C416266737F4C /* Assets.xcassets */; };
@@ -29,6 +30,7 @@
 		A3951EAC1C6D6887637B607C /* amplifyconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = A3951735A5A578835CB3529D /* amplifyconfiguration.json */; };
 		A3951EB8F844DB6FD729EC5B /* SignInPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3951B615956DCF823960B44 /* SignInPage.swift */; };
 		F70FA8A8241F7791005D9942 /* AdminPanelPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70FA8A7241F7791005D9942 /* AdminPanelPage.swift */; };
+		F7255D692553D5BF00174592 /* SignInWithAppleDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7255D682553D5BF00174592 /* SignInWithAppleDelegates.swift */; };
 		F74238862445B125005D9437 /* ToggleText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74238852445B125005D9437 /* ToggleText.swift */; };
 		F7442617242F599500271316 /* HomeViewNetworking.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7442616242F599500271316 /* HomeViewNetworking.swift */; };
 		F744261A242F69BF00271316 /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = F7442618242F69BF00271316 /* awsconfiguration.json */; };
@@ -37,6 +39,7 @@
 		F74B407F241E1C6600E81FDE /* ToggleImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74B407E241E1C6600E81FDE /* ToggleImage.swift */; };
 		F769166B241D48C800C4D014 /* ProfilePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F769166A241D48C800C4D014 /* ProfilePage.swift */; };
 		F792C09C244DEDD70069C978 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F792C09B244DEDD70069C978 /* TextView.swift */; };
+		F7973F7D25529A7E00B6FBC5 /* SignInWithAppleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7973F7C25529A7E00B6FBC5 /* SignInWithAppleButton.swift */; };
 		F7AF8869242DE423009C9E82 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AF8868242DE423009C9E82 /* Networking.swift */; };
 /* End PBXBuildFile section */
 
@@ -46,6 +49,7 @@
 		A39510C20DBD4F5546DAD257 /* SignInUpTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInUpTextField.swift; sourceTree = "<group>"; };
 		A39511C6F5E56A5CEE9F859F /* CornerSpecificRadus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CornerSpecificRadus.swift; sourceTree = "<group>"; };
 		A39511DA9BA82B0EF33FF96C /* TextBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextBox.swift; sourceTree = "<group>"; };
+		A39512667EB71FF0EE2DA8F2 /* ApplePayPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplePayPage.swift; sourceTree = "<group>"; };
 		A39513BF8CC7F32E0013BB60 /* X.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = X.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3951424C2714A99920F9B82 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A39514648B1C58A7323346E5 /* AuthenticationPageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationPageType.swift; sourceTree = "<group>"; };
@@ -67,6 +71,7 @@
 		A3951FCF0B7C416266737F4C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B78C35FF247179F8947311A2 /* Pods-X.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-X.debug.xcconfig"; path = "Target Support Files/Pods-X/Pods-X.debug.xcconfig"; sourceTree = "<group>"; };
 		F70FA8A7241F7791005D9942 /* AdminPanelPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminPanelPage.swift; sourceTree = "<group>"; };
+		F7255D682553D5BF00174592 /* SignInWithAppleDelegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAppleDelegates.swift; sourceTree = "<group>"; };
 		F74238852445B125005D9437 /* ToggleText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleText.swift; sourceTree = "<group>"; };
 		F7442616242F599500271316 /* HomeViewNetworking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewNetworking.swift; sourceTree = "<group>"; };
 		F7442618242F69BF00271316 /* awsconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = awsconfiguration.json; sourceTree = SOURCE_ROOT; };
@@ -75,6 +80,7 @@
 		F74B407E241E1C6600E81FDE /* ToggleImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleImage.swift; sourceTree = "<group>"; };
 		F769166A241D48C800C4D014 /* ProfilePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePage.swift; sourceTree = "<group>"; };
 		F792C09B244DEDD70069C978 /* TextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
+		F7973F7C25529A7E00B6FBC5 /* SignInWithAppleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAppleButton.swift; sourceTree = "<group>"; };
 		F7AF8868242DE423009C9E82 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -149,6 +155,7 @@
 				A39517B835EFF53AE2104574 /* AdminPanelTextBar.swift */,
 				A3951C0AB74C0087A95F77EB /* SwipeablePage */,
 				A39511C6F5E56A5CEE9F859F /* CornerSpecificRadus.swift */,
+				A39512667EB71FF0EE2DA8F2 /* ApplePayPage.swift */,
 			);
 			path = TabBarPages;
 			sourceTree = "<group>";
@@ -162,6 +169,7 @@
 				A3951CA8F91BA9CAD442F173 /* AuthenticationButton.swift */,
 				A39514648B1C58A7323346E5 /* AuthenticationPageType.swift */,
 				A3951C1B4603375B738FD192 /* SignUpConfirmPage.swift */,
+				F7255D662553D26F00174592 /* SignInWithApple */,
 			);
 			path = AuthenticationViews;
 			sourceTree = "<group>";
@@ -200,6 +208,15 @@
 				A39517B2EB2CE17FD5D75B6C /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		F7255D662553D26F00174592 /* SignInWithApple */ = {
+			isa = PBXGroup;
+			children = (
+				F7973F7C25529A7E00B6FBC5 /* SignInWithAppleButton.swift */,
+				F7255D682553D5BF00174592 /* SignInWithAppleDelegates.swift */,
+			);
+			path = SignInWithApple;
 			sourceTree = "<group>";
 		};
 		F7442615242F595E00271316 /* ViewModel */ = {
@@ -352,6 +369,7 @@
 				F74B407F241E1C6600E81FDE /* ToggleImage.swift in Sources */,
 				A39516B7C441089D075FBDDE /* FirstPage.swift in Sources */,
 				F7AF8869242DE423009C9E82 /* Networking.swift in Sources */,
+				F7973F7D25529A7E00B6FBC5 /* SignInWithAppleButton.swift in Sources */,
 				A395144C4956A9C10920399C /* AuthenticationButton.swift in Sources */,
 				F792C09C244DEDD70069C978 /* TextView.swift in Sources */,
 				A395104A92FA5B8BE164684C /* TabBar.swift in Sources */,
@@ -360,6 +378,7 @@
 				F70FA8A8241F7791005D9942 /* AdminPanelPage.swift in Sources */,
 				A3951E7A49DFC159E961BD7A /* TextBox.swift in Sources */,
 				F74238862445B125005D9437 /* ToggleText.swift in Sources */,
+				F7255D692553D5BF00174592 /* SignInWithAppleDelegates.swift in Sources */,
 				F744261D242F889B00271316 /* AddPageNetworking.swift in Sources */,
 				F744261B242F69BF00271316 /* API.swift in Sources */,
 				A3951E173ED4CFE33B773915 /* AddPage.swift in Sources */,
@@ -369,6 +388,7 @@
 				A3951DF737F48A17C320DAC8 /* AuthenticationPageType.swift in Sources */,
 				A395104F4F9FD5FF947BEC18 /* SignUpConfirmPage.swift in Sources */,
 				A39513ADE3AC89AB242DE761 /* CornerSpecificRadus.swift in Sources */,
+				A3951B26C006F84DA9781345 /* ApplePayPage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -396,7 +416,7 @@
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = X/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ariazare.byX;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ariazare.byXApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -413,7 +433,7 @@
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = X/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ariazare.byX;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ariazare.byXApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

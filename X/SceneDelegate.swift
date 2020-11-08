@@ -9,6 +9,7 @@
 import UIKit
 import SwiftUI
 import FBSDKCoreKit
+import AuthenticationServices
 
 let userEmailKey = "userEmailKey"
 let userPasswordKey = "userPasswordKey"
@@ -110,4 +111,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
 
+}
+
+//MARK: providing Apple Sign In the window
+extension SceneDelegate: ASAuthorizationControllerPresentationContextProviding {
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        if let window = self.window {
+            return window
+        } else {
+            fatalError("Main UIWindow is empty")
+        }
+    }
 }

@@ -42,6 +42,11 @@ struct TabBar: View {
                             Image(systemName: "person.3.fill")
                             Text("Admin Panel")
                         }.tag(3)
+                    ApplePayPage()
+                        .tabItem {
+                            Image(systemName: "dollarsign.circle.fill")
+                        }.tag(4)
+
                 }
             }
         }
