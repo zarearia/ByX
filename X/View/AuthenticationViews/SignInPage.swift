@@ -23,18 +23,18 @@ struct SignInPage: View {
                 VStack {
 
                     if self.pageType == .signUp {
-                        SignInUpTextField(text: self.$name, placeHolder: "Name")
+                        AuthenticationTextField(text: self.$name, placeHolder: "Name")
                             .keyboardType(.emailAddress)
                             .padding()
                             .padding(.top, 100)
                     }
 
 
-                    SignInUpTextField(text: self.$email, placeHolder: "Email")
+                    AuthenticationTextField(text: self.$email, placeHolder: "Email")
                         .keyboardType(.emailAddress)
                         .padding()
 
-                    SignInUpTextField(text: self.$password, placeHolder: "Password")
+                    AuthenticationTextField(text: self.$password, placeHolder: "Password")
                         .padding()
 
                     Text(self.networking.signInUpStatusText)
@@ -55,7 +55,7 @@ struct SignInPage: View {
                             .navigationBarTitle(Text("Home"))
 
                     NavigationLink(destination: SignUpConfirmPage().environmentObject(self.networking),
-                        isActive: self.$networking.didSendSignUpEmail) { EmptyView() }
+                        isActive: self.$networking.isEmailVerificationPagePresented) { EmptyView() }
 
                     HStack {
 

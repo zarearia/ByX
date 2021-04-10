@@ -51,7 +51,11 @@ class HomeViewNetworking: ObservableObject {
     @Published var signInUpStatusText = ""
 //    @State var signUpStatusError = false
 
-    @Published var didSendSignUpEmail = false
+    @Published var isEmailVerificationPagePresented = false
+
+    @Published var isForgotPasswordCodeVerificationPagePresented = false
+
+    @Published var isChangePasswordPagePresented = false
 
 //    TODO: Password and Email should be stored in user Defaults
     @Published var userEmail: String! {
@@ -74,6 +78,14 @@ class HomeViewNetworking: ObservableObject {
     @Published var isUserSignedInVar = true
 
     @Published var emailConfirmStatusError = ""
+
+    @Published var forgottenPasswordVerificationStatusError = ""
+
+    @Published var changePasswordStatusError = ""
+
+
+    @Published var userRegularPostsCount = 0
+    @Published var userUpgradedPostsCount = 0
 
     init() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -103,7 +115,7 @@ class HomeViewNetworking: ObservableObject {
                 }
                 print("Latest Sort Query complete.")
 
-                print(result?.data)
+//                print(result?.data)
                 if let resultsList = (result!.data?.listXModelTypes?.items) as? [ListXModelTypesQuery.Data.ListXModelType.Item] {
                     self.rawListItems = resultsList
                 }
@@ -132,7 +144,7 @@ class HomeViewNetworking: ObservableObject {
                    return
                }
                print("MostLiked Query complete.")
-               print(result?.data?.jsonObject)
+//               print(result?.data?.jsonObject)
                let resultJson = result?.data?.listXModelTypesLikesSorted?.jsonObject
                do {
                    if let resultJsonObject = resultJson as? JSONObject {
@@ -223,8 +235,8 @@ class HomeViewNetworking: ObservableObject {
                }
 
                print("Latest Sort Query Upgraded complete.")
-               print(result?.data)
-               print(result?.errors)
+//               print(result?.data)
+//               print(result?.errors)
 
                if let itemsLocal = (result?.data?.listXModelTypes?.items) as? [ListXModelTypesQuery.Data.ListXModelType.Item] {
                    let mergedResult = self.mergeUpgradedAndNotUpgradedPosts(upgradedItems: itemsLocal,
@@ -255,7 +267,7 @@ class HomeViewNetworking: ObservableObject {
                    return
                }
                print("MostLike Sort Query Upgraded complete.")
-               print(result?.data?.jsonObject)
+//               print(result?.data?.jsonObject)
                let resultJson = result?.data?.listXModelTypesLikesSorted?.jsonObject
                do {
                    if let resultJsonObject = resultJson as? JSONObject {
@@ -291,7 +303,7 @@ class HomeViewNetworking: ObservableObject {
                    return
                }
                print("MostDislike Sort Query Upgraded complete.")
-               print(result?.data?.jsonObject)
+//               print(result?.data?.jsonObject)
                let resultJson = result?.data?.listXModelTypesDislikesSorted?.jsonObject
                do {
                    if let resultJsonObject = resultJson as? JSONObject {
@@ -366,8 +378,8 @@ class HomeViewNetworking: ObservableObject {
            } else {
                underflow = $0 - ($0/postRatio) - 1
            }
-           print("$0: \($0) ")
-           print("underflow: \(underflow) ")
+//           print("$0: \($0) ")
+//           print("underflow: \(underflow) ")
 
            if underflow == -1 && upgradedItems.indices.contains($0/postRatio) {
                return upgradedItems[0]
@@ -393,7 +405,7 @@ class HomeViewNetworking: ObservableObject {
            }
        }
 
-       print(mergedArray)
+//       print(mergedArray)
 
        if self.shouldReloadTheFullList == false {
            self.listItems.append(contentsOf: mergedArray)
@@ -406,8 +418,8 @@ class HomeViewNetworking: ObservableObject {
    }
 
    func loadMoreItems(){
-       print(lastEvaluateUpgradedItem)
-       print(lastEvaluateNonupgradedItem)
+//       print(lastEvaluateUpgradedItem)
+//       print(lastEvaluateNonupgradedItem)
 
        self.runQuery()
    }
@@ -427,7 +439,7 @@ class HomeViewNetworking: ObservableObject {
                let resultJson = result?.data?.listXModelTypesSearchTags?.jsonObject
                let reslutList = try! ListXModelTypesQuery.Data.ListXModelType.init(jsonObject: resultJson as! JSONObject)
                self.rawListItems = reslutList.items! as! [ListXModelTypesQuery.Data.ListXModelType.Item]
-               print(result?.data?.listXModelTypesSearchTags?.items)
+//               print(result?.data?.listXModelTypesSearchTags?.items)
 
                self.MergeResults()
            }
@@ -448,7 +460,9 @@ class HomeViewNetworking: ObservableObject {
            let resultJson = result?.data?.listXModelTypesUserItems?.jsonObject
            let reslutList = try! ListXModelTypesQuery.Data.ListXModelType.init(jsonObject: resultJson as! JSONObject)
            self.rawListItems = reslutList.items! as! [ListXModelTypesQuery.Data.ListXModelType.Item]
-           print(result?.data?.listXModelTypesUserItems?.items)
+//           print(result?.data?.listXModelTypesUserItems?.items)
+
+           self.userRegularPostsCount = self.rawListItems.count
 
            self.MergeResults()
 
@@ -550,7 +564,7 @@ class HomeViewNetworking: ObservableObject {
                self.userEmail = email
                self.userPassword = password
                print(statusResult)
-               self.didSendSignUpEmail = true
+               self.isEmailVerificationPagePresented = true
            case 0:
                print("unknown error or problem")    
            default:
@@ -578,11 +592,18 @@ class HomeViewNetworking: ObservableObject {
 
            switch statusResult {
            case 200:
-               self.token = dictionaryResult["token"] as? String
-               let appDelegate = UIApplication.shared.delegate as! AppDelegate
-               appDelegate.reconfigureAppSyncClient {
-                   self.appSyncClient = appDelegate.appSyncClient
-                   self.isUserSignedInVar = self.isUserSignedIn()
+               if self.isEmailVerificationPagePresented {
+                   self.token = dictionaryResult["token"] as? String
+                   let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                   appDelegate.reconfigureAppSyncClient {
+                       self.appSyncClient = appDelegate.appSyncClient
+                       self.isUserSignedInVar = self.isUserSignedIn()
+                   }
+               } else if self.isForgotPasswordCodeVerificationPagePresented {
+                    // implement any kind of action in case of necessity
+                   self.isChangePasswordPagePresented = true
+               } else {
+                   fatalError("none of didSendSignUpEmail or presentForgotPasswordCodeVerificationPage is true")
                }
 
                self.emailConfirmStatusError = dictionaryResult["body"] as? String ?? ""
@@ -722,7 +743,15 @@ class HomeViewNetworking: ObservableObject {
 
 
     func signInWithApple(credential: ASAuthorizationAppleIDCredential) {
-        let name = "\(credential.fullName?.givenName) \(credential.fullName?.familyName)"
+        var name = "nil"
+        if let firstName = credential.fullName?.givenName {
+            name = firstName
+        }
+        if let lastName = credential.fullName?.familyName {
+            name = "\(name) \(lastName)"
+        }
+//        let name = "\(credential.fullName!.givenName ??) \(credential.fullName!.familyName)"
+
         guard let email = credential.email else {
             fatalError("Sign In With Apple: Email credential doesn't exist")
         }
@@ -779,10 +808,30 @@ class HomeViewNetworking: ObservableObject {
 
            self.listItems[itemIndex].isUpgraded = dictionaryResult["isUpgraded"] as! Int
 
-           print("is upgraded : \(dictionaryResult["isUpgraded"])")
+//           print("is upgraded : \(dictionaryResult["isUpgraded"])")
 
            action()
        }
    }
 
+//    Test: must be completed
+    func upgradedCount() -> Int {
+        var count = 0
+        for i in listItems {
+            if i.isUpgraded == 1 {
+                count += 1
+            }
+        }
+        return count
+    }
+
+    func nonupgradedCount() -> Int {
+        var count = 0
+        for i in listItems {
+            if i.isUpgraded == 0 {
+                count += 1
+            }
+        }
+        return count
+    }
 }

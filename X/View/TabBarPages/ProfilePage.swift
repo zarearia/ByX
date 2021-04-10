@@ -47,6 +47,42 @@ struct ProfilePage: View {
                                 .padding(.trailing, 20)
                         }
                     }
+
+                    HStack {
+
+                        Spacer()
+
+                        VStack {
+                            Text("Posts")
+                                .font(.system(size: 25, design: .rounded))
+                                .bold()
+                                .padding()
+                                .foregroundColor(Color(hex: "#6CAF26"))
+
+                            Text(String(observedObj.upgradedCount()))
+                                .font(.system(size: 22, design: .rounded))
+                                .foregroundColor(Color(hex: "#6CAF26"))
+
+                        }
+                            .padding()
+
+                        Spacer()
+
+                        VStack {
+                            Text("Upgraded")
+                                .font(.system(size: 25, design: .rounded))
+                                .bold()
+                                .padding()
+                                .foregroundColor(Color(hex: "#6CAF26"))
+
+                            Text(String(observedObj.nonupgradedCount()))
+                                .font(.system(size: 22, design: .rounded))
+                                .foregroundColor(Color(hex: "#6CAF26"))
+                        }
+//                            .padding()
+
+                        Spacer()
+                    }
                     
                     
                     Rectangle()

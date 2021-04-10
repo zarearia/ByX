@@ -1,0 +1,9 @@
+{
+  "field": "get_all_items_sorted_by_likes",
+  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InhhcHBlbWFpbHRlc3QyMDIwQGdtYWlsLmNvbSJ9.iB8bTlPF7wotCLkvJAsOyHpFNEx4gkgJ1215qF4nR54",
+  "LastEvaluatedKey": {
+    "id": "",
+    "isUpgraded": 1,
+    "email": "xappemailtest2020@gmail.com"
+  }
+}

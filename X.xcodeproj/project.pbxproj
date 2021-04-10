@@ -10,6 +10,7 @@
 		6977440A4F157244C33198FA /* Pods_X.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08CF1BB0F719C81A3D09DE81 /* Pods_X.framework */; };
 		A395104A92FA5B8BE164684C /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39516CC43C0EFCAF39D81C4 /* TabBar.swift */; };
 		A395104F4F9FD5FF947BEC18 /* SignUpConfirmPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3951C1B4603375B738FD192 /* SignUpConfirmPage.swift */; };
+		A395129D9E6CF7EDDE46B6D9 /* ForgotPasswordNetworking.swift in Sources */ = {isa = PBXBuildFile; fileRef = A395159B979D6522CBE4A6F8 /* ForgotPasswordNetworking.swift */; };
 		A39513ADE3AC89AB242DE761 /* CornerSpecificRadus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39511C6F5E56A5CEE9F859F /* CornerSpecificRadus.swift */; };
 		A395144C4956A9C10920399C /* AuthenticationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3951CA8F91BA9CAD442F173 /* AuthenticationButton.swift */; };
 		A39514E99DC0836DCD34A3AD /* SwipeablePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3951CAD3EE96CCFB5803A56 /* SwipeablePage.swift */; };
@@ -18,12 +19,16 @@
 		A39516B7C441089D075FBDDE /* FirstPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3951D7ECF8C497EB31202AE /* FirstPage.swift */; };
 		A39517544A9EAC094B8D3F4E /* HomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3951E832EB47FF0303B426E /* HomePage.swift */; };
 		A39517A4DD3E70353EF621E0 /* SwipeablePageRebuild.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3951CCB5C9B624CE3AC8092 /* SwipeablePageRebuild.swift */; };
+		A39517BDC571760BD4BE9590 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A395129C8F3860598B9119A5 /* StoreManager.swift */; };
 		A39518526F45257CF8A09CEA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3951CC516B278453F92F306 /* SceneDelegate.swift */; };
+		A39518B66519D3F583608220 /* ChangePasswordPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39512B19FE071B1809B96DF /* ChangePasswordPage.swift */; };
 		A39519258D762DF42BBE0346 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A39517B2EB2CE17FD5D75B6C /* Preview Assets.xcassets */; };
 		A3951B26C006F84DA9781345 /* ApplePayPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39512667EB71FF0EE2DA8F2 /* ApplePayPage.swift */; };
 		A3951BB8C42E2179FFDA5127 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3951DCA977A324CCA171122 /* AppDelegate.swift */; };
-		A3951C7D3EAAC96461DFEC33 /* SignInUpTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39510C20DBD4F5546DAD257 /* SignInUpTextField.swift */; };
+		A3951C7D3EAAC96461DFEC33 /* AuthenticationTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39510C20DBD4F5546DAD257 /* AuthenticationTextField.swift */; };
+		A3951C8C5AB293524069547D /* StoreObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = A395153A8BF7B2932482602D /* StoreObserver.swift */; };
 		A3951D1D976AFB2297A2B8DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A3951FCF0B7C416266737F4C /* Assets.xcassets */; };
+		A3951DACBDA5388EECFA450B /* ForgotPasswordPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3951569234C13960D8BBC4D /* ForgotPasswordPage.swift */; };
 		A3951DF737F48A17C320DAC8 /* AuthenticationPageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39514648B1C58A7323346E5 /* AuthenticationPageType.swift */; };
 		A3951E173ED4CFE33B773915 /* AddPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3951D93B7328DCD390B111C /* AddPage.swift */; };
 		A3951E7A49DFC159E961BD7A /* TextBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39511DA9BA82B0EF33FF96C /* TextBox.swift */; };
@@ -40,19 +45,26 @@
 		F769166B241D48C800C4D014 /* ProfilePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F769166A241D48C800C4D014 /* ProfilePage.swift */; };
 		F792C09C244DEDD70069C978 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F792C09B244DEDD70069C978 /* TextView.swift */; };
 		F7973F7D25529A7E00B6FBC5 /* SignInWithAppleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7973F7C25529A7E00B6FBC5 /* SignInWithAppleButton.swift */; };
+		F7A2E12E256105E100B92A08 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7A2E12D256105E100B92A08 /* StoreKit.framework */; };
 		F7AF8869242DE423009C9E82 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AF8868242DE423009C9E82 /* Networking.swift */; };
+		F7BD12BE25637CDC00446E22 /* product_ids.plist in Resources */ = {isa = PBXBuildFile; fileRef = F7BD12BD25637CDC00446E22 /* product_ids.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		08CF1BB0F719C81A3D09DE81 /* Pods_X.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_X.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		296B309E87893A00B229A087 /* Pods-X.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-X.release.xcconfig"; path = "Target Support Files/Pods-X/Pods-X.release.xcconfig"; sourceTree = "<group>"; };
-		A39510C20DBD4F5546DAD257 /* SignInUpTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInUpTextField.swift; sourceTree = "<group>"; };
+		A39510C20DBD4F5546DAD257 /* AuthenticationTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationTextField.swift; sourceTree = "<group>"; };
 		A39511C6F5E56A5CEE9F859F /* CornerSpecificRadus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CornerSpecificRadus.swift; sourceTree = "<group>"; };
 		A39511DA9BA82B0EF33FF96C /* TextBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextBox.swift; sourceTree = "<group>"; };
 		A39512667EB71FF0EE2DA8F2 /* ApplePayPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplePayPage.swift; sourceTree = "<group>"; };
+		A395129C8F3860598B9119A5 /* StoreManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
+		A39512B19FE071B1809B96DF /* ChangePasswordPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasswordPage.swift; sourceTree = "<group>"; };
 		A39513BF8CC7F32E0013BB60 /* X.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = X.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3951424C2714A99920F9B82 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A39514648B1C58A7323346E5 /* AuthenticationPageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationPageType.swift; sourceTree = "<group>"; };
+		A395153A8BF7B2932482602D /* StoreObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreObserver.swift; sourceTree = "<group>"; };
+		A3951569234C13960D8BBC4D /* ForgotPasswordPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordPage.swift; sourceTree = "<group>"; };
+		A395159B979D6522CBE4A6F8 /* ForgotPasswordNetworking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordNetworking.swift; sourceTree = "<group>"; };
 		A39516CC43C0EFCAF39D81C4 /* TabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		A3951735A5A578835CB3529D /* amplifyconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = amplifyconfiguration.json; sourceTree = SOURCE_ROOT; };
 		A39517B2EB2CE17FD5D75B6C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -81,7 +93,10 @@
 		F769166A241D48C800C4D014 /* ProfilePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePage.swift; sourceTree = "<group>"; };
 		F792C09B244DEDD70069C978 /* TextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 		F7973F7C25529A7E00B6FBC5 /* SignInWithAppleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAppleButton.swift; sourceTree = "<group>"; };
+		F7A2E12D256105E100B92A08 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		F7AF8868242DE423009C9E82 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
+		F7BCCA1D255C4A840078F75B /* X.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = X.entitlements; sourceTree = "<group>"; };
+		F7BD12BD25637CDC00446E22 /* product_ids.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = product_ids.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +105,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6977440A4F157244C33198FA /* Pods_X.framework in Frameworks */,
+				F7A2E12E256105E100B92A08 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,6 +124,7 @@
 		9BECEC8920A9D34A04A7C2BF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F7A2E12D256105E100B92A08 /* StoreKit.framework */,
 				08CF1BB0F719C81A3D09DE81 /* Pods_X.framework */,
 			);
 			name = Frameworks;
@@ -124,9 +141,11 @@
 		A395131359D6CCF22E637287 /* X */ = {
 			isa = PBXGroup;
 			children = (
+				F7BCCA1D255C4A840078F75B /* X.entitlements */,
 				F7442619242F69BF00271316 /* API.swift */,
 				F7442618242F69BF00271316 /* awsconfiguration.json */,
 				A3951DDAD9B371F252603EAD /* Info.plist */,
+				F7BD12BD25637CDC00446E22 /* product_ids.plist */,
 				A3951FCF0B7C416266737F4C /* Assets.xcassets */,
 				A3951281959CA0973A354CDE /* LaunchScreen.storyboard */,
 				A3951DCA977A324CCA171122 /* AppDelegate.swift */,
@@ -164,14 +183,25 @@
 			isa = PBXGroup;
 			children = (
 				A3951B615956DCF823960B44 /* SignInPage.swift */,
-				A39510C20DBD4F5546DAD257 /* SignInUpTextField.swift */,
+				A39510C20DBD4F5546DAD257 /* AuthenticationTextField.swift */,
 				A3951D7ECF8C497EB31202AE /* FirstPage.swift */,
 				A3951CA8F91BA9CAD442F173 /* AuthenticationButton.swift */,
 				A39514648B1C58A7323346E5 /* AuthenticationPageType.swift */,
 				A3951C1B4603375B738FD192 /* SignUpConfirmPage.swift */,
 				F7255D662553D26F00174592 /* SignInWithApple */,
+				A3951569234C13960D8BBC4D /* ForgotPasswordPage.swift */,
+				A39512B19FE071B1809B96DF /* ChangePasswordPage.swift */,
 			);
 			path = AuthenticationViews;
+			sourceTree = "<group>";
+		};
+		A3951796CE4E4B9AE476B80A /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				A395153A8BF7B2932482602D /* StoreObserver.swift */,
+				A395129C8F3860598B9119A5 /* StoreManager.swift */,
+			);
+			path = Store;
 			sourceTree = "<group>";
 		};
 		A395180671726A4EFA43F8D1 /* View */ = {
@@ -224,6 +254,8 @@
 			children = (
 				F7442616242F599500271316 /* HomeViewNetworking.swift */,
 				F744261C242F889B00271316 /* AddPageNetworking.swift */,
+				A3951796CE4E4B9AE476B80A /* Store */,
+				A395159B979D6522CBE4A6F8 /* ForgotPasswordNetworking.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -259,7 +291,7 @@
 				ORGANIZATIONNAME = "___FULLUSERNAME___";
 				TargetAttributes = {
 					A395178522F66DF254DBEA42 = {
-						DevelopmentTeam = GG7GN7L79A;
+						DevelopmentTeam = 34J76GMUPG;
 					};
 				};
 			};
@@ -292,6 +324,7 @@
 				A3951623EB9D37BF98CE5E18 /* LaunchScreen.storyboard in Resources */,
 				A39519258D762DF42BBE0346 /* Preview Assets.xcassets in Resources */,
 				A3951EAC1C6D6887637B607C /* amplifyconfiguration.json in Resources */,
+				F7BD12BE25637CDC00446E22 /* product_ids.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -365,7 +398,7 @@
 				A39518526F45257CF8A09CEA /* SceneDelegate.swift in Sources */,
 				A3951EB8F844DB6FD729EC5B /* SignInPage.swift in Sources */,
 				F7442617242F599500271316 /* HomeViewNetworking.swift in Sources */,
-				A3951C7D3EAAC96461DFEC33 /* SignInUpTextField.swift in Sources */,
+				A3951C7D3EAAC96461DFEC33 /* AuthenticationTextField.swift in Sources */,
 				F74B407F241E1C6600E81FDE /* ToggleImage.swift in Sources */,
 				A39516B7C441089D075FBDDE /* FirstPage.swift in Sources */,
 				F7AF8869242DE423009C9E82 /* Networking.swift in Sources */,
@@ -389,6 +422,11 @@
 				A395104F4F9FD5FF947BEC18 /* SignUpConfirmPage.swift in Sources */,
 				A39513ADE3AC89AB242DE761 /* CornerSpecificRadus.swift in Sources */,
 				A3951B26C006F84DA9781345 /* ApplePayPage.swift in Sources */,
+				A3951C8C5AB293524069547D /* StoreObserver.swift in Sources */,
+				A39517BDC571760BD4BE9590 /* StoreManager.swift in Sources */,
+				A3951DACBDA5388EECFA450B /* ForgotPasswordPage.swift in Sources */,
+				A395129D9E6CF7EDDE46B6D9 /* ForgotPasswordNetworking.swift in Sources */,
+				A39518B66519D3F583608220 /* ChangePasswordPage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -411,12 +449,13 @@
 			baseConfigurationReference = 296B309E87893A00B229A087 /* Pods-X.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = X/X.entitlements;
 				DEVELOPMENT_ASSET_PATHS = "\"X/Preview Content\"";
-				DEVELOPMENT_TEAM = GG7GN7L79A;
+				DEVELOPMENT_TEAM = 34J76GMUPG;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = X/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ariazare.byXApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ariazare.byx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -428,12 +467,13 @@
 			baseConfigurationReference = B78C35FF247179F8947311A2 /* Pods-X.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = X/X.entitlements;
 				DEVELOPMENT_ASSET_PATHS = "\"X/Preview Content\"";
-				DEVELOPMENT_TEAM = GG7GN7L79A;
+				DEVELOPMENT_TEAM = 34J76GMUPG;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = X/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ariazare.byXApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ariazare.byx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

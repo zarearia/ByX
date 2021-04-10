@@ -9,6 +9,7 @@
 import UIKit
 import AWSAppSync
 import FBSDKCoreKit
+import StoreKit
 
 
 
@@ -66,7 +67,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var appSyncClient: AWSAppSyncClient?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
+
+
+        SKPaymentQueue.default().add(StoreObserver.shared)
+        StoreManager.shared.startProductRequest()
+
+
         
         /*Mark: Facebook*/
         /*************************/
@@ -168,6 +174,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
 
+    func applicationWillTerminate(_ application: UIApplication) {
 
-
+        SKPaymentQueue.default().remove(StoreObserver.shared)
+    }
 }

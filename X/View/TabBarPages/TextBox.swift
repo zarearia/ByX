@@ -64,6 +64,8 @@ struct TextBox: View {
     @State var isDislikeHitable = false
     @State var isReportHitable = false
 
+    @State var isReportActioSheetPresented = false
+
     var body: some View {
 
         VStack(alignment: .leading) {
@@ -131,8 +133,22 @@ struct TextBox: View {
                             .foregroundColor(Color(hex: "#6CAF26"))
                         }
                     } else {
-                        ToggleText(isOn: Binding<Bool>($envObject.listItems[self.currentItemIndex].isReportedByTheUser) ?? $falseBool, onText: "Reported", offText: "Report", action: reportAction)
+                        ToggleText(isOn: Binding<Bool>($envObject.listItems[self.currentItemIndex].isReportedByTheUser) ?? $falseBool,
+                            onText: "Reported", offText: "Report", action: {
+                            // unreport the post if it has been reported else show Sheet to start reporting process
+                            if envObject.listItems[self.currentItemIndex].isReportedByTheUser ?? false {
+                                presentReportActionSheet()
+                            } else {
+                                reportAction()
+                            }
+                        })
                             .allowsHitTesting(isReportHitable)
+                            .actionSheet(isPresented: $isReportActioSheetPresented) {
+                                let buttons: [ActionSheet.Button] = [.default(Text("misinformation"), action: reportAction),
+                                                                     .default(Text("inappropriate"), action: reportAction),
+                                                                     .cancel { envObject.listItems[self.currentItemIndex].isReportedByTheUser = false }]
+                                return ActionSheet(title: Text("Why are you reporting this post?"), buttons: buttons)
+                            }
                     }
                 }
             }
@@ -163,7 +179,11 @@ struct TextBox: View {
             }
 
     }
-    
+
+
+    func presentReportActionSheet() {
+        self.isReportActioSheetPresented = true
+    }
     
     
     func likeAction() {

@@ -54,7 +54,7 @@ struct HomePage: View {
                 VStack {
 
                     HStack {
-                        SignInUpTextField(text: $observedObj.searchText, placeHolder: "Search #'s", onCommit: observedObj.searchTag)
+                        AuthenticationTextField(text: $observedObj.searchText, placeHolder: "Search #'s", onCommit: observedObj.searchTag)
                             .overlay(
                                 GeometryReader() { geo in
                                     Color(.clear)

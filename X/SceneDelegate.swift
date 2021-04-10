@@ -117,6 +117,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 extension SceneDelegate: ASAuthorizationControllerPresentationContextProviding {
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         if let window = self.window {
+            print("windows inited")
             return window
         } else {
             fatalError("Main UIWindow is empty")

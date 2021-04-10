@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct SignInUpTextField: View {
+struct AuthenticationTextField: View {
 
     @Binding var text: String
     var placeHolder: String

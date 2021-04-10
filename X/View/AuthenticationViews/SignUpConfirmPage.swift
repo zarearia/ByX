@@ -16,7 +16,7 @@ struct SignUpConfirmPage: View {
         ZStack {
             VStack {
 
-                SignInUpTextField(text: self.$confirmationCode, placeHolder: "Enter Code Here")
+                AuthenticationTextField(text: self.$confirmationCode, placeHolder: "Enter Code Here")
                     .keyboardType(.numberPad)
                     .padding(.top, 100)
                     .padding()
@@ -34,6 +34,9 @@ struct SignUpConfirmPage: View {
 //                Text("Approve")
 //                    .padding(.top, 200)
 //            }
+
+                NavigationLink(destination: ChangePasswordPage().environmentObject(self.networking)
+                    , isActive: self.$networking.isChangePasswordPagePresented) { EmptyView() }
 
                 Spacer()
 

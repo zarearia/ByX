@@ -205,3 +205,16 @@ mutation SignUpWith3rdPartyService($email: AWSEmail, $name: String) {
     body
   }
 }
+mutation SendEmailForForgottenPassword($email: AWSEmail) {
+  sendEmailForForgottenPassword(email: $email) {
+    statusCode
+    body
+  }
+}
+mutation ChangePassword($email: AWSEmail, $password: String) {
+  changePassword(email: $email, password: $password) {
+    statusCode
+    body
+    token
+  }
+}

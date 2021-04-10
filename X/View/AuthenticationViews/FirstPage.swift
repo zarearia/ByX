@@ -13,8 +13,8 @@ struct FirstPage: View {
 
     @EnvironmentObject var enviromentObject: HomeViewNetworking
     
-    @State var appleSignInDelegates: SignInWithAppleDelegates! = nil
-    @State var sceneDelegate: SceneDelegate! = nil
+    @State var appleSignInDelegates: SignInWithAppleDelegates! = SignInWithAppleDelegates()
+    @State var sceneDelegate: SceneDelegate! = SceneDelegate()
 
     var body: some View {
 
@@ -59,14 +59,15 @@ struct FirstPage: View {
                         .onTapGesture(perform: showAppleLogin)
                         .padding(10)
 
-                    Button(action: self.buttonAction) {
-                        Text("Forgot password?")
-                            .font(.system(size: 21, design: .rounded))
-                            .fontWeight(.semibold)
-                            .foregroundColor(Color(hex: "#3BB0BA"))
-                            .underline()
+                    NavigationLink(destination: ForgotPasswordPage().environmentObject(self.enviromentObject)) {
+                            Text("Forgot password?")
+                                .font(.system(size: 21, design: .rounded))
+                                .fontWeight(.semibold)
+                                .foregroundColor(Color(hex: "#3BB0BA"))
+                                .underline()
+                                .padding(.top, 50)
+
                     }
-                        .padding(.top, 50)
 
                     HStack {
 

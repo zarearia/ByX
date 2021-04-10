@@ -2244,6 +2244,196 @@ public final class SignUpWith3rdPartyServiceMutation: GraphQLMutation {
   }
 }
 
+public final class SendEmailForForgottenPasswordMutation: GraphQLMutation {
+  public static let operationString =
+    "mutation SendEmailForForgottenPassword($email: AWSEmail) {\n  sendEmailForForgottenPassword(email: $email) {\n    __typename\n    statusCode\n    body\n  }\n}"
+
+  public var email: String?
+
+  public init(email: String? = nil) {
+    self.email = email
+  }
+
+  public var variables: GraphQLMap? {
+    return ["email": email]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Mutation"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("sendEmailForForgottenPassword", arguments: ["email": GraphQLVariable("email")], type: .object(SendEmailForForgottenPassword.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(sendEmailForForgottenPassword: SendEmailForForgottenPassword? = nil) {
+      self.init(snapshot: ["__typename": "Mutation", "sendEmailForForgottenPassword": sendEmailForForgottenPassword.flatMap { $0.snapshot }])
+    }
+
+    public var sendEmailForForgottenPassword: SendEmailForForgottenPassword? {
+      get {
+        return (snapshot["sendEmailForForgottenPassword"] as? Snapshot).flatMap { SendEmailForForgottenPassword(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "sendEmailForForgottenPassword")
+      }
+    }
+
+    public struct SendEmailForForgottenPassword: GraphQLSelectionSet {
+      public static let possibleTypes = ["ResponseWithBody"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("statusCode", type: .scalar(Int.self)),
+        GraphQLField("body", type: .scalar(String.self)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(statusCode: Int? = nil, body: String? = nil) {
+        self.init(snapshot: ["__typename": "ResponseWithBody", "statusCode": statusCode, "body": body])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var statusCode: Int? {
+        get {
+          return snapshot["statusCode"] as? Int
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "statusCode")
+        }
+      }
+
+      public var body: String? {
+        get {
+          return snapshot["body"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "body")
+        }
+      }
+    }
+  }
+}
+
+public final class ChangePasswordMutation: GraphQLMutation {
+  public static let operationString =
+    "mutation ChangePassword($email: AWSEmail, $password: String) {\n  changePassword(email: $email, password: $password) {\n    __typename\n    statusCode\n    body\n    token\n  }\n}"
+
+  public var email: String?
+  public var password: String?
+
+  public init(email: String? = nil, password: String? = nil) {
+    self.email = email
+    self.password = password
+  }
+
+  public var variables: GraphQLMap? {
+    return ["email": email, "password": password]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Mutation"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("changePassword", arguments: ["email": GraphQLVariable("email"), "password": GraphQLVariable("password")], type: .object(ChangePassword.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(changePassword: ChangePassword? = nil) {
+      self.init(snapshot: ["__typename": "Mutation", "changePassword": changePassword.flatMap { $0.snapshot }])
+    }
+
+    public var changePassword: ChangePassword? {
+      get {
+        return (snapshot["changePassword"] as? Snapshot).flatMap { ChangePassword(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "changePassword")
+      }
+    }
+
+    public struct ChangePassword: GraphQLSelectionSet {
+      public static let possibleTypes = ["ResponseWithTokenAndBody"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("statusCode", type: .scalar(Int.self)),
+        GraphQLField("body", type: .scalar(String.self)),
+        GraphQLField("token", type: .scalar(String.self)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(statusCode: Int? = nil, body: String? = nil, token: String? = nil) {
+        self.init(snapshot: ["__typename": "ResponseWithTokenAndBody", "statusCode": statusCode, "body": body, "token": token])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var statusCode: Int? {
+        get {
+          return snapshot["statusCode"] as? Int
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "statusCode")
+        }
+      }
+
+      public var body: String? {
+        get {
+          return snapshot["body"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "body")
+        }
+      }
+
+      public var token: String? {
+        get {
+          return snapshot["token"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "token")
+        }
+      }
+    }
+  }
+}
+
 public final class GetXModelTypeQuery: GraphQLQuery {
   public static let operationString =
     "query GetXModelType($id: ID!) {\n  getXModelType(id: $id) {\n    __typename\n    id\n    email\n    title\n    isUpgraded\n    tags\n    dateCreated\n    dateUpgraded\n    dislikesCount\n    likesCount\n    isReported\n    isSpam\n    reportsCount\n    likers\n    dislikers\n    reporters\n    isLikedByTheUser\n    isDislikedByTheUser\n    isReportedByTheUser\n  }\n}"

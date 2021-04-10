@@ -25,7 +25,8 @@ extension SignInWithAppleDelegates: ASAuthorizationControllerDelegate {
         
         case let passwordCredential as ASPasswordCredential:
 //            TODO: Check if this part is Correct
-            fatalError("Apple Sign In: ASPasswordCredential required(debug)")
+            print("Apple Sign In: ASPasswordCredential required(debug)")
+//            fatalError("Apple Sign In: ASPasswordCredential required(debug)")
             break
             
         default:
